@@ -25,6 +25,7 @@ export const Footer = () => {
       $isMobile={isMobile}>
       <BasicBox
         justify='flex-start'
+        align='center'
         style={{width: 'inherit', height: 'inherit'}}>
         <Logo />
         <BasicBox direction='column' left='94px' right='136px'>
