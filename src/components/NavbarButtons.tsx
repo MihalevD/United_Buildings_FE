@@ -15,7 +15,12 @@ export const NavbarButtons = () => {
   return (
     <Wrapper>
       {navigation.map(nav => {
-        return <LinkButton href={nav.path} text={nav.name}></LinkButton>;
+        return (
+          <LinkButton
+            key={nav.name}
+            href={nav.path}
+            text={nav.name}></LinkButton>
+        );
       })}
       <ContactUs />
     </Wrapper>

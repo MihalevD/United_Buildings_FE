@@ -1,5 +1,5 @@
 import BasicBox from './basic/BasicBox';
-import {MagnifyingGlass} from './basic/MagnifyingGlass';
+import SearchIcon from '@mui/icons-material/Search';
 const buttonStyles = {
   width: '106px',
   height: '77px',
@@ -9,8 +9,8 @@ const buttonStyles = {
 };
 export const SearchButton = () => {
   return (
-    <BasicBox style={buttonStyles}>
-      <MagnifyingGlass />
+    <BasicBox style={buttonStyles} align='center' justify='center'>
+      <SearchIcon sx={{fontSize: '50px', color: 'white'}} />
     </BasicBox>
   );
 };
