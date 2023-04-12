@@ -50,7 +50,7 @@ export const Locations = () => {
       left='140px'
       right='140px'
       top='73px'
-      bottom='274px'
+      bottom='614px'
       direction='column'
       style={{width: 'auto'}}>
       <BasicBox bottom='47px' direction='column'>

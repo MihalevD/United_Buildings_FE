@@ -3,6 +3,7 @@ import useIsMobile from '../helper/isMobile';
 import BasicBox from './basic/BasicBox';
 import {Logo} from './basic/Logo';
 import {TextContainer} from './basic/TextContainer';
+import {Ad} from './Ad';
 
 const textStylesHeading = {
   color: '#3F4554',
@@ -69,10 +70,12 @@ export const Footer = () => {
           </BasicBox>
         </BasicBox>
       </BasicBox>
+      <Ad />
     </FooterWrapper>
   );
 };
 const FooterWrapper = styled(BasicBox)<{$isMobile: boolean}>`
+  position: relative;
   bottom: 0;
   height: ${({$isMobile}) => ($isMobile ? '50px' : '260px')};
   background: #cdd5b1 0% 0% no-repeat padding-box;
