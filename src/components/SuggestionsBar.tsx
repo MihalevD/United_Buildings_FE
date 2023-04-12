@@ -1,5 +1,6 @@
 import BasicBox from './basic/BasicBox';
 import {TextContainer} from './basic/TextContainer';
+import {Carousel} from './carousel/Carousel';
 
 const textStyles = {
   color: 'black',
@@ -19,8 +20,11 @@ export const SuggestionsBar = () => {
         border: '1px solid #696969',
         marginLeft: '-2px',
       }}>
-      <BasicBox left='140px'>
-        <TextContainer text='Нови предложения' textStyles={textStyles} />
+      <BasicBox left='140px' direction='column'>
+        <BasicBox bottom='30px'>
+          <TextContainer text='Нови предложения' textStyles={textStyles} />
+        </BasicBox>
+        <Carousel />
       </BasicBox>
     </BasicBox>
   );

@@ -4,6 +4,7 @@ import useIsMobile from '../helper/isMobile';
 import Spacings from '../tokens/Spacings';
 import {InfoComponent} from './InfoComponent';
 import {SuggestionsBar} from './SuggestionsBar';
+import {Locations} from './Locations';
 
 export const HomePage = () => {
   const isMobile = useIsMobile();
@@ -11,6 +12,7 @@ export const HomePage = () => {
     <BasicBox fullWidth direction='column' bottom={Spacings.medium}>
       <InfoComponent />
       <SuggestionsBar />
+      <Locations />
     </BasicBox>
   );
 };

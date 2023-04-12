@@ -4,16 +4,37 @@ import Colors from '../../tokens/Colors';
 import BasicBox from './BasicBox';
 import {TextContainer} from './TextContainer';
 
+const tagTextStyles = {
+  color: '#C9C7C7',
+  fontSize: '30px',
+  lineHeight: '20px',
+  fontWeight: '700',
+  alignText: 'left' as const,
+};
+
+const boxStyle = {
+  position: 'absolute' as const,
+  bottom: '15px',
+  left: '26px',
+};
+
 export const ImageContainer: React.FC<{
   imageStyles?: {[name: string]: string};
   imageSrc?: string;
   imgText?: string;
   fullWidth?: boolean;
-}> = ({imageSrc, imageStyles, fullWidth, imgText}) => {
+  fullHeight?: boolean;
+  tag?: string;
+  style?: {[name: string]: string};
+}> = ({imageSrc, imageStyles, fullWidth, fullHeight, imgText, tag, style}) => {
   return (
-    <Wrapper fullWidth={fullWidth}>
+    <Wrapper fullWidth={fullWidth} fullHeight={fullHeight}>
       {!!imageSrc && (
-        <ImageComponent imageSrc={imageSrc} imageStyles={imageStyles} />
+        <ImageComponent
+          imageSrc={imageSrc}
+          imageStyles={imageStyles}
+          outerStyle={style}
+        />
       )}
 
       {imgText && (
@@ -26,6 +47,11 @@ export const ImageContainer: React.FC<{
           }}
         />
       )}
+      {tag && (
+        <BasicBox style={boxStyle}>
+          <TextContainer text={tag} textStyles={tagTextStyles} />
+        </BasicBox>
+      )}
     </Wrapper>
   );
 };
@@ -36,6 +62,13 @@ const Wrapper = styled(BasicBox)`
 export const ImageComponent: React.FC<{
   imageStyles?: {[name: string]: string};
   imageSrc: string;
-}> = ({imageSrc, imageStyles}) => {
-  return <img src={imageSrc} alt={'static img'} {...imageStyles}></img>;
+  outerStyle?: {[name: string]: string};
+}> = ({imageSrc, imageStyles, outerStyle}) => {
+  return (
+    <img
+      src={imageSrc}
+      alt={'static img'}
+      {...imageStyles}
+      style={outerStyle}></img>
+  );
 };
