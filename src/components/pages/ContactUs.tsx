@@ -1,8 +1,8 @@
-import BasicBox from './basic/BasicBox';
-import {TextContainer} from './basic/TextContainer';
+import BasicBox from '../basic/BasicBox';
+import {TextContainer} from '../basic/TextContainer';
 
 const textStyles = {
-  fontSize: '25px',
+  fontSize: '20px',
   lineHeight: '33px',
   color: '#3f4554',
 };

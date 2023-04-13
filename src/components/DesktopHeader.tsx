@@ -5,8 +5,10 @@ import {Logo} from './basic/Logo';
 import {Navbar} from './Navbar';
 import {SearchBar} from './SearchBar';
 import BasicBox from './basic/BasicBox';
+import {FilterType} from '../config/types';
 
 const HeaderContainer = styled.div`
+  min-height: 100%;
   height: 100%;
   width: 100%;
   background-size: cover;
@@ -16,7 +18,11 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const DesktopHeader = () => {
+type DesktopHeaderProps = {
+  setFilters: (filters: FilterType) => void;
+};
+
+export const DesktopHeader = (props: DesktopHeaderProps) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -28,15 +34,17 @@ export const DesktopHeader = () => {
   }, []);
 
   return (
-    <div style={{height: '908px', width: '100%', overflow: 'hidden'}}>
+    <div
+      style={{
+        maxHeight: '724px',
+        height: '58vh',
+        width: '100%',
+        overflow: 'hidden',
+      }}>
       <HeaderContainer className={animate ? 'animate' : ''}>
         <Navbar />
-        <BasicBox
-          fullWidth
-          justify='center'
-          bottom='36px'
-          style={{height: '314px'}}>
-          <SearchBar />
+        <BasicBox fullWidth justify='center'>
+          <SearchBar setFilters={props.setFilters} />
         </BasicBox>
       </HeaderContainer>
     </div>

@@ -9,7 +9,7 @@ type LinkButtonTypes = {
 const StyledLink = styled.a`
   color: #3f4554;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 33px;
 `;
 const Wrapper = styled(BasicBox)``;

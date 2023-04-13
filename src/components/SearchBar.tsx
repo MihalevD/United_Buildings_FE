@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import {SearchButton} from './SearchButton';
 import BasicBox from './basic/BasicBox';
 import {TextContainer} from './basic/TextContainer';
+import {useState} from 'react';
+import {FilterType} from '../config/types';
 
 const textStyles = {
   fontSize: '40px',
@@ -14,50 +16,89 @@ const blockStyle = {
   boxShadow: '0px 3px 6px #00000029',
   borderRadius: '20px 0 20px 20px',
   clipPath: 'polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0)',
+  position: 'absolute' as 'absolute',
+  top: window.location.pathname === '/' ? '34%' : '49%',
+  width: '70vw',
+  maxWidth: '960px',
 };
 
 const InputBlock = styled.input`
-  width: 225px;
-  height: 77px;
+  width: 23%;
+  min-width: 160px;
+  height: 70px;
   background: #ffffff;
   border: 1px solid #c9c7c7;
   border-radius: 20px;
   opacity: 1;
   padding-left: 35px;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 27px;
   margin-right: 16px;
 
   ::placeholder {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 27px;
   }
 `;
 
-export const SearchBar = () => {
+type SearchBarProps = {
+  setFilters: (filters: FilterType) => void;
+};
+
+export const SearchBar = (props: SearchBarProps) => {
+  const [filters, setFilters] = useState({type: '', place: '', price: ''});
+
+  const onApply = () => {
+    props.setFilters(filters);
+    clearState();
+  };
+
+  const clearState = () => {
+    setFilters({type: '', place: '', price: ''});
+  };
+
   return (
     <BasicBox
       direction='column'
       style={blockStyle}
       justify='space-between'
       fullPadding={true}
-      spacing='30px'
-      bottom='53px'
-      left='75px'
-      right='53px'>
-      <BasicBox fullWidth align='center' direction='column'>
-        <TextContainer
-          text='Намерете перфектният недвижим'
-          textStyles={textStyles}
+      top={window.location.pathname === '/' ? '30px' : '50px'}
+      bottom='50px'
+      left='70px'
+      right='70px'>
+      {window.location.pathname === '/' && (
+        <BasicBox fullWidth align='center' direction='column'>
+          <TextContainer
+            text='Намерете перфектният недвижим'
+            textStyles={textStyles}
+          />
+          <TextContainer text='имот за Вас!' textStyles={textStyles} />
+        </BasicBox>
+      )}
+      <BasicBox
+        top={window.location.pathname === '/' ? '50px' : '0px'}
+        fullWidth>
+        <InputBlock
+          type='text'
+          placeholder='Населено място'
+          value={filters?.place}
+          onChange={e => setFilters({...filters, place: e.target.value})}
         />
-        <TextContainer text='имот за Вас!' textStyles={textStyles} />
-      </BasicBox>
-      <BasicBox top='53px'>
-        <InputBlock type='text' placeholder='Населено място' />
-        <InputBlock type='text' placeholder='Тип имот' />
-        <InputBlock type='text' placeholder='Цена' />
-        <SearchButton />
+        <InputBlock
+          type='text'
+          placeholder='Тип имот'
+          value={filters?.type}
+          onChange={e => setFilters({...filters, type: e.target.value})}
+        />
+        <InputBlock
+          type='text'
+          placeholder='Цена'
+          value={filters?.price}
+          onChange={e => setFilters({...filters, price: e.target.value})}
+        />
+        <SearchButton onClick={() => onApply()} />
       </BasicBox>
     </BasicBox>
   );

@@ -4,13 +4,14 @@ import {TextContainer} from '../basic/TextContainer';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 
 const blockStyles = {
-  width: '503px',
-  height: '423px',
+  width: '430px',
+  height: '400px',
   background: '#FFFFFF 0% 0% no-repeat padding-box',
   boxShadow: '0px 3px 6px #00000029',
   //border: '1px solid #707070',
   borderRadius: '30px',
   marginRight: '35px',
+  marginBottom: '52px',
 };
 
 const imgStyles = {
@@ -19,6 +20,7 @@ const imgStyles = {
 };
 
 export type CarouselBlockTypes = {
+  id: number;
   imgSrc: string;
   imgAlt: string;
   title: string;

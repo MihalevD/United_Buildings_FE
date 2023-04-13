@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import {navigation} from '../tokens/Texts';
 import BasicBox from './basic/BasicBox';
 import {LinkButton} from './basic/LinkButton';
-import {ContactUs} from './ContactUs';
+import {ContactUs} from './pages/ContactUs';
 
 const Wrapper = styled(BasicBox)`
   display: flex;
