@@ -11,6 +11,11 @@ const PublicRoutes = [
     title: 'Home Page',
   },
   {
+    path: routePaths.catalog,
+    component: () => <Catalog onDelete={() => {}} />,
+    title: 'Catalog',
+  },
+  {
     path: routePaths.aboutUs,
     component: () => <AboutUs />,
     title: 'About Us',

@@ -35,7 +35,7 @@ export const Catalog = (props: CatalogProps) => {
   }, [data.length]);
 
   return (
-    <Wrapper justify='center' bottom='400px'>
+    <Wrapper justify='center' bottom='600px'>
       <InnerWrapper direction='column' align='center'>
         {Object.values(filters).length > 0 && (
           <BasicBox fullWidth align='flex-start'>
