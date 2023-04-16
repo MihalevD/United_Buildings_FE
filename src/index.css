@@ -12,3 +12,16 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.header-text {
+  @media (max-width: 1400px) {
+    font-size: 18px !important;
+  }
+}
+
+.search-text {
+  @media (max-width: 1400px) {
+    font-size: 30px !important;
+    line-height: 30px !important;
+  }
+}

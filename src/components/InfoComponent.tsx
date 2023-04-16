@@ -17,7 +17,7 @@ export const InfoComponent = () => {
       direction='row'
       justify='center'
       fullWidth
-      top='90px'
+      top='210px'
       bottom='90px'>
       <InfoBox
         reverse={false}

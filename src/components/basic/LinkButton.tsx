@@ -17,7 +17,9 @@ const Wrapper = styled(BasicBox)``;
 export const LinkButton: React.FC<LinkButtonTypes> = ({href, text}) => {
   return (
     <Wrapper right='35px'>
-      <StyledLink href={href}>{text}</StyledLink>
+      <StyledLink className='header-text' href={href}>
+        {text}
+      </StyledLink>
     </Wrapper>
   );
 };

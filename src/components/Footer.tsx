@@ -4,11 +4,13 @@ import BasicBox from './basic/BasicBox';
 import {Logo} from './basic/Logo';
 import {TextContainer} from './basic/TextContainer';
 import {Ad} from './Ad';
+import house from '../img/house.png';
+import useIsTablet from '../helper/isTablet';
 
 const textStylesHeading = {
+  font: 'normal normal bold 14px/12px Segoe UI',
+  letterSpacing: '0px',
   color: '#3F4554',
-  fontSize: '10px',
-  lineHeight: '12px',
 };
 const textStylesSubHeading = {
   color: '#3F4554',
@@ -17,6 +19,7 @@ const textStylesSubHeading = {
 };
 export const Footer = () => {
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
   return (
     <FooterWrapper
       fullWidth
@@ -28,7 +31,10 @@ export const Footer = () => {
         align='center'
         style={{width: 'inherit', height: 'inherit'}}>
         <Logo />
-        <BasicBox direction='column' left='94px' right='136px'>
+        <BasicBox
+          direction='column'
+          left='94px'
+          right={isTablet ? '20px' : '136px'}>
           <BasicBox bottom='25px'>
             <TextContainer text='Контакти' textStyles={textStylesHeading} />
           </BasicBox>
@@ -45,7 +51,9 @@ export const Footer = () => {
             textStyles={textStylesSubHeading}
           />
         </BasicBox>
-        <BasicBox direction='column' style={{width: '285px'}}>
+        <BasicBox
+          direction='column'
+          style={{width: '285px', marginTop: '-20px'}}>
           <BasicBox bottom='25px'>
             <TextContainer
               text='Работно време'
@@ -72,6 +80,9 @@ export const Footer = () => {
         </BasicBox>
       </BasicBox>
       <Ad />
+      <ImageWrapper>
+        <img src={house}></img>
+      </ImageWrapper>
     </FooterWrapper>
   );
 };
@@ -80,4 +91,15 @@ const FooterWrapper = styled(BasicBox)<{$isMobile: boolean}>`
   bottom: 0;
   height: ${({$isMobile}) => ($isMobile ? '50px' : '260px')};
   background: #cdd5b1 0% 0% no-repeat padding-box;
+`;
+const ImageWrapper = styled(BasicBox)`
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  width: 24%;
+  position: absolute;
+  top: -200%;
+  left: 13%;
 `;

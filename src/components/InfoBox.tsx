@@ -13,9 +13,16 @@ type WrapperProps = {
 };
 
 const Wrapper = styled(BasicBox)<WrapperProps>`
-  width: 30%;
-  height: 545px;
+  width: 642px;
+  height: 392px;
+  min-width: 400px;
   background: #cdd5b1;
+  @media (max-width: 1365px) {
+    width: 40%;
+  }
+  @media (max-width: 1160px) {
+    width: 48%;
+  }
 
   clip-path: ${({reverse}) =>
     !reverse
@@ -24,8 +31,8 @@ const Wrapper = styled(BasicBox)<WrapperProps>`
 `;
 
 const textStyles = {
-  fontSize: '25px',
-  lineHeight: '33px',
+  fontSize: '20px',
+  lineHeight: '27px',
   letterSpacing: '0px',
   color: '#3F4554',
   textAlign: 'center' as const,
@@ -39,12 +46,11 @@ export const InfoBox = (props: InfoBoxProps) => {
     <Wrapper
       reverse={props.reverse}
       direction='column'
-      left='94px'
-      right='94px'
-      justify='center'
+      justify='flex-start'
+      top='110px'
       align='center'>
       <Icon />
-      <BasicBox top='24px'>
+      <BasicBox top='24px' left='94px' right='94px'>
         <span style={{textAlign: 'center'}}>
           {texts.length > 1 && <span style={textStyles}>{texts[0]}</span>}
           <span style={{...textStyles, fontWeight: 'bold'}}>

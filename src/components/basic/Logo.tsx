@@ -7,7 +7,11 @@ const LogoBox = styled.div`
   width: 436px;
   height: 76px;
   position: relative;
-  padding-left: 140px;
+  padding-left: 100px;
+  @media (max-width: 1400px) {
+    padding-left: 30px;
+    width: 27%;
+  }
 `;
 
 export const Logo = () => {

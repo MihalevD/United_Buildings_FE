@@ -4,6 +4,7 @@ import BasicBox from './basic/BasicBox';
 import {TextContainer} from './basic/TextContainer';
 import {useState} from 'react';
 import {FilterType} from '../config/types';
+import useIsTablet from '../helper/isTablet';
 
 const textStyles = {
   fontSize: '40px',
@@ -11,20 +12,22 @@ const textStyles = {
   color: '#3f4554',
 };
 
-const blockStyle = {
-  background: 'rgba(255, 255, 255, 0.82)',
-  boxShadow: '0px 3px 6px #00000029',
-  borderRadius: '20px 0 20px 20px',
-  clipPath: 'polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0)',
-  position: 'absolute' as 'absolute',
-  top: window.location.pathname === '/' ? '34%' : '49%',
-  width: '70vw',
-  maxWidth: '960px',
+const blockStyle = (top: string) => {
+  return {
+    background: 'rgba(255, 255, 255, 0.82)',
+    boxShadow: '0px 3px 6px #00000029',
+    borderRadius: '20px 0 20px 20px',
+    clipPath: 'polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0)',
+    position: 'absolute' as 'absolute',
+    top: top,
+    width: '70vw',
+    maxWidth: '960px',
+  };
 };
 
 const InputBlock = styled.input`
   width: 23%;
-  min-width: 160px;
+  min-width: 100px;
   height: 70px;
   background: #ffffff;
   border: 1px solid #c9c7c7;
@@ -34,6 +37,9 @@ const InputBlock = styled.input`
   font-size: 18px;
   line-height: 27px;
   margin-right: 16px;
+  @media (max-width: 1100px) {
+    padding-left: 15px;
+  }
 
   ::placeholder {
     color: black;
@@ -48,6 +54,7 @@ type SearchBarProps = {
 
 export const SearchBar = (props: SearchBarProps) => {
   const [filters, setFilters] = useState({type: '', place: '', price: ''});
+  const isTablet = useIsTablet();
 
   const onApply = () => {
     props.setFilters(filters);
@@ -58,10 +65,19 @@ export const SearchBar = (props: SearchBarProps) => {
     setFilters({type: '', place: '', price: ''});
   };
 
+  const top =
+    window.location.pathname === '/'
+      ? isTablet
+        ? '41.5%'
+        : '35%'
+      : isTablet
+      ? '49%'
+      : '64%';
+
   return (
     <BasicBox
       direction='column'
-      style={blockStyle}
+      style={blockStyle(top)}
       justify='space-between'
       fullPadding={true}
       top={window.location.pathname === '/' ? '30px' : '50px'}
@@ -71,18 +87,29 @@ export const SearchBar = (props: SearchBarProps) => {
       {window.location.pathname === '/' && (
         <BasicBox fullWidth align='center' direction='column'>
           <TextContainer
+            className='search-text'
             text='Намерете перфектният недвижим'
             textStyles={textStyles}
           />
-          <TextContainer text='имот за Вас!' textStyles={textStyles} />
+          <TextContainer
+            className='search-text'
+            text='имот за Вас!'
+            textStyles={textStyles}
+          />
         </BasicBox>
       )}
       <BasicBox
-        top={window.location.pathname === '/' ? '50px' : '0px'}
+        top={
+          window.location.pathname === '/'
+            ? isTablet
+              ? '30px'
+              : '50px'
+            : '0px'
+        }
         fullWidth>
         <InputBlock
           type='text'
-          placeholder='Населено място'
+          placeholder={window.innerWidth < 1000 ? 'Н.място' : 'Населено място'}
           value={filters?.place}
           onChange={e => setFilters({...filters, place: e.target.value})}
         />

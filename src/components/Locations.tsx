@@ -6,14 +6,13 @@ import sz from '../img/sz.jpg';
 import ch from '../img/ch.jpg';
 import styled from '@emotion/styled';
 
-const text1 = 'ЛОКАЦИИ';
 const text2 =
   'РАЗГЛЕДАЙТЕ НАЙ-АТРАКТИВНИТЕ КАТЕГОРИИ ЗА ДА ОТКРИЕТЕ СВОЕТО ЖИЛИЩЕ';
 
 const textStylesHeading = {
   color: '#000000',
   fontSize: '30px',
-  lineHeight: '20px',
+  lineHeight: '32px',
   textAlign: 'left' as const,
   fontWeight: '700',
 };
@@ -31,6 +30,15 @@ const Wrapper = styled.div`
   grid-template-columns: 50% 25% 25%;
   height: 331px;
   column-gap: 16px;
+  @media (max-width: 1365px) {
+    grid-template-columns: 40% 30% 30%;
+  }
+  @media (max-width: 1000px) {
+    height: 600px;
+    grid-template-rows: 33% 33% 33%;
+    grid-template-columns: 100%;
+    row-gap: 16px;
+  }
 `;
 
 const imgStyles = {
@@ -54,11 +62,6 @@ export const Locations = () => {
       direction='column'
       style={{width: 'auto'}}>
       <BasicBox bottom='47px' direction='column'>
-        <BasicBox bottom='10px'>
-          <TextContainer
-            text={text1}
-            textStyles={textStylesHeading}></TextContainer>
-        </BasicBox>
         <TextContainer
           text={text2}
           textStyles={textStylesSubHeading}></TextContainer>
