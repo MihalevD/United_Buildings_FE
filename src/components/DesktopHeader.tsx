@@ -6,13 +6,15 @@ import {Navbar} from './Navbar';
 import {SearchBar} from './SearchBar';
 import BasicBox from './basic/BasicBox';
 import {FilterType} from '../config/types';
+import {useIsPropertyPage} from '../helper/isPropertyPage';
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{$isPropPage: boolean}>`
   min-height: 100%;
   height: 100%;
   width: 100%;
   background-size: cover;
-  background-image: ${`url(${background})`};
+  background-image: ${({$isPropPage}) =>
+    $isPropPage ? 'none' : `url(${background})`};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,6 +26,7 @@ type DesktopHeaderProps = {
 
 export const DesktopHeader = (props: DesktopHeaderProps) => {
   const [animate, setAnimate] = useState(false);
+  const isProductPage = useIsPropertyPage();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,15 +40,19 @@ export const DesktopHeader = (props: DesktopHeaderProps) => {
     <div
       style={{
         maxHeight: '724px',
-        height: '58vh',
+        height: isProductPage ? '100%' : '58vh',
         width: '100%',
         overflow: 'hidden',
       }}>
-      <HeaderContainer className={animate ? 'animate' : ''}>
+      <HeaderContainer
+        className={animate ? 'animate' : ''}
+        $isPropPage={isProductPage}>
         <Navbar />
-        <BasicBox fullWidth justify='center'>
-          <SearchBar setFilters={props.setFilters} />
-        </BasicBox>
+        {!isProductPage && (
+          <BasicBox fullWidth justify='center'>
+            <SearchBar setFilters={props.setFilters} />
+          </BasicBox>
+        )}
       </HeaderContainer>
     </div>
   );
