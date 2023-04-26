@@ -1,19 +1,31 @@
+import styled from '@emotion/styled';
 import BasicBox from '../basic/BasicBox';
 import {ImageContainer} from '../basic/ImageContainer';
 import {TextContainer} from '../basic/TextContainer';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
+import { useNavigate } from 'react-router-dom';
 
-const blockStyles = {
-  width: '430px',
-  height: '400px',
-  background: '#FFFFFF 0% 0% no-repeat padding-box',
-  boxShadow: '0px 3px 6px #00000029',
-  //border: '1px solid #707070',
-  borderRadius: '30px',
-  marginRight: '35px',
-  marginBottom: '52px',
-};
-
+const Wrapper = styled(BasicBox)`
+  cursor: pointer;
+  width: 430px;
+  height: 400px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  //border: 1px solid #707070;
+  border-radius: 30px;
+  margin-right: 35px;
+  margin-bottom: 52px;
+  transition: background-color 1s;
+  :hover {
+    background: #cdd5b1 0% 0% no-repeat padding-box;
+  }
+`
+const Tint = styled(BasicBox)`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  `
 const imgStyles = {
   width: '100%',
   height: '269px',
@@ -46,8 +58,12 @@ const textStylesSubHeading = {
 };
 
 export const CarouselBlock = (props: CarouselBlockTypes) => {
+
+  const navigate = useNavigate();
+  const handleClick = () => navigate('/property/' + props.id);
+
   return (
-    <BasicBox style={blockStyles} direction='column'>
+    <Wrapper direction='column' onClick={handleClick}>
       <BasicBox fullWidth>
         <ImageContainer
           imageSrc={props.imgSrc}
@@ -92,6 +108,6 @@ export const CarouselBlock = (props: CarouselBlockTypes) => {
           </BasicBox>
         </BasicBox>
       </BasicBox>
-    </BasicBox>
+    </Wrapper>
   );
 };

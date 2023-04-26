@@ -20,7 +20,7 @@ const textStylesHeading = {
 const textStylesSubHeading = {
   color: '#000000',
   fontSize: '25px',
-  lineHeight: '20px',
+  lineHeight: '32px',
   textAlign: 'left' as const,
   fontWeight: '600',
 };

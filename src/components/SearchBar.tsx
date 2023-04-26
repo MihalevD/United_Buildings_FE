@@ -66,7 +66,7 @@ export const SearchBar = (props: SearchBarProps) => {
   };
 
   const top =
-    window.location.pathname === '/' ? (isTablet ? '41.5%' : '35%') : '49%';
+    window.location.pathname === '/' ? (isTablet ? '41.5%' : '34%') : '49%';
 
   return (
     <BasicBox

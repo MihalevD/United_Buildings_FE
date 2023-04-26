@@ -10,7 +10,6 @@ type RouterProps = {
 
 const Router = (props: RouterProps) => {
   return (
-    <BrowserRouter>
       <Routes>
         {PublicRoutes.map(({component: Component, path, title}) => {
           if (path === '/catalog') {
@@ -42,7 +41,6 @@ const Router = (props: RouterProps) => {
           }
         })}
       </Routes>
-    </BrowserRouter>
   );
 };
 
