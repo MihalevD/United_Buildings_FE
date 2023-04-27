@@ -1,28 +1,28 @@
-import BasicBox from './basic/BasicBox';
-import {ImageContainer} from './basic/ImageContainer';
-import {TextContainer} from './basic/TextContainer';
-import bs from '../img/bs.jpg';
-import sz from '../img/sz.jpg';
-import ch from '../img/ch.jpg';
-import styled from '@emotion/styled';
+import BasicBox from "./basic/BasicBox";
+import { ImageContainer } from "./basic/ImageContainer";
+import { TextContainer } from "./basic/TextContainer";
+import bs from "../img/bs.jpg";
+import sz from "../img/sz.jpg";
+import ch from "../img/ch.jpg";
+import styled from "@emotion/styled";
 
 const text2 =
-  'РАЗГЛЕДАЙТЕ НАЙ-АТРАКТИВНИТЕ КАТЕГОРИИ ЗА ДА ОТКРИЕТЕ СВОЕТО ЖИЛИЩЕ';
+  "РАЗГЛЕДАЙТЕ НАЙ-АТРАКТИВНИТЕ КАТЕГОРИИ ЗА ДА ОТКРИЕТЕ СВОЕТО ЖИЛИЩЕ";
 
 const textStylesHeading = {
-  color: '#000000',
-  fontSize: '30px',
-  lineHeight: '32px',
-  textAlign: 'left' as const,
-  fontWeight: '700',
+  color: "#000000",
+  fontSize: "30px",
+  lineHeight: "32px",
+  textAlign: "left" as const,
+  fontWeight: "700",
 };
 
 const textStylesSubHeading = {
-  color: '#000000',
-  fontSize: '25px',
-  lineHeight: '32px',
-  textAlign: 'left' as const,
-  fontWeight: '600',
+  color: "#000000",
+  fontSize: "25px",
+  lineHeight: "32px",
+  textAlign: "left" as const,
+  fontWeight: "600",
 };
 
 const Wrapper = styled.div`
@@ -42,29 +42,30 @@ const Wrapper = styled.div`
 `;
 
 const imgStyles = {
-  width: '100%',
-  height: 'inherit',
+  width: "100%",
+  height: "inherit",
 };
 
 const styles = {
-  borderRadius: '30px',
-  boxShadow: '0px 3px 6px #00000029',
-  objectFit: 'cover',
+  borderRadius: "30px",
+  boxShadow: "0px 3px 6px #00000029",
 };
 
 export const Locations = () => {
   return (
     <BasicBox
-      left='140px'
-      right='140px'
-      top='73px'
-      bottom='614px'
-      direction='column'
-      style={{width: 'auto'}}>
-      <BasicBox bottom='47px' direction='column'>
+      left="140px"
+      right="140px"
+      top="73px"
+      bottom="614px"
+      direction="column"
+      style={{ width: "auto" }}
+    >
+      <BasicBox bottom="47px" direction="column">
         <TextContainer
           text={text2}
-          textStyles={textStylesSubHeading}></TextContainer>
+          textStyles={textStylesSubHeading}
+        ></TextContainer>
       </BasicBox>
       <Wrapper>
         <ImageContainer
@@ -72,7 +73,7 @@ export const Locations = () => {
           imageStyles={imgStyles}
           fullHeight
           fullWidth
-          tag='Бургас'
+          tag="Бургас"
           style={styles}
         />
         <ImageContainer
@@ -80,13 +81,13 @@ export const Locations = () => {
           imageStyles={imgStyles}
           fullHeight
           fullWidth
-          tag='Созопол'
+          tag="Созопол"
           style={styles}
         />
         <ImageContainer
           imageSrc={ch}
           imageStyles={imgStyles}
-          tag='Черноморец'
+          tag="Черноморец"
           fullHeight
           fullWidth
           style={styles}

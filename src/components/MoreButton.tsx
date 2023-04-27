@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-const CustomButton = styled.button`
+export const CustomButton = styled.button`
   width: 229px;
   height: 56px;
   background: #cdd5b1 0% 0% no-repeat padding-box;
