@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import background from "../img/apart.jpg";
-import { Logo } from "./basic/Logo";
 import { Navbar } from "./Navbar";
 import { SearchBar } from "./SearchBar";
 import BasicBox from "./basic/BasicBox";
 import { FilterType } from "../config/types";
-import { useIsPropertyPage } from "../helper/isPropertyPage";
+import { useLocation } from "react-router-dom";
 
 const HeaderContainer = styled.div<{ $isPropPage: boolean }>`
   min-height: 100%;
@@ -22,15 +21,11 @@ const HeaderContainer = styled.div<{ $isPropPage: boolean }>`
 
 type DesktopHeaderProps = {
   setFilters: (filters: FilterType) => void;
-  isPropertyPage?: boolean;
 };
 
 export const DesktopHeader = (props: DesktopHeaderProps) => {
-  const [isProductPage, setIsProductPage] = useState(true);
-
-  useEffect(() => {
-    setIsProductPage(props.isPropertyPage ?? false);
-  }, [props.isPropertyPage]);
+  const location = useLocation();
+  const isProductPage = location.pathname.split("/")[1] == "property";
 
   return (
     <div
