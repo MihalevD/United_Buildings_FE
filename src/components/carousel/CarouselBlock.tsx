@@ -1,15 +1,16 @@
-import styled from '@emotion/styled';
-import BasicBox from '../basic/BasicBox';
-import {ImageContainer} from '../basic/ImageContainer';
-import {TextContainer} from '../basic/TextContainer';
-import SquareFootIcon from '@mui/icons-material/SquareFoot';
-import { useNavigate } from 'react-router-dom';
+import styled from "@emotion/styled";
+import BasicBox from "../basic/BasicBox";
+import { ImageContainer } from "../basic/ImageContainer";
+import { TextContainer } from "../basic/TextContainer";
+import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled(BasicBox)`
+  flex-shrink: 0;
   cursor: pointer;
   width: 430px;
   height: 400px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
+  background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   //border: 1px solid #707070;
   border-radius: 30px;
@@ -19,16 +20,10 @@ const Wrapper = styled(BasicBox)`
   :hover {
     background: #cdd5b1 0% 0% no-repeat padding-box;
   }
-`
-const Tint = styled(BasicBox)`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  `
+`;
 const imgStyles = {
-  width: '100%',
-  height: '269px',
+  width: "100%",
+  height: "269px",
 };
 
 export type CarouselBlockTypes = {
@@ -43,52 +38,53 @@ export type CarouselBlockTypes = {
 };
 
 const textStylesHeading = {
-  color: '#000000',
-  fontSize: '25px',
-  lineHeight: '35px',
-  textAlign: 'left' as const,
-  fontWeight: '600',
+  color: "#000000",
+  fontSize: "25px",
+  lineHeight: "35px",
+  textAlign: "left" as const,
+  fontWeight: "600",
 };
 
 const textStylesSubHeading = {
-  color: '#000000',
-  fontSize: '22px',
-  lineHeight: '35px',
-  textAlign: 'left' as const,
+  color: "#000000",
+  fontSize: "22px",
+  lineHeight: "35px",
+  textAlign: "left" as const,
 };
 
 export const CarouselBlock = (props: CarouselBlockTypes) => {
-
   const navigate = useNavigate();
-  const handleClick = () => navigate('/property/' + props.id);
+  const handleClick = () => navigate("/property/" + props.id);
 
   return (
-    <Wrapper direction='column' onClick={handleClick}>
+    <Wrapper direction="column" onClick={handleClick}>
       <BasicBox fullWidth>
         <ImageContainer
           imageSrc={props.imgSrc}
           imageStyles={imgStyles}
-          style={{borderRadius: '30px', border: '1px solid #C9C7C7'}}
+          style={{ borderRadius: "30px", border: "1px solid #C9C7C7" }}
           fullWidth
         />
       </BasicBox>
       <BasicBox
-        left='24px'
-        right='15px'
-        direction='column'
-        bottom='30px'
-        style={{width: 'auto'}}
+        left="24px"
+        right="15px"
+        direction="column"
+        bottom="30px"
+        style={{ width: "auto" }}
         fullHeight
-        justify='space-between'>
+        justify="space-between"
+      >
         <BasicBox
-          justify='space-between'
+          justify="space-between"
           fullWidth
-          direction='column'
-          top='12px'>
-          <BasicBox justify='space-between' fullWidth>
+          direction="column"
+          top="12px"
+        >
+          <BasicBox justify="space-between" fullWidth>
             <TextContainer text={props.title} textStyles={textStylesHeading} />
             <TextContainer
-              text={'€ ' + props.price}
+              text={"€ " + props.price}
               textStyles={textStylesHeading}
             />
           </BasicBox>
@@ -97,9 +93,9 @@ export const CarouselBlock = (props: CarouselBlockTypes) => {
             textStyles={textStylesSubHeading}
           />
         </BasicBox>
-        <BasicBox justify='space-between' fullWidth>
+        <BasicBox justify="space-between" fullWidth>
           <TextContainer
-            text={props.rooms + ' спални'}
+            text={props.rooms + " спални"}
             textStyles={textStylesSubHeading}
           />
           <BasicBox>
