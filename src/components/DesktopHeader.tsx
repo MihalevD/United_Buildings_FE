@@ -49,12 +49,11 @@ export const DesktopHeader = (props: DesktopHeaderProps) => {
     >
       <HeaderContainer $isPropPage={isProductPage} $isAboutPage={isAboutPage}>
         <Navbar />
-        {!isProductPage ||
-          (!isAboutPage && (
-            <BasicBox fullWidth justify="center">
-              <SearchBar setFilters={props.setFilters} />
-            </BasicBox>
-          ))}
+        {!isProductPage && !isAboutPage && (
+          <BasicBox fullWidth justify="center">
+            <SearchBar setFilters={props.setFilters} />
+          </BasicBox>
+        )}
       </HeaderContainer>
     </div>
   );

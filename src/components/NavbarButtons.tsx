@@ -1,8 +1,8 @@
-import styled from '@emotion/styled';
-import {navigation} from '../tokens/Texts';
-import BasicBox from './basic/BasicBox';
-import {LinkButton} from './basic/LinkButton';
-import {ContactUs} from './pages/ContactUs';
+import styled from "@emotion/styled";
+import { navigation } from "../tokens/Texts";
+import BasicBox from "./basic/BasicBox";
+import { LinkButton } from "./basic/LinkButton";
+import { ContactUs } from "./pages/ContactUs";
 
 const Wrapper = styled(BasicBox)`
   display: flex;
@@ -14,12 +14,13 @@ const Wrapper = styled(BasicBox)`
 export const NavbarButtons = () => {
   return (
     <Wrapper>
-      {navigation.map(nav => {
+      {navigation.map((nav) => {
         return (
           <LinkButton
             key={nav.name}
             href={nav.path}
-            text={nav.name}></LinkButton>
+            text={nav.name}
+          ></LinkButton>
         );
       })}
       <ContactUs />

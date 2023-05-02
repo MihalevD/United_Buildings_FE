@@ -54,7 +54,10 @@ const textStylesSubHeading = {
 
 export const CarouselBlock = (props: CarouselBlockTypes) => {
   const navigate = useNavigate();
-  const handleClick = () => navigate("/property/" + props.id);
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate("/property/" + props.id);
+  };
 
   return (
     <Wrapper direction="column" onClick={handleClick}>
