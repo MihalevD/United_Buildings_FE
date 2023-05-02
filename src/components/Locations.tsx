@@ -1,9 +1,9 @@
 import BasicBox from "./basic/BasicBox";
 import { ImageContainer } from "./basic/ImageContainer";
 import { TextContainer } from "./basic/TextContainer";
-import bs from "../img/bs.jpg";
+import bs from "../img/betterquality/Burgas.jpg";
 import sz from "../img/sz.jpg";
-import ch from "../img/ch.jpg";
+import ch from "../img/betterquality/chernomorets2.jpg";
 import styled from "@emotion/styled";
 
 const text2 =
@@ -49,6 +49,7 @@ const imgStyles = {
 const styles = {
   borderRadius: "30px",
   boxShadow: "0px 3px 6px #00000029",
+  objectFit: "cover",
 };
 
 export const Locations = () => {
@@ -74,6 +75,7 @@ export const Locations = () => {
           fullHeight
           fullWidth
           tag="Бургас"
+          top
           style={styles}
         />
         <ImageContainer

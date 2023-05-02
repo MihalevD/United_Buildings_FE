@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
-import BasicBox from './basic/BasicBox';
-import {Logo} from './basic/Logo';
-import {NavbarButtons} from './NavbarButtons';
+import styled from "@emotion/styled";
+import BasicBox from "./basic/BasicBox";
+import { Logo } from "./basic/Logo";
+import { NavbarButtons } from "./NavbarButtons";
 
 const Wrapper = styled(BasicBox)`
   position: relative;

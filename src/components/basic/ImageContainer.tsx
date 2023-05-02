@@ -14,7 +14,7 @@ const tagTextStyles = {
 
 const boxStyle = {
   position: "absolute" as const,
-  bottom: "15px",
+  bottom: "55px",
   left: "26px",
 };
 
@@ -27,6 +27,7 @@ export const ImageContainer: React.FC<{
   tag?: string;
   style?: { [name: string]: string };
   children?: React.ReactNode;
+  top?: boolean;
 }> = ({
   imageSrc,
   imageStyles,
@@ -38,7 +39,7 @@ export const ImageContainer: React.FC<{
   children,
 }) => {
   return (
-    <Wrapper fullWidth={fullWidth} fullHeight={fullHeight}>
+    <Wrapper fullWidth={fullWidth} fullHeight={fullHeight} style={imageStyles}>
       {!!imageSrc && (
         <ImageComponent
           imageSrc={imageSrc}
