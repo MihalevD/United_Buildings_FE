@@ -1,6 +1,6 @@
-import { CustomButton } from "./MoreButton";
 import { PropertyPageInfo } from "./PropertyPageInfo";
 import BasicBox from "./basic/BasicBox";
+import { LightButton } from "./basic/LightButton";
 import { TextContainer } from "./basic/TextContainer";
 import styled from "@emotion/styled";
 
@@ -36,7 +36,7 @@ export const AdWrapperProperty = () => {
       </BasicBox>
       <PropertyPageInfo />
       <BasicBox fullWidth justify="center" top="30px">
-        <CustomButton>Направете запитване</CustomButton>
+        <LightButton>Направете запитване</LightButton>
       </BasicBox>
     </AdWrapper>
   );
