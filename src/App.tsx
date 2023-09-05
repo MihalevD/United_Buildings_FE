@@ -7,26 +7,20 @@ import useIsMobile from "./helper/isMobile";
 import { MobileHeader } from "./components/MobileHeader";
 import BasicBox from "./components/basic/BasicBox";
 import { FilterType } from "./config/types";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
+import routePaths from "./config/routePaths";
 
 export const FilterContext = createContext<FilterType>({});
 
 function App() {
   const isMobile = useIsMobile();
   const [filters, setFilters] = useState<FilterType>({});
+
   return (
     <BasicBox fullWidth fullHeight direction="column">
-      <BrowserRouter>
-        <FilterContext.Provider value={filters}>
-          {isMobile ? (
-            <MobileHeader />
-          ) : (
-            <DesktopHeader setFilters={setFilters} />
-          )}
-          <Router onDeleteFilter={setFilters} />
-          <Footer />
-        </FilterContext.Provider>
-      </BrowserRouter>
+      <FilterContext.Provider value={filters}>
+        <Router onDeleteFilter={setFilters} />
+      </FilterContext.Provider>
     </BasicBox>
   );
 }

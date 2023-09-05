@@ -4,48 +4,53 @@ import Helmet from "react-helmet";
 import { FilterType } from "../../config/types";
 import { Catalog } from "../pages/Catalog";
 import { useEffect } from "react";
+import React from "react";
+import { FilterContext } from "../../App";
+import routePaths from "../../config/routePaths";
+import isMobile from "../../helper/isMobile";
+import { DesktopHeader } from "../DesktopHeader";
+import { Footer } from "../Footer";
+import { MobileHeader } from "../MobileHeader";
+import useIsMobile from "../../helper/isMobile";
 
 type RouterProps = {
   onDeleteFilter: (filters: FilterType) => void;
 };
 
 const Router = (props: RouterProps) => {
-  const location = useLocation();
-  useEffect(() => {
-    console.log(location);
-  }, [location.pathname]);
+  const isMobile = useIsMobile();
   return (
-    <Routes>
-      {PublicRoutes.map(({ component: Component, path, title }) => {
-        if (path === "/catalog") {
-          return (
-            <Route
-              path={path}
-              key={path}
-              element={
-                <>
-                  <Catalog onDelete={props.onDeleteFilter} />
-                  <Helmet title={title} />
-                </>
-              }
-            />
-          );
-        } else {
-          return (
-            <Route
-              path={path}
-              key={path}
-              element={
-                <>
-                  <Component />
-                  <Helmet title={title} />
-                </>
-              }
-            />
-          );
-        }
-      })}
-    </Routes>
+    <BrowserRouter>
+      <FilterContext.Consumer>
+        {(filters) => (
+          <Routes>
+            {PublicRoutes.map(({ component: Component, path, title }) => (
+              <Route
+                path={path}
+                key={path}
+                element={
+                  <React.Fragment>
+                    {path !== routePaths.admin &&
+                      // Render Header for non-AdminPage routes
+                      (isMobile ? (
+                        <MobileHeader />
+                      ) : (
+                        <DesktopHeader setFilters={props.onDeleteFilter} />
+                      ))}
+                    <Component />
+                    <Helmet title={title} />
+                    {path !== routePaths.admin && (
+                      // Render Footer for non-AdminPage routes
+                      <Footer />
+                    )}
+                  </React.Fragment>
+                }
+              />
+            ))}
+          </Routes>
+        )}
+      </FilterContext.Consumer>
+    </BrowserRouter>
   );
 };
 

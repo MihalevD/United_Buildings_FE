@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { default as ReactSelect } from "react-select";
 import makeAnimated from "react-select/animated";
@@ -40,7 +40,7 @@ const MySelect = (props: MySelectProps) => {
         menuPortalTarget={document.body}
         menuPosition={"fixed"}
         options={[props.allOption, ...props.options]}
-        closeMenuOnSelect={props.closeMenuOnSelect}
+        closeMenuOnSelect={props.isMulti ? false : true}
         hideSelectedOptions={props.hideSelectedOptions}
         components={props.components}
         onChange={(selected) => {
@@ -56,7 +56,6 @@ const MySelect = (props: MySelectProps) => {
       />
     );
   }
-
   return <ReactSelect {...props} />;
 };
 
@@ -115,7 +114,7 @@ const MySelectC = ({
       isMulti={isMulti}
       styles={styles ?? customStyles}
       placeholder={placeholder}
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={isMulti ? false : true}
       hideSelectedOptions={false}
       components={{
         Option,
@@ -123,7 +122,7 @@ const MySelectC = ({
         animatedComponents,
       }}
       onChange={handleChange}
-      allowSelectAll={true}
+      allowSelectAll={!!isMulti}
       value={optionSelected}
     />
   );

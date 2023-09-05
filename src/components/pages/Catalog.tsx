@@ -55,7 +55,6 @@ export const Catalog = (props: CatalogProps) => {
       setNumber(data.length);
     }
   }, [data.length]);
-  console.log("wtf", names);
 
   return (
     <Wrapper justify="center" bottom="600px">

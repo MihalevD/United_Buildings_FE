@@ -1,29 +1,35 @@
-import routePaths from '../../config/routePaths';
-import {AboutUs} from '../AboutUs';
-import {Catalog} from '../pages/Catalog';
-import {HomePage} from '../pages/HomePage';
-import {PropertyPage} from '../pages/PropertyPage';
+import routePaths from "../../config/routePaths";
+import { AboutUs } from "../AboutUs";
+import AdminPage from "../pages/Admin";
+import { Catalog } from "../pages/Catalog";
+import { HomePage } from "../pages/HomePage";
+import { PropertyPage } from "../pages/PropertyPage";
 
 const PublicRoutes = [
   {
     path: routePaths.entry,
     component: () => <HomePage />,
-    title: 'Home Page',
+    title: "Home Page",
   },
   {
     path: routePaths.catalog,
     component: () => <Catalog onDelete={() => {}} />,
-    title: 'Catalog',
+    title: "Catalog",
   },
   {
     path: routePaths.aboutUs,
     component: () => <AboutUs />,
-    title: 'About Us',
+    title: "About Us",
   },
   {
     path: routePaths.property,
     component: () => <PropertyPage />,
-    title: 'Property',
+    title: "Property",
+  },
+  {
+    path: routePaths.admin,
+    component: () => <AdminPage />,
+    title: "Admin",
   },
 ];
 

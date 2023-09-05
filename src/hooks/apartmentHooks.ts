@@ -1,9 +1,18 @@
 import {handleApiMutation, handleApiResponse, useApiCall, generateApiUrl } from "./useApiCall";
 import { useMutation } from 'react-query';
 
-interface Apartment {
-  id: number;
-  // Add other properties as needed
+export interface Apartment {
+  idapartments: number;
+  apartment_name: string;
+  idtypes: string,
+  idlocations: string,
+  location_name: string,
+  type_name: string;
+  price: string,
+  size: string,
+  idprojects?: string,
+  project_name?: string,
+  image_url?: string[],
 }
 
 // useGetApartments
@@ -20,13 +29,15 @@ const useGetSingleApartment = (apartmentId: number) => {
 
 // usePostApartment
 const usePostApartment = () => {
-  const mutation = useMutation<Apartment, Error, { apartmentData: any, imageFiles: File[] }>(async ({ apartmentData, imageFiles }) => {
+  const mutation = useMutation<Apartment, Error, { apartmentData: any, imageFiles?: File[] }>(async ({ apartmentData, imageFiles }) => {
     const formData = new FormData();
-
     formData.append("apartmentData", JSON.stringify(apartmentData));
 
-    for (const imageFile of imageFiles) {
-      formData.append("images", imageFile);
+    // Wait for all image files to be processed before proceeding
+    if (imageFiles) {
+      for (const imageFile of imageFiles) {
+        formData.append("images", imageFile);
+      }
     }
 
     const options = {
@@ -41,9 +52,14 @@ const usePostApartment = () => {
   return mutation;
 };
 
+
+
+
+
+
 // useUpdateApartment
 const useUpdateApartment = () => {
-  const mutation = useMutation<void, Error, { apartmentId: number, updatedData: any, imageFiles?: File[] }>(async ({ apartmentId, updatedData, imageFiles }) => {
+  const mutation = useMutation<Apartment, Error, { apartmentId: number, updatedData: any, imageFiles?: File[] }>(async ({ apartmentId, updatedData, imageFiles }) => {
     const formData = new FormData();
     formData.append("updatedData", JSON.stringify(updatedData));
 
@@ -59,7 +75,7 @@ const useUpdateApartment = () => {
     };
 
     const url = generateApiUrl(`apartments`, apartmentId);
-    return handleApiMutation<void>(useApiCall<void>(url, options));
+    return handleApiMutation<Apartment>(useApiCall<Apartment>(url, options));
   });
 
   return mutation;

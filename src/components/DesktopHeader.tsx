@@ -36,8 +36,6 @@ export const DesktopHeader = (props: DesktopHeaderProps) => {
   const isProductPage = location.pathname.split("/")[1] == "property";
   const isAboutPage = location.pathname.split("/")[1] == "about-us";
 
-  console.log("isAboutPgae", isAboutPage);
-
   return (
     <div
       style={{
@@ -51,7 +49,7 @@ export const DesktopHeader = (props: DesktopHeaderProps) => {
         <Navbar />
         {!isProductPage && !isAboutPage && (
           <BasicBox fullWidth justify="center">
-            <SearchBar setFilters={props.setFilters} />
+            <SearchBar />
           </BasicBox>
         )}
       </HeaderContainer>

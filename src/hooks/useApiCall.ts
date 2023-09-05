@@ -6,6 +6,7 @@ interface ApiResponse<T> {
 const useApiCall = <T>(url: string, options: RequestInit = {}): Promise<ApiResponse<T>> => {
   return new Promise(async (resolve) => {
     try {
+      console.log(options)
       const response = await fetch(url, options);
       const responseData = await response.json();
       resolve({ data: responseData, error: null });
@@ -36,7 +37,7 @@ const handleApiMutation = async <T>(mutation: Promise<ApiResponse<T>>) => {
   }
 };
 
-const generateApiUrl = (endpoint: string, id?: number) => {
+const generateApiUrl:any = (endpoint: string, id?: number) => {
   const isProduction = process.env.NODE_ENV === 'production';
   const baseUrl = isProduction ? 'https://api.example.com' : 'http://localhost:3000';
   if (id !== undefined) {

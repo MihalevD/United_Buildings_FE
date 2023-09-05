@@ -1,24 +1,31 @@
-import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from 'react-query';
+import { useMutation, useQuery, UseQueryOptions } from 'react-query';
 import {useApiCall, handleApiResponse, handleApiMutation , generateApiUrl} from './useApiCall';
 
-interface Location {
-  idlocations: number;
+export interface Location {
+  idlocations?: number;
   location_name?: string;
   image_url?: string;
 }
 
-interface Type {
-  idtypes: number;
+export interface Type {
+  idtypes?: number;
   type_name?: string;
 }
 
-interface PriceRange {
-  idprice_range: number;
+export interface PriceRange {
+  idprice_range?: number;
   top: Number;
   bottom: Number;
 }
 
-type OptionType = { label: string; value: string };
+export interface Project {
+  idprojects: number;
+  project_name?: string;
+  image_url?: string[];
+}
+
+
+export type OptionType = { label: string; value: string };
 
 
 const transformPriceData = (data: PriceRange[]): OptionType[] => {
@@ -28,19 +35,37 @@ const transformPriceData = (data: PriceRange[]): OptionType[] => {
   }));
 };
 
-const transformTypeData = (data: Type[]): OptionType[] => {
+export function transformTypeData (data: Type[] | undefined): OptionType[] {
+  if (!data) {
+    return [];
+  }
   return data.map((type) => ({
     label: type.type_name || '',
     value: type.idtypes ? type.idtypes.toString() : '', 
   }));
 };
 
-const transformLocationData = (data: Location[]): OptionType[] => {
+export function transformLocationData(data: Location[] | undefined): OptionType[] {
+  if (!data) {
+    return [];
+  }
+
   return data.map((location) => ({
     label: location.location_name || '',
     value: location.idlocations ? location.idlocations.toString() : '',
   }));
-};
+}
+
+export function transformProjectData(data: Project[] | undefined): OptionType[] {
+  if (!data) {
+    return [];
+  }
+
+  return data.map((project) => ({
+    label: project.project_name || '',
+    value: project.idprojects ? project.idprojects.toString() : '',
+  }));
+}
 
 //useGetLocations
 const useGetLocations = (options?: UseQueryOptions<Location[]>) => {
@@ -56,16 +81,19 @@ const useGetLocations = (options?: UseQueryOptions<Location[]>) => {
 };
 
 // useGetPriceRanges
-const useGetPriceRanges = (options?: UseQueryOptions<PriceRange[]>) => {
+const useGetPriceRanges = ({ filtered = false, ...options } = {}) => {
   const { data: priceData } = useQuery<PriceRange[]>(
     'priceRanges',
     () => handleApiResponse<PriceRange[]>(useApiCall<PriceRange[]>(generateApiUrl('prices'))),
     options
   );
 
-  const transformedData = priceData ? transformPriceData(priceData) : [];
+  let transformedData;
+  if (filtered) {
+    transformedData = priceData ? transformPriceData(priceData) : [];
+  }
 
-  return {data: transformedData};
+  return { data: filtered ? transformedData : priceData };
 };
 
 // useGetTypes
@@ -81,12 +109,26 @@ const useGetTypes = (options?: UseQueryOptions<Type[]>) => {
   return {data: transformedData};
 };
 
+//useGetProjects
+const useGetProjects = (options?: UseQueryOptions<Project[]>) => {
+  const { data: projectData } = useQuery<Project[]>(
+    'projects',
+    () => handleApiResponse<Project[]>(useApiCall<Project[]>(generateApiUrl('projects'))),
+    options
+  );
+
+  const transformedData = projectData ? transformProjectData(projectData) : [];
+
+  return {data: transformedData};
+};
+
+
 
 
 // usePostLocation
 const usePostLocation = () => {
   return useMutation<Location, Error, Location>(async (locationData) => {
-    const response = await useApiCall(generateApiUrl('locations'), {
+    const response:any = await useApiCall(generateApiUrl('locations'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -98,53 +140,92 @@ const usePostLocation = () => {
       throw new Error(response.error.message);
     }
 
-    return locationData;
+    return response.data[0];
   });
 };
 
 // usePostType
 const usePostType = () => {
-  return useMutation<void, Error, Type>(async (typeData) => {
-    return handleApiMutation<void>(useApiCall(generateApiUrl('types'), {
+  return useMutation<Type, Error, Type>(async (typeData) => {
+    console.log(typeData)
+    const response =  await useApiCall(generateApiUrl('types'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(typeData),
-    }));
+      body: JSON.stringify(typeData),}
+  });
+
+    if (response.error) {
+      throw new Error(response.error.message);
+    }
+
+    return typeData;  
   });
 };
 
 // usePostPriceRange
 const usePostPriceRange = () => {
-  return useMutation<void, Error, PriceRange>(async (priceRangeData) => {
-    return handleApiMutation<void>(useApiCall(generateApiUrl('prices'), {
+  return useMutation<PriceRange, Error, PriceRange>(async (priceRangeData) => {
+    const response = await useApiCall(generateApiUrl('prices'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(priceRangeData),
-    }));
+    });
+
+    if (response.error) {
+      throw new Error(response.error.message);
+    }
+
+    return priceRangeData;
   });
 };
 
+// usePostProject
+const usePostProject = () => {
+  const mutation = useMutation<Project, Error, { project_name: any, imageFiles: File[] }>(async ({ project_name, imageFiles }) => {
+    const formData = new FormData();
+    formData.append("projectData", JSON.stringify({project_name}));
+
+    // Wait for all image files to be processed before proceeding
+    if (imageFiles) {
+      for (const imageFile of imageFiles) {
+        formData.append("images", imageFile);
+      }
+    }
+
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+
+    const url = generateApiUrl(`projects`);
+    return handleApiMutation<Project>(useApiCall<Project>(url, options));
+  });
+
+  return mutation;
+};
+
+
 // useUpdateLocation
 const useUpdateLocation = () => {
-  return useMutation<void, Error, Location>(async (updatedData) => {
-    return handleApiMutation<void>(useApiCall(generateApiUrl('locations', updatedData.idlocations), {
+  return useMutation<Location[], Error, Location>(async (updatedData) => {
+    return handleApiMutation<Location[]>(useApiCall(generateApiUrl('locations', updatedData.idlocations), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify(updatedData), 
     }));
   });
 };
 
 // useUpdateType
 const useUpdateType = () => {
-  return useMutation<void, Error, Type>(async (updatedData) => {
-    return handleApiMutation<void>(useApiCall(generateApiUrl('types', updatedData.idtypes), {
+  return useMutation<Type[], Error, Type>(async (updatedData) => {
+    console.log(updatedData)
+    return handleApiMutation<Type[]>(useApiCall(generateApiUrl('types', updatedData.idtypes), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -156,8 +237,8 @@ const useUpdateType = () => {
 
 // useUpdatePriceRange
 const useUpdatePriceRange = () => {
-  return useMutation<void, Error, PriceRange>(async (updatedData) => {
-    return handleApiMutation<void>(useApiCall(generateApiUrl('prices', updatedData.idprice_range), {
+  return useMutation<PriceRange[], Error, PriceRange>(async (updatedData) => {
+    return handleApiMutation<PriceRange[]>(useApiCall(generateApiUrl('prices', updatedData.idprice_range), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -166,6 +247,31 @@ const useUpdatePriceRange = () => {
     }));
   });
 };
+
+const useUpdateProject = () => {
+  const mutation = useMutation<Project, Error, { projectid: number, updatedData: any, imageFiles?: File[] }>(async ({ projectid, updatedData, imageFiles }) => {
+    const formData = new FormData();
+    formData.append("updatedData", JSON.stringify(updatedData));
+
+    if (imageFiles) {
+      for (const imageFile of imageFiles) {
+        formData.append("images", imageFile);
+      }
+    }
+
+    const options = {
+      method: "PUT",
+      body: formData,
+    };
+
+    const url = generateApiUrl(`projects`, projectid);
+    return handleApiMutation<Project>(useApiCall<Project>(url, options));
+  });
+
+  return mutation;
+};
+
+
 
 // useDeleteLocation
 const useDeleteLocation = () => {
@@ -194,17 +300,31 @@ const useDeletePriceRange = () => {
   });
 };
 
+// useDeleteProject
+const useDeleteProject = () => {
+  const mutation = useMutation<void, Error, number>(async (idprojects) => {
+    return handleApiMutation<void>(useApiCall(generateApiUrl('projects', idprojects), {
+      method: 'DELETE',
+    }));
+  });
+  return mutation;
+};  
+
 export {
   useGetLocations,
   useGetPriceRanges,
   useGetTypes,
+  useGetProjects,
   usePostLocation,
   usePostType,
   usePostPriceRange,
+  usePostProject,
   useUpdateLocation,
   useUpdateType,
   useUpdatePriceRange,
+  useUpdateProject,
   useDeleteLocation,
   useDeleteType,
   useDeletePriceRange,
+  useDeleteProject
 };
