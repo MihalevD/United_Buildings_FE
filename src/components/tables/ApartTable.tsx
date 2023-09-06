@@ -17,6 +17,7 @@ import {
   ActionsColumn,
   BackButton,
 } from "../../styles/TableStyles";
+import useUrl from "../../hooks/useURL";
 
 type TableProps = {
   onBack: () => void;
@@ -30,6 +31,7 @@ const Table: React.FC<TableProps> = ({ onBack }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editApartmentData, setEditApartmentData] = useState<any | null>(null); // Add state for edit data
+  const urlDomain = useUrl();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -138,7 +140,7 @@ const Table: React.FC<TableProps> = ({ onBack }) => {
                         <img
                           key={url}
                           crossOrigin="anonymous"
-                          src={"http://localhost:3000/images/" + url}
+                          src={urlDomain + "/images/" + url}
                           alt=""
                           style={{ width: "100px" }}
                         />

@@ -1,3 +1,5 @@
+import useUrl from "./useURL";
+
 interface ApiResponse<T> {
   data: T | null;
   error: Error | null;
@@ -38,12 +40,11 @@ const handleApiMutation = async <T>(mutation: Promise<ApiResponse<T>>) => {
 };
 
 const generateApiUrl:any = (endpoint: string, id?: number) => {
-  const isProduction = process.env.NODE_ENV === 'production';
-  const baseUrl = isProduction ? 'https://api.example.com' : 'http://localhost:3000';
+  const url = useUrl();
   if (id !== undefined) {
-    return `${baseUrl}/${endpoint}/${id}`;
+    return `${url}/${endpoint}/${id}`;
   }
-  return `${baseUrl}/${endpoint}`;
+  return `${url}/${endpoint}`;
 };
 
 

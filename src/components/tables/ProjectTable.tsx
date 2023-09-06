@@ -16,6 +16,7 @@ import { useQueryClient } from "react-query";
 import { useDeleteProject } from "../../hooks/filterHooks";
 import BasicBox from "../basic/BasicBox";
 import ProjectModal from "../modals/ProjectModal";
+import useUrl from "../../hooks/useURL";
 
 type TableProps = {
   onBack: () => void;
@@ -28,6 +29,7 @@ const ProjectTable: React.FC<TableProps> = ({ onBack }) => {
   const queryProjects: any[] = queryClient.getQueryData("projects") || [];
   const [editProjectData, setEditProjectData] = useState<any | null>(null);
   const deleteProjectCB = useDeleteProject();
+  const urlDomain = useUrl();
 
   const [projects, setProjects] = useState(queryProjects);
 
@@ -98,7 +100,7 @@ const ProjectTable: React.FC<TableProps> = ({ onBack }) => {
                       <img
                         key={url}
                         crossOrigin="anonymous"
-                        src={"http://localhost:3000/images/" + url}
+                        src={urlDomain + "/images/" + url}
                         alt=""
                         style={{ width: "100px" }}
                       />

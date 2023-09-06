@@ -1,5 +1,6 @@
 import { useApiCall, handleApiResponse, handleApiMutation, generateApiUrl } from "./useApiCall";
 import { useQuery, UseQueryOptions, useMutation } from 'react-query';
+import useUrl from "./useURL";
 
 interface User {
   id: number;
@@ -9,9 +10,10 @@ interface User {
 
 // useGetUser
 const useGetUser = (options?: UseQueryOptions<User[]>) => {
+  const url = useUrl();
   return useQuery<User[]>(
     'users',
-    () => handleApiResponse<User[]>(useApiCall<User[]>('http://localhost:3000/users')),
+    () => handleApiResponse<User[]>(useApiCall<User[]>(url+ '/users')),
     options
   );
 };

@@ -23,6 +23,7 @@ import {
 } from "../../styles/ModalStyles";
 import { ImageContainer } from "../basic/ImageContainer";
 import BasicBox from "../basic/BasicBox";
+import useUrl from "../../hooks/useURL";
 
 const initialFormData = {
   id_type: { value: "", label: "" },
@@ -52,6 +53,7 @@ const ApartmentModal: React.FC<ApartmentModalProps> = ({
   const [oldImages, setOldImages] = useState<string[]>(
     apartmentData?.image_url || []
   );
+  const url = useUrl();
 
   useEffect(() => {
     if (mode === "edit" && apartmentData) {
@@ -229,7 +231,7 @@ const ApartmentModal: React.FC<ApartmentModalProps> = ({
                 <BasicBox key={index} style={{ position: "relative" }}>
                   <Thumbnail
                     crossOrigin="anonymous"
-                    src={"http://localhost:3000/images/" + image}
+                    src={url + "/images/" + image}
                     alt={`Image ${index}`}
                   />
                   <DeleteCircle onClick={() => removeFromApartment(index)} />

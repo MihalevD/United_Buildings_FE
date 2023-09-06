@@ -16,6 +16,7 @@ import {
   useUpdateProject,
 } from "../../hooks/filterHooks";
 import BasicBox from "../basic/BasicBox";
+import useUrl from "../../hooks/useURL";
 
 const initialFormData = {
   project_name: "",
@@ -41,6 +42,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   const [oldImages, setOldImages] = useState<string[]>(
     projectData?.image_url || []
   );
+  const url = useUrl();
 
   useEffect(() => {
     if (mode === "edit" && projectData) {
@@ -147,7 +149,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                 <BasicBox key={index} style={{ position: "relative" }}>
                   <Thumbnail
                     crossOrigin="anonymous"
-                    src={"http://localhost:3000/images/" + image}
+                    src={url + "/images/" + image}
                     alt={`Image ${index}`}
                   />
                   <DeleteCircle onClick={() => removeFromProject(index)} />
