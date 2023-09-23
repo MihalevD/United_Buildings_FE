@@ -87,6 +87,8 @@ const AdminPage: React.FC = () => {
   const types = typeQuery.data;
   const projects = projectQuery.data;
 
+  console.log("NOT FOUND???????????????");
+
   useEffect(() => {
     // Check the password from local storage during the initial load
     const check = localStorage.getItem("admin"); // Replace 'admin' with the key used to store the password in local storage

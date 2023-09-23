@@ -19,6 +19,9 @@ type RouterProps = {
 
 const Router = (props: RouterProps) => {
   const isMobile = useIsMobile();
+  useEffect(() => {
+    console.log("pathname", window.location.pathname);
+  }, [window.location.pathname]);
   return (
     <BrowserRouter>
       <FilterContext.Consumer>
