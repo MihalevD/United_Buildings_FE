@@ -6,14 +6,23 @@ import { AdAboutUs } from "./AdAboutUs";
 import { TextContainer } from "./basic/TextContainer";
 import { ClientsAboutUs } from "./ClientsAboutUs";
 import { LocationsAboutUs } from "./LocationsAbousUs";
+import useIsMobile from "../helper/isMobile";
+import { MobileAboutUs } from "./mobile/MobileAboutUs";
 
 export const AboutUs = () => {
+  const isMobile = useIsMobile();
   return (
-    <BasicBox fullWidth align="center" direction="column">
-      <InfoAboutUs />
-      <AdAboutUs />
-      <ClientsAboutUs />
-      <LocationsAboutUs />
-    </BasicBox>
+    <>
+      {!isMobile ? (
+        <BasicBox fullWidth align="center" direction="column">
+          <InfoAboutUs />
+          <AdAboutUs />
+          <ClientsAboutUs />
+          <LocationsAboutUs />
+        </BasicBox>
+      ) : (
+        <MobileAboutUs />
+      )}
+    </>
   );
 };

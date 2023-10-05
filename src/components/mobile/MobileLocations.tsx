@@ -1,9 +1,9 @@
-import BasicBox from "./basic/BasicBox";
-import { ImageContainer } from "./basic/ImageContainer";
-import { TextContainer } from "./basic/TextContainer";
-import bs from "../img/betterquality/Burgas.jpg";
-import sz from "../img/sz.jpg";
-import ch from "../img/betterquality/chernomorets2.jpg";
+import BasicBox from "../basic/BasicBox";
+import { ImageContainer } from "../basic/ImageContainer";
+import { TextContainer } from "../basic/TextContainer";
+import bs from "../../img/betterquality/Burgas.jpg";
+import sz from "../../img/sz.jpg";
+import ch from "../../img/betterquality/chernomorets2.jpg";
 import styled from "@emotion/styled";
 
 const text2 =
@@ -11,39 +11,49 @@ const text2 =
 
 const tagTextStyles = {
   color: "#C9C7C7",
-  fontSize: "30px",
-  lineHeight: "20px",
+  fontSize: "18px",
+  lineHeight: "24px",
   fontWeight: "700",
   alignText: "left" as const,
 };
 
 const textStylesSubHeading = {
   color: "#000000",
-  fontSize: "25px",
-  lineHeight: "32px",
+  fontSize: "19px",
+  lineHeight: "28px",
   textAlign: "left" as const,
   fontWeight: "600",
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled(BasicBox)`
   display: grid;
-  grid-template-columns: 50% 25% 25%;
-  height: 331px;
-  column-gap: 16px;
-  @media (max-width: 1365px) {
-    grid-template-columns: 40% 30% 30%;
-  }
-  @media (max-width: 1000px) {
-    height: 600px;
-    grid-template-rows: 33% 33% 33%;
-    grid-template-columns: 100%;
-    row-gap: 16px;
-  }
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 140px 140px;
+  column-gap: 10px;
+  row-gap: 15px;
+  grid-template-areas:
+    "header header"
+    "image2 image3";
 `;
 
 const imgStyles = {
   width: "100%",
-  height: "inherit",
+  height: "100%",
+};
+
+const imgStyles1 = {
+  ...imgStyles,
+  gridArea: "header",
+};
+
+const imgStyles2 = {
+  ...imgStyles,
+  gridArea: "image2",
+};
+
+const imgStyles3 = {
+  ...imgStyles,
+  gridArea: "image3",
 };
 
 const styles = {
@@ -52,15 +62,16 @@ const styles = {
   objectFit: "cover",
 };
 
-export const Locations = () => {
+export const MobileLocations = () => {
   return (
     <BasicBox
-      left="140px"
-      right="140px"
-      top="73px"
-      bottom="614px"
+      left="36px"
+      right="36px"
+      top="50px"
+      fullWidth
+      bottom="50px"
       direction="column"
-      style={{ width: "auto" }}
+      style={{ boxSizing: "border-box" }}
     >
       <BasicBox bottom="47px" direction="column">
         <TextContainer
@@ -68,10 +79,10 @@ export const Locations = () => {
           textStyles={textStylesSubHeading}
         ></TextContainer>
       </BasicBox>
-      <Wrapper>
+      <Wrapper direction="column">
         <ImageContainer
           imageSrc={bs}
-          imageStyles={imgStyles}
+          imageStyles={imgStyles1}
           fullHeight
           fullWidth
           tag="Бургас"
@@ -81,7 +92,7 @@ export const Locations = () => {
         />
         <ImageContainer
           imageSrc={sz}
-          imageStyles={imgStyles}
+          imageStyles={imgStyles2}
           fullHeight
           fullWidth
           tag="Созопол"
@@ -90,7 +101,7 @@ export const Locations = () => {
         />
         <ImageContainer
           imageSrc={ch}
-          imageStyles={imgStyles}
+          imageStyles={imgStyles3}
           tag="Черноморец"
           fullHeight
           fullWidth

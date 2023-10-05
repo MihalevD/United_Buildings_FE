@@ -12,6 +12,7 @@ import { DesktopHeader } from "../DesktopHeader";
 import { Footer } from "../Footer";
 import { MobileHeader } from "../MobileHeader";
 import useIsMobile from "../../helper/isMobile";
+import { MobileFooter } from "../mobile/MobileFooter";
 
 type RouterProps = {
   onDeleteFilter: (filters: FilterType) => void;
@@ -42,10 +43,11 @@ const Router = (props: RouterProps) => {
                       ))}
                     <Component />
                     <Helmet title={title} />
-                    {path !== routePaths.admin && (
-                      // Render Footer for non-AdminPage routes
+                    {isMobile ? (
+                      <MobileFooter />
+                    ) : path !== routePaths.admin ? (
                       <Footer />
-                    )}
+                    ) : null}
                   </React.Fragment>
                 }
               />

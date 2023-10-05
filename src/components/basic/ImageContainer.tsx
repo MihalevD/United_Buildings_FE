@@ -4,18 +4,10 @@ import Colors from "../../tokens/Colors";
 import BasicBox from "./BasicBox";
 import { TextContainer } from "./TextContainer";
 
-const tagTextStyles = {
-  color: "#C9C7C7",
-  fontSize: "30px",
-  lineHeight: "20px",
-  fontWeight: "700",
-  alignText: "left" as const,
-};
-
 const boxStyle = {
   position: "absolute" as const,
-  bottom: "55px",
-  left: "26px",
+  bottom: "8%",
+  left: "8%",
 };
 
 export const ImageContainer: React.FC<{
@@ -28,6 +20,7 @@ export const ImageContainer: React.FC<{
   style?: { [name: string]: string };
   children?: React.ReactNode;
   top?: boolean;
+  tagTextStyles?: { [name: string]: string };
 }> = ({
   imageSrc,
   imageStyles,
@@ -37,6 +30,7 @@ export const ImageContainer: React.FC<{
   tag,
   style,
   children,
+  tagTextStyles,
 }) => {
   return (
     <Wrapper fullWidth={fullWidth} fullHeight={fullHeight} style={imageStyles}>

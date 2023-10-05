@@ -8,6 +8,8 @@ import { MoreButton } from "../MoreButton";
 import { FiltersRow } from "../FiltersRow";
 import { FilterType } from "../../config/types";
 import { FilterContext } from "../../App";
+import useIsMobile from "../../helper/isMobile";
+import { MobileAd } from "../mobile/MobileAd";
 
 const Wrapper = styled(BasicBox)``;
 
@@ -20,6 +22,7 @@ type CatalogProps = {
 };
 export const Catalog = (props: CatalogProps) => {
   const [data, setData] = useState<CarouselBlockTypes[]>(items.slice(0, 9));
+  const isMobile = useIsMobile();
 
   const [names, setNames] = useState([]);
   const [number, setNumber] = useState(data?.length);
@@ -57,8 +60,18 @@ export const Catalog = (props: CatalogProps) => {
   }, [data.length]);
 
   return (
-    <Wrapper justify="center" bottom="600px">
-      <InnerWrapper direction="column" align="center">
+    <Wrapper
+      justify="center"
+      bottom={isMobile ? "0px" : "600px"}
+      direction="column"
+    >
+      <InnerWrapper
+        direction="column"
+        align="center"
+        bottom="50px"
+        left={isMobile ? "36px" : "0px"}
+        right={isMobile ? "36px" : "0px"}
+      >
         {Object.values(filters).length > 0 && (
           <BasicBox fullWidth align="flex-start">
             <FiltersRow filters={filters} onDelete={props.onDelete} />
@@ -67,6 +80,7 @@ export const Catalog = (props: CatalogProps) => {
         <PropertyData data={data} top={Object.values(filters).length > 0} />
         <MoreButton onClick={onAddMore} max={number % 9 > 0}></MoreButton>
       </InnerWrapper>
+      <MobileAd />
     </Wrapper>
   );
 };

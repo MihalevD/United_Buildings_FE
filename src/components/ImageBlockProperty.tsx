@@ -4,6 +4,8 @@ import apart from "./../img/apart.jpg";
 import styled from "@emotion/styled";
 import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
+import useIsMobile from "../helper/isMobile";
+import SwipeableTextMobileStepper from "./mobile/MobileStepper";
 
 const SmallImg = styled(BasicBox)`
   width: 251px;
@@ -52,37 +54,47 @@ const InsideButtonText = styled(TextContainer)`
 `;
 
 export const ImageBlockProperty = () => {
+  const isMobile = useIsMobile();
   return (
-    <ImageContainer
-      imageSrc={bkg}
-      fullWidth
-      style={{
-        width: "100%",
-        borderRadius: "30px",
-        maxHeight: "550px",
-        clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0)",
-      }}
-      imageStyles={{
-        width: "100%",
-        height: "100%",
-      }}
-      children={
-        <SmallImg>
-          <ImageContainer
-            imageSrc={apart}
-            fullWidth
-            fullHeight
-            style={{ borderRadius: "20px" }}
-            imageStyles={{
-              width: "100%",
-              height: "100%",
-            }}
-          ></ImageContainer>
-          <Custom>
-            <InsideButtonText text={"Разгледай всички 5 снимки"} />
-          </Custom>
-        </SmallImg>
-      }
-    />
+    <>
+      {!isMobile ? (
+        <ImageContainer
+          imageSrc={bkg}
+          fullWidth
+          style={{
+            width: "100%",
+            borderRadius: isMobile ? "0px" : "30px",
+            maxHeight: "550px",
+            minHeight: isMobile ? "342px" : "0px",
+            objectFit: "cover",
+          }}
+          imageStyles={{
+            width: "100%",
+            height: "100%",
+          }}
+          children={
+            !isMobile && (
+              <SmallImg>
+                <ImageContainer
+                  imageSrc={apart}
+                  fullWidth
+                  fullHeight
+                  style={{ borderRadius: "20px" }}
+                  imageStyles={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                ></ImageContainer>
+                <Custom>
+                  <InsideButtonText text={"Разгледай всички 5 снимки"} />
+                </Custom>
+              </SmallImg>
+            )
+          }
+        />
+      ) : (
+        <SwipeableTextMobileStepper />
+      )}
+    </>
   );
 };

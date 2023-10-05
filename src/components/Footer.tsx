@@ -83,10 +83,14 @@ export const Footer = () => {
           </BasicBox>
         </BasicBox>
       </BasicBox>
-      <Ad />
-      <ImageWrapper>
-        <img src={house}></img>
-      </ImageWrapper>
+      {!isMobile && (
+        <>
+          <Ad />
+          <ImageWrapper>
+            <img src={house}></img>
+          </ImageWrapper>
+        </>
+      )}
     </FooterWrapper>
   );
 };
