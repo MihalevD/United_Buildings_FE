@@ -39,6 +39,7 @@ export const MobileHeader = () => {
   const location = useLocation();
   const isAboutPage = location.pathname.split("/")[1] == "about-us";
   const isProductPage = location.pathname.split("/")[1] == "property";
+  const isProjectsPage = location.pathname.split("/")[1] == "projects";
 
   const toggleDrawer = (event: any) => {
     if (
@@ -58,7 +59,7 @@ export const MobileHeader = () => {
       bottom={!isAboutPage ? (!isProductPage ? "260px" : "0px") : "0px"}
       style={{ position: "relative" }}
     >
-      {!isProductPage ? (
+      {!isProductPage && !isProjectsPage ? (
         <>
           {!isAboutPage ? (
             <img src={background} style={{ width: "100%" }} />
@@ -87,7 +88,7 @@ export const MobileHeader = () => {
       <LogoBlock>
         <MobileLogo />
       </LogoBlock>
-      {!isAboutPage && !isProductPage && <MobileSearchBox />}
+      {!isAboutPage && !isProductPage && !isProjectsPage && <MobileSearchBox />}
       {isToggled && (
         <MobileSidebar isOpen={isToggled} closeSidebar={toggleDrawer} />
       )}

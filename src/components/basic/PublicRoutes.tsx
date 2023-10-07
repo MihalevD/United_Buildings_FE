@@ -1,9 +1,10 @@
 import routePaths from "../../config/routePaths";
 import { AboutUs } from "../AboutUs";
-import SwipeableTextMobileStepper from "../mobile/MobileStepper";
 import AdminPage from "../pages/Admin";
 import { Catalog } from "../pages/Catalog";
 import { HomePage } from "../pages/HomePage";
+import { ProjectPage } from "../pages/ProjectPage";
+import { Projects } from "../pages/Projects";
 import { PropertyPage } from "../pages/PropertyPage";
 
 const PublicRoutes = [
@@ -24,8 +25,13 @@ const PublicRoutes = [
   },
   {
     path: routePaths.projects,
-    component: () => <SwipeableTextMobileStepper />,
+    component: () => <Projects />,
     title: "Projects",
+  },
+  {
+    path: routePaths.project,
+    component: () => <ProjectPage />,
+    title: "Project Page",
   },
   {
     path: routePaths.property,
