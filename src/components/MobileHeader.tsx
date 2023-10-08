@@ -56,7 +56,9 @@ export const MobileHeader = () => {
     <HeaderContainer
       fullWidth
       justify="space-between"
-      bottom={!isAboutPage ? (!isProductPage ? "260px" : "0px") : "0px"}
+      bottom={
+        !isAboutPage && !isProductPage && !isProjectsPage ? "260px" : "0px"
+      }
       style={{ position: "relative" }}
     >
       {!isProductPage && !isProjectsPage ? (
@@ -89,9 +91,7 @@ export const MobileHeader = () => {
         <MobileLogo />
       </LogoBlock>
       {!isAboutPage && !isProductPage && !isProjectsPage && <MobileSearchBox />}
-      {isToggled && (
-        <MobileSidebar isOpen={isToggled} closeSidebar={toggleDrawer} />
-      )}
+      <MobileSidebar isOpen={isToggled} closeSidebar={toggleDrawer} />
     </HeaderContainer>
   );
 };

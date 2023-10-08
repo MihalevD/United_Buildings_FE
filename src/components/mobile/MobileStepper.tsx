@@ -9,6 +9,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import styled from "@emotion/styled";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -34,6 +35,10 @@ const images = [
       "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
   },
 ];
+
+const CustomMobileStepper = styled(MobileStepper)`
+  background: #f5f5f5 !important;
+`;
 
 function SwipeableTextMobileStepper() {
   const theme = useTheme();
@@ -79,7 +84,7 @@ function SwipeableTextMobileStepper() {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-      <MobileStepper
+      <CustomMobileStepper
         steps={maxSteps}
         position="static"
         activeStep={activeStep}

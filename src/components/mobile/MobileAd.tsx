@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { AdChoose } from "../AdChoose";
 import { AdForm } from "../AdForm";
 import BasicBox from "../basic/BasicBox";
 import styled from "@emotion/styled";
+import useIsMobile from "../../helper/isMobile";
 
 const Wrapper = styled(BasicBox)`
   background: #7a7d48 0% 0% no-repeat padding-box;
@@ -34,7 +36,9 @@ type MobileAdProps = {
 };
 
 export const MobileAd: React.FC<MobileAdProps> = ({ hasPadding = true }) => {
-  const chosen = false;
+  const [chosen, setChosen] = useState(false);
+  const [formBuy, setFormBuy] = useState(false);
+  const isMobile = useIsMobile();
   return (
     <BasicBox
       left={hasPadding ? "36px" : "0px"}
@@ -50,6 +54,8 @@ export const MobileAd: React.FC<MobileAdProps> = ({ hasPadding = true }) => {
           direction="column"
           align="center"
           justify="center"
+          left="18px"
+          right="18px"
         >
           <Text>
             С <span style={{ fontWeight: "bold" }}>United Buildings</span>{" "}
@@ -58,7 +64,14 @@ export const MobileAd: React.FC<MobileAdProps> = ({ hasPadding = true }) => {
           <SecondaryText>
             <span>Направи запитване</span>
           </SecondaryText>
-          {chosen ? <AdForm /> : <AdChoose />}
+          {chosen && isMobile && (
+            <AdChoose setChosen={setChosen} setFormBuy={setFormBuy} />
+          )}
+          {chosen ? (
+            <AdForm formBuy={formBuy} />
+          ) : (
+            <AdChoose setChosen={setChosen} setFormBuy={setFormBuy} />
+          )}
         </BasicBox>
       </Wrapper>
     </BasicBox>

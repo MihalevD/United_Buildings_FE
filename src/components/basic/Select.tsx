@@ -9,6 +9,7 @@ import Select, {
   MultiValue,
   components,
 } from "react-select";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface Option {
   label: string;
@@ -98,6 +99,19 @@ const MyMultiValue = (props: any) => (
   </components.MultiValue>
 );
 
+const DropdownIndicator = (props: any) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <ExpandMoreIcon
+        sx={{
+          fontSize: "33px",
+          color: "rgba(63, 69, 84, 1)",
+        }}
+      />
+    </components.DropdownIndicator>
+  );
+};
+
 const animatedComponents = makeAnimated();
 
 const MySelectC = ({
@@ -112,7 +126,7 @@ const MySelectC = ({
     <MySelect
       options={options}
       isMulti={isMulti}
-      styles={styles ?? customStyles}
+      styles={{ ...customStyles, ...styles }}
       placeholder={placeholder}
       closeMenuOnSelect={isMulti ? false : true}
       hideSelectedOptions={false}
@@ -120,6 +134,7 @@ const MySelectC = ({
         Option,
         MultiValue: MyMultiValue,
         animatedComponents,
+        DropdownIndicator,
       }}
       onChange={handleChange}
       allowSelectAll={!!isMulti}
@@ -131,7 +146,7 @@ const MySelectC = ({
 type OptionType = { label: string; value: string };
 
 const customStyles: StylesConfig<OptionType, true> = {
-  menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+  menuPortal: (base) => ({ ...base, zIndex: 9999, background: "red" }),
   input: (base) => ({
     ...base,
     display: "none",
@@ -177,6 +192,10 @@ const customStyles: StylesConfig<OptionType, true> = {
     minWidth: "fit-content",
     background: "#f0f0f0",
     marginRight: "5px",
+  }),
+  indicatorSeparator: (provided: any) => ({
+    ...provided,
+    display: "none",
   }),
   valueContainer: (provided) => ({
     ...provided,

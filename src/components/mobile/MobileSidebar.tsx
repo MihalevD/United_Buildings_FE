@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import BasicBox from "../basic/BasicBox";
 import CloseIcon from "@mui/icons-material/Close";
 import { MobileLogo } from "../basic/MobileLogo";
 import { navigation } from "../../tokens/Texts";
+import { useSpring, animated, config } from "react-spring"; // Import react-spring
 
-const Container = styled.div`
-  position: relative;
-  overflow: hidden;
-`;
-
-const Sidebar = styled(BasicBox)<{ isOpen: boolean }>`
+const Sidebar = styled(animated(BasicBox))<{ isOpen: boolean }>`
   height: 100%;
   width: ${(props) => (props.isOpen ? "250px" : "0")};
   position: fixed;
@@ -20,9 +16,11 @@ const Sidebar = styled(BasicBox)<{ isOpen: boolean }>`
   transition: 0.3s;
   padding-top: 16px;
   z-index: 10000;
+  overflow: ${(props) => (props.isOpen ? "visible" : "hidden")};
 `;
 
 const SidebarLink = styled.a`
+  min-width: 200px;
   padding: 15px;
   text-decoration: none;
   font-size: 24px;
@@ -35,6 +33,7 @@ const SidebarLink = styled.a`
     background-color: #555;
   }
 `;
+
 type MobileSidebarProps = {
   isOpen: boolean;
   closeSidebar: (event: any) => void;
@@ -44,8 +43,16 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({
   isOpen,
   closeSidebar,
 }) => {
+  const sidebarAnimation = useSpring({
+    width: isOpen ? "250px" : "0px",
+    opacity: isOpen ? 1 : 0,
+    config: {
+      duration: 250, // Adjust the duration here (e.g., 250ms for faster animation)
+    },
+  });
+
   return (
-    <Sidebar left="16px" isOpen={isOpen} direction="column">
+    <Sidebar isOpen={isOpen} style={sidebarAnimation} direction="column">
       <CloseIcon
         sx={{ fontSize: "50px", color: "rgba(63, 69, 84, 1)" }}
         onClick={(e) => closeSidebar(e)}
@@ -61,10 +68,37 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({
       </BasicBox>
       <MobileLogo
         width="220px"
-        styles={{ position: "absolute", bottom: "35px" }}
+        styles={{ position: "absolute", bottom: "35px", left: "15px" }}
       />
     </Sidebar>
   );
 };
 
 export default MobileSidebar;
+
+// import React from "react";
+// import { useSpring, animated } from "react-spring";
+
+// type MobileSidebarProps = {
+//   open: boolean;
+//   setOpen: (open: boolean) => void;
+// };
+
+// const MobileSidebar: React.FC<MobileSidebarProps> = ({ open, setOpen }) => {
+//   const props = useSpring({ width: open ? 250 : 0 });
+
+//   return (
+//     <div onClick={() => setOpen(false)}>
+//       <animated.div
+//         style={{
+//           width: props.width,
+//           height: "50px",
+//           background: "hotpink",
+//           overflow: "hidden", // Hide content when the width is 0
+//         }}
+//       />
+//     </div>
+//   );
+// };
+
+// export default MobileSidebar;

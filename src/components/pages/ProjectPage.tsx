@@ -6,7 +6,7 @@ export const ProjectPage = () => {
   const isMobile = useIsMobile();
   return (
     <>
-      {isMobile ? (
+      {!isMobile ? (
         <BasicBox></BasicBox>
       ) : (
         <MobileProjectPage></MobileProjectPage>
