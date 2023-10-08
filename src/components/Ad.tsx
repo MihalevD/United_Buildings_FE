@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AdChoose } from "./AdChoose";
 import { AdForm } from "./AdForm";
 import BasicBox from "./basic/BasicBox";
@@ -34,7 +35,8 @@ const SecondaryText = styled.span`
 `;
 
 export const Ad = () => {
-  const chosen = false;
+  const [chosen, setChosen] = useState(false);
+  const [formBuy, setFormBuy] = useState(false);
   return (
     <Wrapper>
       <BasicBox top="20px" right="96px" fullWidth justify="flex-end" fullHeight>
@@ -52,7 +54,11 @@ export const Ad = () => {
           <SecondaryText>
             <span>Направи запитване</span>
           </SecondaryText>
-          {chosen ? <AdForm /> : <AdChoose />}
+          {chosen ? (
+            <AdForm formBuy={formBuy} />
+          ) : (
+            <AdChoose setChosen={setChosen} setFormBuy={setFormBuy} />
+          )}
         </BasicBox>
       </BasicBox>
     </Wrapper>
