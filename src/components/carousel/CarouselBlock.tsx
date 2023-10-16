@@ -8,13 +8,12 @@ import { useNavigate } from "react-router-dom";
 const Wrapper = styled(BasicBox)`
   flex-shrink: 0;
   cursor: pointer;
-  width: 430px;
+  width: 400px;
   height: 400px;
+  aspect-ratio: 1/1;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
-  //border: 1px solid #707070;
   border-radius: 30px;
-  margin-right: 35px;
   margin-bottom: 52px;
   transition: background-color 1s;
   :hover {
@@ -60,53 +59,61 @@ export const CarouselBlock = (props: CarouselBlockTypes) => {
   };
 
   return (
-    <Wrapper direction="column" onClick={handleClick}>
-      <BasicBox fullWidth>
-        <ImageContainer
-          imageSrc={props.imgSrc}
-          imageStyles={imgStyles}
-          style={{ borderRadius: "30px", border: "1px solid #C9C7C7" }}
-          fullWidth
-        />
-      </BasicBox>
-      <BasicBox
-        left="24px"
-        right="15px"
-        direction="column"
-        bottom="30px"
-        style={{ width: "auto" }}
-        fullHeight
-        justify="space-between"
-      >
+    <BasicBox fullWidth justify="center">
+      <Wrapper direction="column" onClick={handleClick}>
+        <BasicBox fullWidth>
+          <ImageContainer
+            imageSrc={props.imgSrc}
+            imageStyles={imgStyles}
+            style={{ borderRadius: "30px", border: "1px solid #C9C7C7" }}
+            fullWidth
+          />
+        </BasicBox>
         <BasicBox
-          justify="space-between"
-          fullWidth
+          left="24px"
+          right="15px"
           direction="column"
-          top="12px"
+          bottom="30px"
+          style={{ width: "auto" }}
+          fullHeight
+          justify="space-between"
         >
-          <BasicBox justify="space-between" fullWidth>
-            <TextContainer text={props.title} textStyles={textStylesHeading} />
+          <BasicBox
+            justify="space-between"
+            fullWidth
+            direction="column"
+            top="12px"
+          >
+            <BasicBox justify="space-between" fullWidth>
+              <TextContainer
+                text={props.title}
+                textStyles={textStylesHeading}
+              />
+              <TextContainer
+                text={"€ " + props.price}
+                textStyles={textStylesHeading}
+              />
+            </BasicBox>
             <TextContainer
-              text={"€ " + props.price}
-              textStyles={textStylesHeading}
+              text={props.address}
+              textStyles={textStylesSubHeading}
             />
           </BasicBox>
-          <TextContainer
-            text={props.address}
-            textStyles={textStylesSubHeading}
-          />
-        </BasicBox>
-        <BasicBox justify="space-between" fullWidth>
-          <TextContainer
-            text={props.rooms + " спални"}
-            textStyles={textStylesSubHeading}
-          />
-          <BasicBox>
-            <SquareFootIcon />
-            <TextContainer text={props.sqm} textStyles={textStylesSubHeading} />
+          <BasicBox justify="space-between" fullWidth>
+            <TextContainer
+              text={props.rooms + " спални"}
+              textStyles={textStylesSubHeading}
+            />
+            <BasicBox>
+              <SquareFootIcon />
+              <TextContainer
+                text={props.sqm}
+                textStyles={textStylesSubHeading}
+              />
+            </BasicBox>
           </BasicBox>
         </BasicBox>
-      </BasicBox>
-    </Wrapper>
+      </Wrapper>
+    </BasicBox>
   );
 };

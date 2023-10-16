@@ -14,8 +14,8 @@ export const HomePage = () => {
       {!isMobile ? (
         <BasicBox fullWidth justify="center" direction="column" align="center">
           <InfoComponent />
-          <SuggestionsBar />
           <Locations />
+          <SuggestionsBar />
         </BasicBox>
       ) : (
         <MobileHomePage />

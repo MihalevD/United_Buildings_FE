@@ -32,7 +32,6 @@ const InfoText = styled(TextContainer)`
 const Wrapper = styled(BasicBox)`
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
-  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0);
   border-radius: 20px;
   margin-left: -80px;
   max-height: 360px;

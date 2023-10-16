@@ -27,7 +27,7 @@ const textStylesSubHeading = {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 50% 25% 25%;
+  grid-template-columns: 2fr 1fr 1fr;
   height: 331px;
   column-gap: 16px;
   @media (max-width: 1365px) {
@@ -55,12 +55,10 @@ const styles = {
 export const Locations = () => {
   return (
     <BasicBox
-      left="140px"
-      right="140px"
       top="73px"
-      bottom="614px"
+      bottom="92px"
       direction="column"
-      style={{ width: "auto" }}
+      style={{ width: "75%" }}
     >
       <BasicBox bottom="47px" direction="column">
         <TextContainer

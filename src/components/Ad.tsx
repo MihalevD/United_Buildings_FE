@@ -6,12 +6,12 @@ import styled from "@emotion/styled";
 
 const Wrapper = styled(BasicBox)`
   position: absolute;
-  width: 75vw;
+  width: 75%;
   background: #7a7d48 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
   height: 400px;
   border-radius: 20px;
-  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0);
+  box-shadow: 0px 3px 6px #00000029;
   top: -140%;
 `;
 

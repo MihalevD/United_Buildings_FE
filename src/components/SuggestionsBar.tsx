@@ -1,30 +1,35 @@
-import BasicBox from './basic/BasicBox';
-import {TextContainer} from './basic/TextContainer';
-import {Carousel} from './carousel/Carousel';
+import BasicBox from "./basic/BasicBox";
+import { TextContainer } from "./basic/TextContainer";
+import { Carousel } from "./carousel/Carousel";
+import SimpleSlider from "./carousel/SimpleSlider";
 
 const textStyles = {
-  color: 'black',
-  fontSize: '30px',
-  lineHeight: '40px',
-  fontWeight: 'bold',
+  color: "black",
+  fontSize: "30px",
+  lineHeight: "40px",
+  fontWeight: "bold",
 };
 
 export const SuggestionsBar = () => {
   return (
     <BasicBox
-      top='60px'
+      top="60px"
       fullWidth
-      bottom='92px'
+      bottom="92px"
       style={{
-        background: '#7A7D48',
-        border: '1px solid #696969',
-        marginLeft: '-2px',
-      }}>
-      <BasicBox left='140px' direction='column'>
-        <BasicBox bottom='30px'>
-          <TextContainer text='Нови предложения' textStyles={textStyles} />
+        background: "#7A7D48",
+        borderTop: "1px solid #696969",
+        borderBottom: "1px solid #696969",
+        marginBottom: "614px",
+      }}
+      justify="center"
+    >
+      <BasicBox width="80%" direction="column" style={{ position: "relative" }}>
+        <BasicBox bottom="30px">
+          <TextContainer text="Нови предложения" textStyles={textStyles} />
         </BasicBox>
-        <Carousel />
+        <SimpleSlider />
+        {/* <Carousel /> */}
       </BasicBox>
     </BasicBox>
   );

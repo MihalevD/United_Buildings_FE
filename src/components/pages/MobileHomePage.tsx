@@ -1,3 +1,4 @@
+import { SuggestionsBar } from "../SuggestionsBar";
 import BasicBox from "../basic/BasicBox";
 import { MobileAd } from "../mobile/MobileAd";
 import { MobileinfoComponent } from "../mobile/MobileInfoComponent";
@@ -8,7 +9,7 @@ export const MobileHomePage = () => {
   return (
     <BasicBox direction="column" fullWidth>
       <MobileinfoComponent />
-      <MobileSuggestionsBar />
+      <SuggestionsBar />
       <MobileLocations />
       <MobileAd />
     </BasicBox>

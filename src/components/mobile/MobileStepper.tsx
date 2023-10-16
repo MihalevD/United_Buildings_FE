@@ -7,11 +7,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import styled from "@emotion/styled";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+import { WithAutoPlay } from "react-swipeable-views-utils";
 
 const images = [
   {
@@ -59,7 +58,7 @@ function SwipeableTextMobileStepper() {
 
   return (
     <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <AutoPlaySwipeableViews
+      {/* <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
         onChangeIndex={handleStepChange}
@@ -83,7 +82,7 @@ function SwipeableTextMobileStepper() {
             ) : null}
           </div>
         ))}
-      </AutoPlaySwipeableViews>
+      </AutoPlaySwipeableViews> */}
       <CustomMobileStepper
         steps={maxSteps}
         position="static"
