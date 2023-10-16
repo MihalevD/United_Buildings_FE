@@ -2,6 +2,7 @@ import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
 import { Carousel } from "./carousel/Carousel";
 import styled from "@emotion/styled";
+import SimpleSlider from "./carousel/SimpleSlider";
 
 const textStyles = {
   textAlign: "left" as const,
@@ -13,11 +14,9 @@ const CarouselWrapper = styled(BasicBox)``;
 
 export const SuggestionSection = () => {
   return (
-    <BasicBox fullWidth top="78px" bottom="78px" direction="column">
+    <BasicBox fullWidth top="78px" bottom="78px" direction="column" gap="20px">
       <TextContainer text="Предложения в района" textStyles={textStyles} />
-      <CarouselWrapper fullWidth top="37px">
-        <Carousel />
-      </CarouselWrapper>
+      <SimpleSlider />
     </BasicBox>
   );
 };

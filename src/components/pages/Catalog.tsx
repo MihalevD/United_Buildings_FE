@@ -29,26 +29,6 @@ export const Catalog = (props: CatalogProps) => {
 
   const filters = useContext(FilterContext);
 
-  useEffect(() => {
-    fetch(
-      "https://gugz7lj3y0.execute-api.eu-north-1.amazonaws.com/prod/aparts",
-      {
-        method: "GET", // or 'POST', 'PUT', etc.
-        headers: {
-          "Content-Type": "application/json",
-          // 'Authorization': 'Bearer ' + token, // if you use token authentication
-        },
-        // body: JSON.stringify(data), // if you're sending data in a 'POST', 'PUT', etc. request
-      }
-    )
-      .then((response) => {
-        console.log(response.json());
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
-
   const onAddMore = () => {
     setData([...data, ...items.slice(number, number + 9)]);
     setNumber(number + 9);
@@ -64,6 +44,7 @@ export const Catalog = (props: CatalogProps) => {
       justify="center"
       bottom={isMobile ? "0px" : "600px"}
       direction="column"
+      fullWidth
     >
       <InnerWrapper
         direction="column"
@@ -80,7 +61,7 @@ export const Catalog = (props: CatalogProps) => {
         <PropertyData data={data} top={Object.values(filters).length > 0} />
         <MoreButton onClick={onAddMore} max={number % 9 > 0}></MoreButton>
       </InnerWrapper>
-      <MobileAd />
+      {isMobile && <MobileAd />}
     </Wrapper>
   );
 };
