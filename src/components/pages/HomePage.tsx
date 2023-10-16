@@ -12,7 +12,7 @@ export const HomePage = () => {
   return (
     <>
       {!isMobile ? (
-        <BasicBox fullWidth direction="column" bottom={Spacings.medium}>
+        <BasicBox fullWidth justify="center" direction="column" align="center">
           <InfoComponent />
           <SuggestionsBar />
           <Locations />

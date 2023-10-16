@@ -19,15 +19,18 @@ const textStyles = {
 };
 
 const blockStyle = (top: string) => ({
-  background: "rgba(255, 255, 255, 0.82)",
-  boxShadow: "0px 3px 6px #00000029",
-  borderRadius: "20px 0 20px 20px",
-  clipPath: "polygon(0 0, 0 100%, 100% 100%, 100% 25%, 89% 0)",
   position: "absolute" as "absolute",
   top: top,
-  width: "70vw",
-  maxWidth: "960px",
+  width: "100%",
 });
+
+const innerStyle = {
+  backdropFilter: "blur(30px)",
+  boxShadow: "0px 3px 6px #00000029",
+  borderRadius: "20px",
+  width: "75%",
+  boxSizing: "border-box" as const,
+};
 
 type OptionType = { label: string; value: string };
 
@@ -74,63 +77,66 @@ export const SearchBar = () => {
   const { data: priceData } = useGetPriceRanges();
 
   return (
-    <BasicBox
-      direction="column"
-      style={blockStyle(top)}
-      justify="space-between"
-      fullPadding={true}
-      top={window.location.pathname === "/" ? "30px" : "50px"}
-      bottom="50px"
-      left="70px"
-      right="70px"
-    >
-      {window.location.pathname === "/" && (
-        <BasicBox fullWidth align="center" direction="column">
-          <TextContainer
-            className="search-text"
-            text="Намерете перфектният недвижим"
-            textStyles={textStyles}
-          />
-          <TextContainer
-            className="search-text"
-            text="имот за Вас!"
-            textStyles={textStyles}
-          />
-        </BasicBox>
-      )}
+    <BasicBox style={blockStyle(top)} justify="center">
       <BasicBox
-        top={
-          window.location.pathname === "/"
-            ? isTablet
-              ? "30px"
-              : "50px"
-            : "0px"
-        }
+        direction="column"
+        justify="space-between"
+        style={innerStyle}
+        fullPadding={true}
+        top={window.location.pathname === "/" ? "30px" : "50px"}
+        bottom="50px"
+        left="70px"
+        right="70px"
         fullWidth
       >
-        <Select
-          options={locationData ?? []}
-          placeholder="Местоположение"
-          optionSelected={filters.place}
-          handleChange={handleMultiChange("place")}
-          isMulti
-        />
+        {window.location.pathname === "/" && (
+          <BasicBox fullWidth align="center" direction="column">
+            <TextContainer
+              className="search-text"
+              text="Намерете перфектният недвижим"
+              textStyles={textStyles}
+            />
+            <TextContainer
+              className="search-text"
+              text="имот за Вас!"
+              textStyles={textStyles}
+            />
+          </BasicBox>
+        )}
+        <BasicBox
+          top={
+            window.location.pathname === "/"
+              ? isTablet
+                ? "30px"
+                : "50px"
+              : "0px"
+          }
+          fullWidth
+        >
+          <Select
+            options={locationData ?? []}
+            placeholder="Местоположение"
+            optionSelected={filters.place}
+            handleChange={handleMultiChange("place")}
+            isMulti
+          />
 
-        <Select
-          options={typeData ?? []}
-          handleChange={handleMultiChange("type")}
-          optionSelected={filters.type}
-          placeholder="Тип"
-          isMulti
-        />
+          <Select
+            options={typeData ?? []}
+            handleChange={handleMultiChange("type")}
+            optionSelected={filters.type}
+            placeholder="Тип"
+            isMulti
+          />
 
-        <Select
-          options={priceData ?? []}
-          placeholder="Цена"
-          optionSelected={filters.price}
-          handleChange={handleMultiChange("price")}
-        />
-        <SearchButton onClick={() => onApply()} />
+          <Select
+            options={priceData ?? []}
+            placeholder="Цена"
+            optionSelected={filters.price}
+            handleChange={handleMultiChange("price")}
+          />
+          <SearchButton onClick={() => onApply()} />
+        </BasicBox>
       </BasicBox>
     </BasicBox>
   );

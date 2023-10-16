@@ -16,9 +16,10 @@ export const InfoComponent = () => {
     <BasicBox
       direction="row"
       justify="center"
-      fullWidth
+      width="75%"
       top="180px"
       bottom="90px"
+      gap="50px"
     >
       <InfoBox
         reverse={false}
@@ -27,32 +28,6 @@ export const InfoComponent = () => {
           <HomeIcon sx={{ fontSize: "100px", color: "#7A7D48" }} />
         )}
       />
-      <BasicBox
-        style={{
-          width: "16px",
-          background: "transparent",
-          height: "initial",
-          position: "relative",
-        }}
-      >
-        <BasicBox
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%,-50%)",
-            zIndex: "100",
-          }}
-        >
-          <ImageContainer
-            imageSrc={icon}
-            imageStyles={{
-              width: "120px",
-              height: "93px",
-            }}
-          ></ImageContainer>
-        </BasicBox>
-      </BasicBox>
       <InfoBox
         reverse={true}
         value={text2}

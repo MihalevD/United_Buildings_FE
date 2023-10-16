@@ -47,7 +47,7 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({
     width: isOpen ? "250px" : "0px",
     opacity: isOpen ? 1 : 0,
     config: {
-      duration: 250, // Adjust the duration here (e.g., 250ms for faster animation)
+      duration: 150, // Adjust the duration here (e.g., 250ms for faster animation)
     },
   });
 

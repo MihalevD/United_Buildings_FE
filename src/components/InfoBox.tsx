@@ -13,7 +13,6 @@ type WrapperProps = {
 };
 
 const Wrapper = styled(BasicBox)<WrapperProps>`
-  width: 642px;
   height: 392px;
   min-width: 400px;
   background: #cdd5b1;
@@ -48,6 +47,7 @@ export const InfoBox = (props: InfoBoxProps) => {
       justify="flex-start"
       top="110px"
       align="center"
+      fullWidth
     >
       <Icon />
       <BasicBox top="24px" left="94px" right="94px">
