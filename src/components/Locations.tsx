@@ -27,17 +27,21 @@ const textStylesSubHeading = {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  height: 331px;
-  column-gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px 16px;
+  grid-template-areas:
+    "first first . ."
+    ". . . .";
   @media (max-width: 1365px) {
-    grid-template-columns: 40% 30% 30%;
-  }
-  @media (max-width: 1000px) {
-    height: 600px;
-    grid-template-rows: 33% 33% 33%;
-    grid-template-columns: 100%;
-    row-gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 16px 16px;
+    grid-template-areas:
+      "first first"
+      ". ."
+      ". ."
+      ". .;
   }
 `;
 
@@ -50,7 +54,10 @@ const styles = {
   borderRadius: "30px",
   boxShadow: "0px 3px 6px #00000029",
   objectFit: "cover",
+  cursor: "pointer",
 };
+
+const ImageContainerWithHover = styled(ImageContainer)``;
 
 export const Locations = () => {
   return (
@@ -67,17 +74,17 @@ export const Locations = () => {
         ></TextContainer>
       </BasicBox>
       <Wrapper>
-        <ImageContainer
+        <ImageContainerWithHover
           imageSrc={bs}
-          imageStyles={imgStyles}
+          imageStyles={{ ...imgStyles, gridArea: "first" }}
           fullHeight
           fullWidth
           tag="Бургас"
           top
-          style={styles}
+          style={{ ...styles, gridarea: "first" }}
           tagTextStyles={tagTextStyles}
         />
-        <ImageContainer
+        <ImageContainerWithHover
           imageSrc={sz}
           imageStyles={imgStyles}
           fullHeight
@@ -86,7 +93,43 @@ export const Locations = () => {
           style={styles}
           tagTextStyles={tagTextStyles}
         />
-        <ImageContainer
+        <ImageContainerWithHover
+          imageSrc={ch}
+          imageStyles={imgStyles}
+          tag="Черноморец"
+          fullHeight
+          fullWidth
+          style={styles}
+          tagTextStyles={tagTextStyles}
+        />
+        <ImageContainerWithHover
+          imageSrc={sz}
+          imageStyles={imgStyles}
+          fullHeight
+          fullWidth
+          tag="Созопол"
+          style={styles}
+          tagTextStyles={tagTextStyles}
+        />
+        <ImageContainerWithHover
+          imageSrc={ch}
+          imageStyles={imgStyles}
+          tag="Черноморец"
+          fullHeight
+          fullWidth
+          style={styles}
+          tagTextStyles={tagTextStyles}
+        />
+        <ImageContainerWithHover
+          imageSrc={sz}
+          imageStyles={imgStyles}
+          fullHeight
+          fullWidth
+          tag="Созопол"
+          style={styles}
+          tagTextStyles={tagTextStyles}
+        />
+        <ImageContainerWithHover
           imageSrc={ch}
           imageStyles={imgStyles}
           tag="Черноморец"

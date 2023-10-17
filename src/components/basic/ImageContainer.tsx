@@ -64,6 +64,13 @@ export const ImageContainer: React.FC<{
 };
 const Wrapper = styled(BasicBox)`
   position: relative;
+  transition: all 0.5s ease-in-out;
+  :hover {
+    scale: 1.1;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    z-index: 10;
+  }
 `;
 
 export const ImageComponent: React.FC<{
