@@ -9,15 +9,17 @@ const Wrapper = styled(BasicBox)`
   padding-top: 47px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 
 export const Navbar = () => {
   return (
     <Wrapper>
-      <Logo />
-      <NavbarButtons />
+      <BasicBox justify="space-between" width="90%" align="center">
+        <Logo />
+        <NavbarButtons />
+      </BasicBox>
     </Wrapper>
   );
 };

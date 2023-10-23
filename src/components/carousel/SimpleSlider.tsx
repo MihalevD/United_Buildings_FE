@@ -81,7 +81,7 @@ export default function SimpleSlider() {
     <Slider {...settings}>
       {carouselData.map((item, index) => {
         return !isMobile ? (
-          <CarouselBlock key={index} {...item} />
+          <CarouselBlock key={index} {...item} fullWidth={true} />
         ) : (
           <MobileCarouselBlock key={index} {...item} />
         );

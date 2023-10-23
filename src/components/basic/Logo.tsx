@@ -1,25 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import styled from '@emotion/styled';
-import logo from '../../img/logo.png';
-import {ImageContainer} from './ImageContainer';
+import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import logo from "../../img/logo.png";
+import { ImageContainer } from "./ImageContainer";
 
-const LogoBox = styled.div`
-  width: 436px;
-  height: 76px;
+const LogoBox = styled.div<{ $left: boolean }>`
+  width: 250px;
+  height: 50px;
   position: relative;
-  padding-left: 100px;
-  @media (max-width: 1400px) {
-    padding-left: 30px;
-    width: 27%;
+  padding-left: ${({ $left }) => (!$left ? "0px" : "100px")};
+  @media (max-width: 1200px) {
+    padding-left: ${({ $left }) => (!$left ? "0px" : "30px")};
   }
 `;
 
-export const Logo = () => {
+type LogoProps = {
+  left?: boolean;
+};
+
+export const Logo: React.FC<LogoProps> = ({ left = false }) => {
   return (
-    <LogoBox>
+    <LogoBox $left={left}>
       <ImageContainer
         imageSrc={logo}
-        imageStyles={{height: '100%', width: '100%'}}></ImageContainer>
+        imageStyles={{ height: "100%", width: "100%" }}
+      ></ImageContainer>
     </LogoBox>
   );
 };

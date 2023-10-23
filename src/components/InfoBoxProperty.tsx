@@ -3,6 +3,7 @@ import { AdWrapperProperty } from "./AdWrapperProperty";
 import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
 import { DescriptionBlock } from "./DescriptionBlock";
+import styled from "@emotion/styled";
 
 const textStylesHeading = {
   font: "normal normal bold 30px/40px Segoe UI",
@@ -25,10 +26,29 @@ type InfoBoxProps = {
   };
 };
 
+const Wrapper = styled(BasicBox)`
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-left: 0px;
+    padding-left: 0px;
+    gap: 50px;
+  }
+`;
+const InfoWrapper = styled(BasicBox)`
+  width: 50%;
+  @media (max-width: 1150px) {
+    width: 100%;
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+`;
+
 export const InfoBoxProperty = (props: InfoBoxProps) => {
   return (
-    <BasicBox top="33px" fullWidth justify="space-between">
-      <BasicBox direction="column" style={{ width: "40%" }}>
+    <Wrapper top="33px" fullWidth justify="space-between" bottom="78px">
+      <InfoWrapper direction="column">
         <TextContainer
           text={props.data ? props.data.title : "Чудесен едностаен апартамент"}
           textStyles={textStylesHeading}
@@ -46,8 +66,8 @@ export const InfoBoxProperty = (props: InfoBoxProps) => {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
           }
         />
-      </BasicBox>
+      </InfoWrapper>
       <AdWrapperProperty />
-    </BasicBox>
+    </Wrapper>
   );
 };

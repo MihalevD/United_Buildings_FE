@@ -34,6 +34,7 @@ export type CarouselBlockTypes = {
   address: string;
   sqm: string;
   rooms: string;
+  fullWidth?: boolean;
 };
 
 const textStylesHeading = {
@@ -59,7 +60,7 @@ export const CarouselBlock = (props: CarouselBlockTypes) => {
   };
 
   return (
-    <BasicBox fullWidth justify="center">
+    <BasicBox fullWidth={props.fullWidth} justify="center">
       <Wrapper direction="column" onClick={handleClick}>
         <BasicBox fullWidth>
           <ImageContainer

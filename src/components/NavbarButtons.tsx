@@ -14,6 +14,7 @@ const Wrapper = styled(BasicBox)`
 export const NavbarButtons = () => {
   return (
     <Wrapper>
+      <ContactUs />
       {navigation.map((nav) => {
         return (
           <LinkButton
@@ -23,7 +24,6 @@ export const NavbarButtons = () => {
           ></LinkButton>
         );
       })}
-      <ContactUs />
     </Wrapper>
   );
 };

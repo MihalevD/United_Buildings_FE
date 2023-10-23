@@ -192,10 +192,25 @@ const customStyles: StylesConfig<OptionType, true> = {
     minWidth: "fit-content",
     background: "#f0f0f0",
     marginRight: "5px",
+    borderRadius: "20px",
   }),
   indicatorSeparator: (provided: any) => ({
     ...provided,
     display: "none",
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: "black",
+    cursor: "pointer",
+    ":hover": {
+      background: "transparent",
+      color: "red",
+      borderRadius: "20px",
+    },
+  }),
+  indicatorsContainer: (provided) => ({
+    ...provided,
+    cursor: "pointer",
   }),
   valueContainer: (provided) => ({
     ...provided,

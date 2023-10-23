@@ -15,6 +15,9 @@ const Wrapper = styled(BasicBox)``;
 
 const InnerWrapper = styled(BasicBox)`
   max-width: 85%;
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
 `;
 
 type CatalogProps = {
@@ -42,14 +45,15 @@ export const Catalog = (props: CatalogProps) => {
   return (
     <Wrapper
       justify="center"
-      bottom={isMobile ? "0px" : "600px"}
+      bottom={isMobile ? "0px" : "350px"}
+      align="center"
       direction="column"
       fullWidth
     >
       <InnerWrapper
         direction="column"
         align="center"
-        bottom="50px"
+        bottom="80px"
         left={isMobile ? "36px" : "0px"}
         right={isMobile ? "36px" : "0px"}
       >

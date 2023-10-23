@@ -32,7 +32,7 @@ export const Footer = () => {
         align="center"
         style={{ width: "inherit", height: "inherit" }}
       >
-        <Logo />
+        <Logo left />
         <BasicBox
           direction="column"
           left="94px"
@@ -54,7 +54,7 @@ export const Footer = () => {
             textStyles={textStylesSubHeading}
           />
         </BasicBox>
-        <BasicBox
+        {/* <BasicBox
           direction="column"
           style={{ width: "285px", marginTop: "-20px" }}
         >
@@ -81,14 +81,11 @@ export const Footer = () => {
               textStyles={textStylesSubHeading}
             />
           </BasicBox>
-        </BasicBox>
+        </BasicBox> */}
       </BasicBox>
       {!isMobile && (
         <>
           <Ad />
-          <ImageWrapper>
-            <img src={house}></img>
-          </ImageWrapper>
         </>
       )}
     </FooterWrapper>

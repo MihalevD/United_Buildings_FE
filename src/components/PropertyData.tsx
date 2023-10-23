@@ -19,8 +19,9 @@ export const PropertyData = (props: PropertyDataProps) => {
   return (
     <Wrapper
       justify="center"
-      top={!props.top ? "152px" : "52px"}
-      bottom={isMobile ? "10px" : "80px"}
+      top={!props.top ? (isMobile ? "0px" : "152px") : "52px"}
+      bottom="30px"
+      gap="30px"
     >
       {props.data.map((item, index) => {
         return !isMobile ? (

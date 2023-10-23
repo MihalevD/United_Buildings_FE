@@ -11,11 +11,9 @@ const Wrapper = styled(BasicBox)`
   width: 290px;
   height: 290px;
   background: #ffffff 0% 0% no-repeat padding-box;
-  margin-right: 15px;
   box-shadow: 0px 3px 6px #00000029;
   //border: 1px solid #707070;
   border-radius: 30px;
-  margin-bottom: 52px;
   transition: background-color 1s;
   :hover {
     background: #cdd5b1 0% 0% no-repeat padding-box;

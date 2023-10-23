@@ -16,7 +16,7 @@ export const AdChoose: React.FC<AdChooseProps> = ({
   return (
     <BasicBox
       fullWidth
-      justify="space-evenly"
+      justify="flex-start"
       top="15px"
       direction={isMobile ? "column" : "row"}
       style={{ gap: "16px" }}
@@ -31,6 +31,7 @@ export const AdChoose: React.FC<AdChooseProps> = ({
         Търся апартамент
       </LightButton>
       <LightButton
+        style={{ marginLeft: "20px" }}
         onClick={() => {
           setChosen(true);
           setFormBuy(false);

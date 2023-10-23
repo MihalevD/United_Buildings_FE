@@ -3,16 +3,16 @@ import { AdChoose } from "./AdChoose";
 import { AdForm } from "./AdForm";
 import BasicBox from "./basic/BasicBox";
 import styled from "@emotion/styled";
+import HouseSVG from "../img/svg/HouseSVG";
 
 const Wrapper = styled(BasicBox)`
   position: absolute;
   width: 75%;
   background: #7a7d48 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
-  height: 400px;
   border-radius: 20px;
   box-shadow: 0px 3px 6px #00000029;
-  top: -140%;
+  top: -150%;
 `;
 
 const Text = styled.span`
@@ -38,15 +38,10 @@ export const Ad = () => {
   const [chosen, setChosen] = useState(false);
   const [formBuy, setFormBuy] = useState(false);
   return (
-    <Wrapper>
-      <BasicBox top="20px" right="96px" fullWidth justify="flex-end" fullHeight>
-        <BasicBox
-          style={{ width: "60%", height: "60%" }}
-          top="60px"
-          direction="column"
-          align="flex-start"
-          justify="center"
-        >
+    <Wrapper justify="center">
+      <HouseSVG />
+      <BasicBox right="96px" style={{ height: "auto" }} align="center">
+        <BasicBox direction="column" justify="center">
           <Text>
             С <span style={{ fontWeight: "bold" }}>United Buildings</span>{" "}
             винаги е лесно

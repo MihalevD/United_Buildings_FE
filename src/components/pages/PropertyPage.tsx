@@ -8,6 +8,8 @@ import { InfoBoxProperty } from "../InfoBoxProperty";
 import { SuggestionSection } from "../SuggestionSection";
 import useIsMobile from "../../helper/isMobile";
 import { MobilePropertyPage } from "../mobile/MobilePropertyPage";
+import Stepper from "../basic/Stepper";
+import { CreditCalculator } from "../CreditCalculator";
 
 export const PropertyPage = () => {
   const { id } = useParams();
@@ -26,9 +28,10 @@ export const PropertyPage = () => {
         >
           <BackButton />
           <BasicBox fullWidth>
-            <ImageBlockProperty />
+            <Stepper />
           </BasicBox>
           <InfoBoxProperty data={data} />
+          <CreditCalculator price={"78000"} />
           <SuggestionSection />
         </BasicBox>
       ) : (
