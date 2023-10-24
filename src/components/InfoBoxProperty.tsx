@@ -113,6 +113,7 @@ export const InfoBoxProperty = (props: InfoBoxProps) => {
       </InfoWrapper>
       <AdWrapperProperty />
       {isOpenPlans && (
+        // @ts-ignore
         <Lightbox
           small={explan}
           medium={explan}
