@@ -11,6 +11,7 @@ import ModalImage, { Lightbox } from "react-modal-image";
 import explan from "../img/ex_plan.png";
 import { useState } from "react";
 import { ShareModal } from "./modals/ShareModal";
+// @ts-ignore
 
 const textStylesHeading = {
   font: "normal normal bold 30px/40px Segoe UI",
