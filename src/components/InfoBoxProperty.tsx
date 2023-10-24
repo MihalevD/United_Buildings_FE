@@ -4,6 +4,13 @@ import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
 import { DescriptionBlock } from "./DescriptionBlock";
 import styled from "@emotion/styled";
+import { LightButton } from "./basic/LightButton";
+import IosShareIcon from "@mui/icons-material/IosShare";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
+import ModalImage, { Lightbox } from "react-modal-image";
+import explan from "../img/ex_plan.png";
+import { useState } from "react";
+import { ShareModal } from "./modals/ShareModal";
 
 const textStylesHeading = {
   font: "normal normal bold 30px/40px Segoe UI",
@@ -46,8 +53,32 @@ const InfoWrapper = styled(BasicBox)`
 `;
 
 export const InfoBoxProperty = (props: InfoBoxProps) => {
+  const [isOpenPlans, setIsOpenPlans] = useState(false);
+  const [isOpenShare, setIsOpenShare] = useState(false);
+
+  const openLightbox = () => {
+    setIsOpenPlans(true);
+  };
+  const closeLightbox = () => {
+    setIsOpenPlans(false);
+  };
+
+  const openShare = () => {
+    setIsOpenShare(true);
+  };
+
+  const closeShare = () => {
+    setIsOpenShare(false);
+  };
+
   return (
-    <Wrapper top="33px" fullWidth justify="space-between" bottom="78px">
+    <Wrapper
+      top="33px"
+      fullWidth
+      justify="space-between"
+      bottom="78px"
+      style={{ position: "relative" }}
+    >
       <InfoWrapper direction="column">
         <TextContainer
           text={props.data ? props.data.title : "Чудесен едностаен апартамент"}
@@ -66,8 +97,48 @@ export const InfoBoxProperty = (props: InfoBoxProps) => {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
           }
         />
+        <BasicBox style={{ position: "relative" }}>
+          <CustomButton onClick={() => openLightbox()}>
+            <AspectRatioIcon />
+            Планове
+          </CustomButton>
+          <CustomButton onClick={() => openShare()}>
+            <IosShareIcon />
+          </CustomButton>
+          {isOpenShare && (
+            <ShareModal onClose={() => closeShare()} isOpen={isOpenShare} />
+          )}
+        </BasicBox>
       </InfoWrapper>
       <AdWrapperProperty />
+      {isOpenPlans && (
+        <Lightbox
+          small={explan}
+          medium={explan}
+          alt="Plan"
+          onClose={() => closeLightbox()}
+        />
+      )}
     </Wrapper>
   );
 };
+
+const CustomButton = styled.button`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 30px;
+  padding: 10px 24px;
+  text-align: left;
+  font: normal normal 600 20px/12px Segoe UI;
+  letter-spacing: 0px;
+  color: #3f4554;
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  cursor: pointer;
+  border: none;
+  gap: 18px;
+  :hover {
+    background: #dce2c5 0% 0% no-repeat padding-box !important;
+  }
+`;

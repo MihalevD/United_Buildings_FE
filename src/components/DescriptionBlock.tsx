@@ -17,6 +17,7 @@ const textStylesSubHeading = {
   font: "normal normal normal 20px/27px Segoe UI",
   letterSpacing: "0px",
   color: "#3F4554",
+  textWrap: "pretty" as const,
 };
 
 export const DescriptionBlock = (props: DescriptionBlockProps) => {
@@ -25,7 +26,7 @@ export const DescriptionBlock = (props: DescriptionBlockProps) => {
       <BasicBox bottom="12px">
         <TextContainer text="Описание:" textStyles={textStylesHeading} />
       </BasicBox>
-      <TextContainer text={props.text} textStyles={textStylesSubHeading} />
+      <pre style={textStylesSubHeading}>{props.text}</pre>
     </BasicBox>
   );
 };
