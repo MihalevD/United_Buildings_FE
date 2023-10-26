@@ -68,17 +68,16 @@ export function transformProjectData(data: Project[] | undefined): OptionType[] 
 }
 
 //useGetLocations
-const useGetLocations = (options?: UseQueryOptions<Location[]>) => {
-  const { data: locationData } = useQuery<Location[]>(
-    'locations',
-    () => handleApiResponse<Location[]>(useApiCall<Location[]>(generateApiUrl('locations'))),
+const useGetLocations = (resourceIds:any, options:any) => {
+  const { data: locationData } = useQuery(
+    `locations_${options.page}_${options.perPage}_${options.field}_${options.order}_${options.yourFilterField}`,
+    () => handleApiResponse(useApiCall(generateApiUrl(`locations/${resourceIds.join(',')}`))),
     options
   );
 
-  const transformedData = locationData ? transformLocationData(locationData) : [];
-
-  return {data: transformedData};
+  return { data: locationData };
 };
+
 
 // useGetPriceRanges
 const useGetPriceRanges = ({ filtered = false, ...options } = {}) => {

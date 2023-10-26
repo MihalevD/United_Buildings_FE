@@ -6,6 +6,7 @@ import { HomePage } from "../pages/HomePage";
 import { ProjectPage } from "../pages/ProjectPage";
 import { Projects } from "../pages/Projects";
 import { PropertyPage } from "../pages/PropertyPage";
+import AdminPage2 from "../pages/Admin2";
 
 const PublicRoutes = [
   {
@@ -42,6 +43,11 @@ const PublicRoutes = [
     path: routePaths.admin,
     component: () => <AdminPage />,
     title: "Admin",
+  },
+  {
+    path: routePaths.adminTrain,
+    component: () => <AdminPage2 />,
+    title: "Admin Train",
   },
 ];
 

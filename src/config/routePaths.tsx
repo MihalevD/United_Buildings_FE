@@ -6,6 +6,7 @@ const routePaths = {
   admin: "/admin",
   projects: "/projects",
   project: "/projects/:id",
+  adminTrain: "/adminTrain/*",
 };
 
 export default routePaths;

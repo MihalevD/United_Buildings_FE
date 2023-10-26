@@ -35,6 +35,7 @@ const Router = (props: RouterProps) => {
                 element={
                   <React.Fragment>
                     {path !== routePaths.admin &&
+                      path !== routePaths.adminTrain &&
                       // Render Header for non-AdminPage routes
                       (isMobile ? (
                         <MobileHeader />
@@ -45,7 +46,8 @@ const Router = (props: RouterProps) => {
                     <Helmet title={title} />
                     {isMobile ? (
                       <MobileFooter />
-                    ) : path !== routePaths.admin ? (
+                    ) : path !== routePaths.admin &&
+                      path !== routePaths.adminTrain ? (
                       <Footer />
                     ) : null}
                   </React.Fragment>

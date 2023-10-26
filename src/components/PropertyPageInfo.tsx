@@ -4,6 +4,10 @@ import ImageAspectRatioOutlinedIcon from "@mui/icons-material/ImageAspectRatioOu
 import styled from "@emotion/styled";
 import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
+import { AspectRatio } from "@mui/icons-material";
+import StairsIcon from "@mui/icons-material/StairsOutlined";
+import HomeWorkIcon from "@mui/icons-material/HomeWorkOutlined";
+import HvacIconOutlined from "@mui/icons-material/HvacOutlined";
 
 const InformationWrapper = styled(BasicBox)`
   box-sizing: border-box;
@@ -33,28 +37,74 @@ export const PropertyPageInfo = () => {
       spacing="24px"
       fullPadding
       justify="space-between"
-      style={{ boxSizing: "border-box" }}
+      gap="20px"
+      style={{ boxSizing: "border-box", flexWrap: "wrap" }}
     >
-      <BasicBox align="center">
-        <TextContainer text={"спални"} textStyles={textStyle} />
-        <BasicBox align="center">
-          <BedOutlinedIcon />
-          <TextContainer text={"1"} textStyles={textStyle2} />
+      <BasicBox align="center" width="45%">
+        <BasicBox justify="space-between" align="center" gap="10px">
+          <BedOutlinedIcon sx={{ fontSize: "30px" }} />
+          <TextContainer text={"Спални"} textStyles={textStyle} />
         </BasicBox>
+        <TextContainer
+          text={"1"}
+          customStyles={{ width: "100%", justifyContent: "flex-end" }}
+          textStyles={textStyle2}
+        />
       </BasicBox>
-      <BasicBox align="center">
-        <TextContainer text={"бани"} textStyles={textStyle} />
-        <BasicBox align="center">
-          <BathtubOutlinedIcon />
-          <TextContainer text={"1"} textStyles={textStyle2} />
+      <BasicBox align="center" width="45%">
+        <BasicBox justify="space-between" align="center" gap="10px">
+          <BathtubOutlinedIcon sx={{ fontSize: "30px" }} />
+          <TextContainer text={"Бани"} textStyles={textStyle} />
         </BasicBox>
+        <TextContainer
+          text={"1"}
+          customStyles={{ width: "100%", justifyContent: "flex-end" }}
+          textStyles={textStyle2}
+        />
       </BasicBox>
-      <BasicBox align="center">
-        <TextContainer text={"площ"} textStyles={textStyle} />
-        <BasicBox align="center">
-          <ImageAspectRatioOutlinedIcon />
-          <TextContainer text={"1"} textStyles={textStyle2} />
+      <BasicBox align="center" width="45%">
+        <BasicBox justify="space-between" align="center" gap="10px">
+          <AspectRatio sx={{ fontSize: "30px" }} />
+          <TextContainer text={"Площ"} textStyles={textStyle} />
         </BasicBox>
+        <TextContainer
+          text={"1"}
+          customStyles={{ width: "100%", justifyContent: "flex-end" }}
+          textStyles={textStyle2}
+        />
+      </BasicBox>
+      <BasicBox align="center" width="45%">
+        <BasicBox justify="space-between" align="center" gap="10px">
+          <StairsIcon sx={{ fontSize: "30px" }} />
+          <TextContainer text={"Етаж"} textStyles={textStyle} />
+        </BasicBox>
+        <TextContainer
+          text={"1"}
+          customStyles={{ width: "100%", justifyContent: "flex-end" }}
+          textStyles={textStyle2}
+        />
+      </BasicBox>
+      <BasicBox align="center" width="45%">
+        <BasicBox justify="space-between" align="center" gap="10px">
+          <HomeWorkIcon sx={{ fontSize: "30px" }} />
+          <TextContainer text={"Год. на строеж"} textStyles={textStyle} />
+        </BasicBox>
+        <TextContainer
+          text={"1"}
+          customStyles={{ width: "100%", justifyContent: "flex-end" }}
+          textStyles={textStyle2}
+        />
+      </BasicBox>
+      <BasicBox align="center" width="45%">
+        <BasicBox justify="space-between" align="center" gap="10px">
+          <HvacIconOutlined sx={{ fontSize: "30px" }} />
+          <TextContainer text={"Отопление"} textStyles={textStyle} />
+        </BasicBox>
+        <TextContainer
+          text={"1"}
+          customStyles={{ width: "100%", justifyContent: "flex-end" }}
+          textStyles={textStyle2}
+        />
       </BasicBox>
     </InformationWrapper>
   );
