@@ -1,81 +1,65 @@
+import { useDispatch, useSelector } from "react-redux";
+import { changeFilter } from "../redux/actions/filterActions";
 import { SearchButton } from "./SearchButton";
 import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
 import { useState } from "react";
 import useIsTablet from "../helper/isTablet";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ActionMeta, MultiValue } from "react-select";
+import { MultiValue } from "react-select";
 import Select from "./basic/Select";
-import {
-  useGetLocations,
-  useGetTypes,
-  useGetPriceRanges,
-} from "../hooks/filterHooks";
-
-const textStyles = {
-  fontSize: "40px",
-  lineHeight: "53px",
-  color: "#3f4554",
-};
-
-const blockStyle = (top: string) => ({
-  position: "absolute" as "absolute",
-  top: top,
-  width: "100%",
-});
-
-const innerStyle = {
-  backdropFilter: "blur(30px)",
-  boxShadow: "0px 3px 6px #00000029",
-  borderRadius: "20px",
-  width: "75%",
-  boxSizing: "border-box" as const,
-};
+import { RootState } from "../store";
+import { blockStyle, innerStyle, textStyles } from "../styles/SearchBarStyles";
+import { MySlider } from "./basic/Slider";
+import { asyncGetApartments } from "../redux/actions/apartmentActions";
 
 type OptionType = { label: string; value: string };
 
-// type SearchBarProps = {
-//   setFilters: (filters: FilterType) => void;
-// };
+function valuetext(value: number) {
+  return `${value}€`;
+}
 
 export const SearchBar = () => {
-  const [filters, setFilters] = useState({
-    type: [] as OptionType[],
-    place: [] as OptionType[],
-    price: [] as OptionType[],
-  });
+  const dispatch = useDispatch();
   const isTablet = useIsTablet();
   const location = useLocation();
   const navigate = useNavigate();
 
+  const locationData = useSelector((state: RootState) => state.locations);
+  const kvartaliData = useSelector((state: RootState) => state.kvartals);
+  const typeData = useSelector((state: RootState) => state.types);
+
+  const [localFilters, setLocalFilters] = useState({
+    location: [],
+    kvartal: [],
+    type: [],
+    priceRange: [50, 140],
+  });
+
   const onApply = () => {
+    Object.entries(localFilters).forEach(([key, value]) => {
+      dispatch(changeFilter({ value: value, filterType: key }));
+    });
+
+    dispatch(asyncGetApartments() as any);
+
     if (location.pathname === "/") {
       navigate("/catalog");
     }
-    // setFilters(filters);
-    clearState();
   };
 
   const handleMultiChange =
-    (field: keyof typeof filters) =>
-    (newValue: MultiValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-      setFilters({
-        ...filters,
-        [field]: newValue || [],
-      });
+    (field: keyof typeof localFilters) =>
+    (newValue: MultiValue<OptionType>) => {
+      setLocalFilters((prev) => ({ ...prev, [field]: newValue }));
     };
 
-  const clearState = () => {
-    setFilters({ type: [], place: [], price: [] });
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setLocalFilters((prev) => ({ ...prev, priceRange: newValue as number[] }));
   };
 
   const top =
-    window.location.pathname === "/" ? (isTablet ? "41.5%" : "34%") : "49%";
-
-  const { data: locationData } = useGetLocations();
-  const { data: typeData } = useGetTypes();
-  const { data: priceData } = useGetPriceRanges();
-
+    window.location.pathname === "/" ? (isTablet ? "41.5%" : "34%") : "45%";
   return (
     <BasicBox style={blockStyle(top)} justify="center">
       <BasicBox
@@ -113,28 +97,48 @@ export const SearchBar = () => {
           }
           fullWidth
         >
-          <Select
-            options={locationData ?? []}
-            placeholder="Местоположение"
-            optionSelected={filters.place}
-            handleChange={handleMultiChange("place")}
-            isMulti
-          />
+          <BasicBox fullWidth direction="column">
+            <BasicBox fullWidth>
+              <Select
+                options={locationData ?? []}
+                placeholder="Местоположение"
+                optionSelected={localFilters.location}
+                handleChange={handleMultiChange("location")}
+                isMulti
+              />
 
-          <Select
-            options={typeData ?? []}
-            handleChange={handleMultiChange("type")}
-            optionSelected={filters.type}
-            placeholder="Тип"
-            isMulti
-          />
+              <Select
+                disabled={
+                  localFilters.location &&
+                  localFilters.location.find(
+                    (item: { label: string }) => item.label === "Бургас"
+                  )
+                    ? false
+                    : true
+                }
+                options={kvartaliData ?? []}
+                placeholder="Квартали"
+                optionSelected={localFilters.kvartal}
+                handleChange={handleMultiChange("kvartal")}
+                isMulti
+              />
 
-          <Select
-            options={priceData ?? []}
-            placeholder="Цена"
-            optionSelected={filters.price}
-            handleChange={handleMultiChange("price")}
-          />
+              <Select
+                options={typeData ?? []}
+                handleChange={handleMultiChange("type")}
+                optionSelected={localFilters.type}
+                placeholder="Тип"
+                isMulti
+              />
+            </BasicBox>
+            <BasicBox fullWidth top="20px">
+              <MySlider
+                value={localFilters.priceRange}
+                handleChange={handleChange}
+                valuetext={valuetext}
+              />
+            </BasicBox>
+          </BasicBox>
           <SearchButton onClick={() => onApply()} />
         </BasicBox>
       </BasicBox>

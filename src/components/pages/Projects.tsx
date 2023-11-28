@@ -1,8 +1,11 @@
 import useIsMobile from "../../helper/isMobile";
 import { MobileProjects } from "../mobile/MobileProjects";
+import { DesktopProjects } from "./DesktopProjects";
 
 export const Projects = () => {
-  const isMobile = useIsMobile();
-
-  return <>{isMobile ? <div></div> : <MobileProjects></MobileProjects>}</>;
+  return (
+    <>
+      <DesktopProjects></DesktopProjects>
+    </>
+  );
 };

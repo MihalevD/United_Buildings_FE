@@ -5,14 +5,13 @@ import { useState } from "react";
 import useIsTablet from "../../helper/isTablet";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ActionMeta, MultiValue } from "react-select";
-import {
-  OptionType,
-  useGetLocations,
-  useGetPriceRanges,
-  useGetTypes,
-} from "../../hooks/filterHooks";
+import { OptionType } from "../../hooks/filterHooks";
 import Select from "../basic/Select";
 import { DarkButton } from "../basic/DarkButton";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { MySlider } from "../basic/Slider";
+import { changeFilter } from "../../redux/actions/filterActions";
 
 const Wrapper = styled(BasicBox)`
   position: absolute;
@@ -29,7 +28,9 @@ const InnerWrapper = styled(BasicBox)`
   gap: 20px;
   maxwidth: 90%;
 `;
-
+function valuetext(value: number) {
+  return `${value}€`;
+}
 const textStyles = {
   fontSize: "18px",
   lineHeight: "24px",
@@ -39,40 +40,35 @@ const textStyles = {
 };
 
 export const MobileSearchBox = () => {
-  const [filters, setFilters] = useState({
-    type: [] as OptionType[],
-    place: [] as OptionType[],
-    price: [] as OptionType[],
-  });
+  const dispatch = useDispatch();
   const isTablet = useIsTablet();
   const location = useLocation();
   const navigate = useNavigate();
   const isProductPage = location.pathname.split("/")[1] == "property";
 
+  const locationData = useSelector((state: RootState) => state.locations);
+  const kvartaliData = useSelector((state: RootState) => state.kvartals);
+  const typeData = useSelector((state: RootState) => state.types);
+
+  const filters = useSelector((state: RootState) => state.filters);
+
   const onApply = () => {
     if (location.pathname === "/") {
       navigate("/catalog");
     }
-    // setFilters(filters);
-    clearState();
   };
 
   const handleMultiChange =
-    (field: keyof typeof filters) =>
-    (newValue: MultiValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-      setFilters({
-        ...filters,
-        [field]: newValue || [],
-      });
+    (field: keyof typeof filters) => (newValue: MultiValue<OptionType>) => {
+      // Dispatch actions to update the Redux store with the new filter value
+      const selectedValues = newValue || [];
+      dispatch(changeFilter({ value: selectedValues, filterType: field }));
     };
 
-  const clearState = () => {
-    setFilters({ type: [], place: [], price: [] });
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    dispatch(changeFilter({ value: newValue, filterType: "priceRange" }));
   };
 
-  const { data: locationData } = useGetLocations();
-  const { data: typeData } = useGetTypes();
-  const { data: priceData } = useGetPriceRanges();
   return (
     <Wrapper left="36px" right="36px">
       <InnerWrapper
@@ -91,9 +87,22 @@ export const MobileSearchBox = () => {
         <Select
           options={locationData ?? []}
           placeholder="Местоположение"
-          optionSelected={filters.place}
-          handleChange={handleMultiChange("place")}
+          optionSelected={filters.location}
+          handleChange={handleMultiChange("location")}
           isMulti
+        />
+
+        <Select
+          options={kvartaliData ?? []}
+          placeholder="Квартал"
+          disabled={
+            filters.location &&
+            filters.location.find((item) => item.label === "Бургас")
+              ? false
+              : true
+          }
+          optionSelected={filters.kvartal}
+          handleChange={handleMultiChange("kvartal")}
         />
 
         <Select
@@ -103,12 +112,11 @@ export const MobileSearchBox = () => {
           placeholder="Тип"
           isMulti
         />
-
-        <Select
-          options={priceData ?? []}
-          placeholder="Цена"
-          optionSelected={filters.price}
-          handleChange={handleMultiChange("price")}
+        <MySlider
+          value={filters.priceRange}
+          handleChange={handleChange}
+          valuetext={valuetext}
+          marks={false}
         />
 
         <DarkButton onClick={() => onApply()}>Търси</DarkButton>

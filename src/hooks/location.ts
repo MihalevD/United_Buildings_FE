@@ -30,7 +30,7 @@ import {
   async function fetchDataForGetList(resource: any, params: { pagination:{page: number; perPage: number;}, sort: { field: any; order: any; }; }) {
     try {
       // Construct the URL for your endpoint
-      const url = `http://localhost:3000/locations`;
+      const url = import.meta.env.VITE_NODE_ENV === 'production' ? 'https://united-buildings-be.online' : 'http://localhost:3000';
 
       console.log(params)
   

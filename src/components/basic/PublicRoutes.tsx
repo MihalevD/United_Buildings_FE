@@ -7,6 +7,9 @@ import { ProjectPage } from "../pages/ProjectPage";
 import { Projects } from "../pages/Projects";
 import { PropertyPage } from "../pages/PropertyPage";
 import AdminPage2 from "../pages/Admin2";
+import React from "react";
+
+const Admin = React.lazy(() => import("../pages/Admin2"));
 
 const PublicRoutes = [
   {
@@ -16,7 +19,7 @@ const PublicRoutes = [
   },
   {
     path: routePaths.catalog,
-    component: () => <Catalog onDelete={() => {}} />,
+    component: () => <Catalog />,
     title: "Catalog",
   },
   {
@@ -41,13 +44,8 @@ const PublicRoutes = [
   },
   {
     path: routePaths.admin,
-    component: () => <AdminPage />,
+    component: () => <Admin />,
     title: "Admin",
-  },
-  {
-    path: routePaths.adminTrain,
-    component: () => <AdminPage2 />,
-    title: "Admin Train",
   },
 ];
 

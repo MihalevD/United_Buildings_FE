@@ -1,14 +1,5 @@
-import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { default as ReactSelect } from "react-select";
-import makeAnimated from "react-select/animated";
-import styled from "@emotion/styled";
-import Select, {
-  StylesConfig,
-  ActionMeta,
-  MultiValue,
-  components,
-} from "react-select";
+import Select, { StylesConfig, components } from "react-select";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface Option {
@@ -20,84 +11,38 @@ interface MySelectProps {
   options: Option[];
   value: any;
   onChange: (selected: Option[] | null) => void;
-  allowSelectAll: boolean;
-  allOption: Option;
   isMulti: boolean;
-  closeMenuOnSelect: boolean;
-  hideSelectedOptions: boolean;
   components: any;
   placeholder: string;
   styles: any;
+  disabled: boolean;
 }
 
 const MySelect = (props: MySelectProps) => {
-  if (props.allowSelectAll) {
-    return (
-      <ReactSelect
-        {...props}
-        isMulti={props.isMulti}
-        placeholder={props.placeholder}
-        styles={props.styles}
-        menuPortalTarget={document.body}
-        menuPosition={"fixed"}
-        options={[props.allOption, ...props.options]}
-        closeMenuOnSelect={props.isMulti ? false : true}
-        hideSelectedOptions={props.hideSelectedOptions}
-        components={props.components}
-        onChange={(selected) => {
-          if (
-            selected !== null &&
-            selected.length > 0 &&
-            selected[selected.length - 1].value === props.allOption.value
-          ) {
-            return props.onChange(props.options);
-          }
-          return props.onChange(selected);
-        }}
-      />
-    );
-  }
-  return <ReactSelect {...props} />;
+  return (
+    <Select
+      {...props}
+      isMulti={props.isMulti}
+      isDisabled={props.disabled}
+      placeholder={props.placeholder}
+      styles={props.styles}
+      menuPortalTarget={document.body}
+      menuPosition={"fixed"}
+      options={props.options}
+      isOptionDisabled={() => props.value && props.value.length > 3}
+      components={props.components}
+      onChange={(selected) => {
+        return props.onChange(selected);
+      }}
+    />
+  );
 };
 
 MySelect.propTypes = {
   options: PropTypes.array.isRequired,
   value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
-  allowSelectAll: PropTypes.bool.isRequired,
-  allOption: PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  }).isRequired,
 };
-
-MySelect.defaultProps = {
-  allOption: {
-    label: "Select all",
-    value: "*",
-  },
-};
-
-const Option = (props: any) => {
-  return (
-    <div>
-      <components.Option {...props}>
-        <input
-          type="checkbox"
-          checked={props.isSelected}
-          onChange={() => null}
-        />{" "}
-        <label>{props.label}</label>
-      </components.Option>
-    </div>
-  );
-};
-
-const MyMultiValue = (props: any) => (
-  <components.MultiValue {...props} styles={customStyles.multiValue}>
-    <span>{props.data.label}</span>
-  </components.MultiValue>
-);
 
 const DropdownIndicator = (props: any) => {
   return (
@@ -112,32 +57,26 @@ const DropdownIndicator = (props: any) => {
   );
 };
 
-const animatedComponents = makeAnimated();
-
 const MySelectC = ({
   options,
   handleChange,
   optionSelected,
-  styles,
   placeholder,
+  styles,
+  disabled,
   isMulti,
 }: any) => {
   return (
     <MySelect
+      disabled={disabled}
       options={options}
       isMulti={isMulti}
       styles={{ ...customStyles, ...styles }}
       placeholder={placeholder}
-      closeMenuOnSelect={isMulti ? false : true}
-      hideSelectedOptions={false}
       components={{
-        Option,
-        MultiValue: MyMultiValue,
-        animatedComponents,
         DropdownIndicator,
       }}
       onChange={handleChange}
-      allowSelectAll={!!isMulti}
       value={optionSelected}
     />
   );
@@ -147,21 +86,18 @@ type OptionType = { label: string; value: string };
 
 const customStyles: StylesConfig<OptionType, true> = {
   menuPortal: (base) => ({ ...base, zIndex: 9999, background: "red" }),
-  input: (base) => ({
-    ...base,
-    display: "none",
-  }),
   container: (provided) => ({
     ...provided,
     width: "100%",
     minWidth: "100px",
-    marginRight: "16px",
+    marginRight: "8px",
+    marginLeft: "8px",
   }),
-  control: (provided) => ({
+  control: (provided, state) => ({
     ...provided,
     width: "100%",
     height: "70px",
-    background: "#ffffff",
+    background: !state.isDisabled ? "#ffffff" : "lightgray",
     border: "1px solid #c9c7c7",
     borderRadius: "20px",
     opacity: 1,
@@ -174,7 +110,6 @@ const customStyles: StylesConfig<OptionType, true> = {
   menu: (provided) => ({
     ...provided,
     borderRadius: "20px",
-    background: "#ffffff",
     paddingLeft: "5px",
     paddingRight: "15px",
     paddingTop: "10px",
@@ -184,8 +119,7 @@ const customStyles: StylesConfig<OptionType, true> = {
   }),
   option: (provided, state) => ({
     ...provided,
-    background: state.isFocused ? "#c9c7c7" : "white",
-    color: state.isFocused ? "white" : "black",
+    cursor: "pointer",
   }),
   multiValue: (provided) => ({
     ...provided,
@@ -193,6 +127,21 @@ const customStyles: StylesConfig<OptionType, true> = {
     background: "#f0f0f0",
     marginRight: "5px",
     borderRadius: "20px",
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    paddingTop: "0px",
+    paddingBottom: "0px",
+    maxHeight: "200px",
+    "&::-webkit-scrollbar": {
+      width: "5px", // Width of the scrollbar
+      height: "5px",
+      paddingLeft: "5px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "green", // Color of the scrollbar thumb
+      borderRadius: "2px", // Border radius of the thumb
+    },
   }),
   indicatorSeparator: (provided: any) => ({
     ...provided,
@@ -220,12 +169,15 @@ const customStyles: StylesConfig<OptionType, true> = {
     scrollbarWidth: "thin", // For Firefox
     scrollbarColor: "transparent transparent", // For Firefox
     paddingBottom: "5px",
+    paddingLeft: "0px",
+    marginLeft: "8px",
     "&::-webkit-scrollbar": {
       width: "2px", // Width of the scrollbar
       height: "5px",
+      paddingLeft: "5px",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#ccc", // Color of the scrollbar thumb
+      backgroundColor: "green", // Color of the scrollbar thumb
       borderRadius: "2px", // Border radius of the thumb
     },
   }),

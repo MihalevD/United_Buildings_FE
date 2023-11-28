@@ -14,10 +14,12 @@ type WrapperProps = {
 
 const Wrapper = styled(BasicBox)<WrapperProps>`
   height: 392px;
-  min-width: 400px;
   background: #cdd5b1;
+  padding-top: 110px;
   @media (max-width: 1365px) {
-    width: 40%;
+    height: 300px;
+    padding-top: 50px;
+    padding-bottom: 20px;
   }
   @media (max-width: 1160px) {
     width: 48%;
@@ -45,20 +47,35 @@ export const InfoBox = (props: InfoBoxProps) => {
       reverse={props.reverse}
       direction="column"
       justify="flex-start"
-      top="110px"
       align="center"
       fullWidth
     >
       <Icon />
-      <BasicBox top="24px" left="94px" right="94px">
+      <TextBox top="24px" left="94px" right="94px">
         <span style={{ textAlign: "center" }}>
-          {texts.length > 1 && <span style={textStyles}>{texts[0]}</span>}
-          <span style={{ ...textStyles, fontWeight: "bold" }}>
-            United buildings
-          </span>
-          <span style={textStyles}>{texts[1]}</span>
+          {texts.length > 1 && <Text>{texts[0]}</Text>}
+          <Text style={{ fontWeight: "bold" }}>United buildings</Text>
+          <Text>{texts[1]}</Text>
         </span>
-      </BasicBox>
+      </TextBox>
     </Wrapper>
   );
 };
+
+const Text = styled.span`
+  font: normal normal normal 20px/27px Segoe UI;
+  letter-spacing: 0px;
+  color: #3f4554;
+  text-align: center;
+  @media (max-width: 1365px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
+`;
+
+const TextBox = styled(BasicBox)`
+  @media (max-width: 1360px) {
+    padding-left: 62px;
+    padding-right: 62px;
+  }
+`;

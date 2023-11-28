@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import BasicBox from "../basic/BasicBox";
 import { ImageContainer } from "../basic/ImageContainer";
 import { TextContainer } from "../basic/TextContainer";
-import SquareFootIcon from "@mui/icons-material/SquareFoot";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled(BasicBox)`
@@ -26,12 +26,12 @@ const imgStyles = {
 
 export type CarouselBlockTypes = {
   id: number;
-  imgSrc: string;
+  image_url: { src: string }[];
   imgAlt: string;
-  title: string;
+  type_name: string;
   price: string;
   address: string;
-  sqm: string;
+  size: string;
   rooms: string;
 };
 
@@ -62,9 +62,13 @@ export const MobileCarouselBlock = (props: CarouselBlockTypes) => {
       <Wrapper direction="column" onClick={handleClick}>
         <BasicBox fullWidth>
           <ImageContainer
-            imageSrc={props.imgSrc}
+            imageSrc={props.image_url ? props.image_url[0].src : ""}
             imageStyles={imgStyles}
-            style={{ borderRadius: "30px", border: "1px solid #C9C7C7" }}
+            style={{
+              borderRadius: "30px",
+              border: "1px solid #C9C7C7",
+              objectFit: "cover",
+            }}
             fullWidth
           />
         </BasicBox>
@@ -85,11 +89,11 @@ export const MobileCarouselBlock = (props: CarouselBlockTypes) => {
           >
             <BasicBox justify="space-between" fullWidth>
               <TextContainer
-                text={props.title}
+                text={props.type_name}
                 textStyles={textStylesHeading}
               />
               <TextContainer
-                text={"€ " + props.price}
+                text={"€ " + props.price + ",000"}
                 textStyles={textStylesHeading}
               />
             </BasicBox>
@@ -104,9 +108,9 @@ export const MobileCarouselBlock = (props: CarouselBlockTypes) => {
               textStyles={textStylesSubHeading}
             />
             <BasicBox>
-              <SquareFootIcon />
+              <AspectRatioIcon />
               <TextContainer
-                text={props.sqm}
+                text={props.size + " кв.м."}
                 textStyles={textStylesSubHeading}
               />
             </BasicBox>

@@ -2,6 +2,7 @@ import { type } from "os";
 import useIsMobile from "../helper/isMobile";
 import BasicBox from "./basic/BasicBox";
 import { LightButton } from "./basic/LightButton";
+import styled from "@emotion/styled";
 
 type AdChooseProps = {
   setChosen: (choice: boolean) => void;
@@ -30,15 +31,21 @@ export const AdChoose: React.FC<AdChooseProps> = ({
       >
         Търся апартамент
       </LightButton>
-      <LightButton
-        style={{ marginLeft: "20px" }}
+      <SpecialLightButton
         onClick={() => {
           setChosen(true);
           setFormBuy(false);
         }}
       >
         Продавам апартамент
-      </LightButton>
+      </SpecialLightButton>
     </BasicBox>
   );
 };
+
+const SpecialLightButton = styled(LightButton)`
+  margin-left: 20px;
+  @media (max-width: 768px) {
+    margin-left: 0px;
+  }
+`;

@@ -108,6 +108,7 @@ const ApartmentModal: React.FC<ApartmentModalProps> = ({
         ...Array.from(selectedFiles),
       ]);
     }
+    console.log("selectedFiles", selectedFiles);
   };
 
   const removeImage = (index: number) => {

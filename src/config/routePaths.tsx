@@ -3,10 +3,9 @@ const routePaths = {
   catalog: "/catalog",
   aboutUs: "/about-us",
   property: "/property/:id",
-  admin: "/admin",
+  admin: "/admin/*",
   projects: "/projects",
   project: "/projects/:id",
-  adminTrain: "/adminTrain/*",
 };
 
 export default routePaths;

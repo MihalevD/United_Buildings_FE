@@ -7,9 +7,11 @@ import { PropertyData } from "../PropertyData";
 import { MoreButton } from "../MoreButton";
 import { FiltersRow } from "../FiltersRow";
 import { FilterType } from "../../config/types";
-import { FilterContext } from "../../App";
 import useIsMobile from "../../helper/isMobile";
 import { MobileAd } from "../mobile/MobileAd";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { TextContainer } from "../basic/TextContainer";
 
 const Wrapper = styled(BasicBox)``;
 
@@ -19,22 +21,23 @@ const InnerWrapper = styled(BasicBox)`
     max-width: 100%;
   }
 `;
-
-type CatalogProps = {
-  onDelete: (filter: FilterType) => void;
+const textStyles = {
+  fontSize: "48px",
+  lineHeight: "24px",
+  color: "#3f4554",
 };
-export const Catalog = (props: CatalogProps) => {
-  const [data, setData] = useState<CarouselBlockTypes[]>(items.slice(0, 9));
-  const isMobile = useIsMobile();
 
-  const [names, setNames] = useState([]);
+export const Catalog = () => {
+  const data = useSelector((state: RootState) => state.apartments);
+  const dispatch = useDispatch();
+
+  const isMobile = useIsMobile();
   const [number, setNumber] = useState(data?.length);
 
-  const filters = useContext(FilterContext);
+  const filters = useSelector((state: RootState) => state.filters);
 
   const onAddMore = () => {
-    setData([...data, ...items.slice(number, number + 9)]);
-    setNumber(number + 9);
+    dispatch({ type: "ADD_MORE" });
   };
   useEffect(() => {
     if (data) {
@@ -43,13 +46,7 @@ export const Catalog = (props: CatalogProps) => {
   }, [data.length]);
 
   return (
-    <Wrapper
-      justify="center"
-      bottom={isMobile ? "0px" : "350px"}
-      align="center"
-      direction="column"
-      fullWidth
-    >
+    <Wrapper justify="center" align="center" direction="column" fullWidth>
       <InnerWrapper
         direction="column"
         align="center"
@@ -58,12 +55,25 @@ export const Catalog = (props: CatalogProps) => {
         right={isMobile ? "36px" : "0px"}
       >
         {Object.values(filters).length > 0 && (
-          <BasicBox fullWidth align="flex-start">
-            <FiltersRow filters={filters} onDelete={props.onDelete} />
+          <BasicBox fullWidth align="center" top="30px">
+            <FiltersRow />
           </BasicBox>
         )}
-        <PropertyData data={data} top={Object.values(filters).length > 0} />
-        <MoreButton onClick={onAddMore} max={number % 9 > 0}></MoreButton>
+        {data && data.length > 0 && (
+          <>
+            <PropertyData data={data} top={Object.values(filters).length > 0} />
+            <MoreButton onClick={onAddMore} max={number % 9 > 0}></MoreButton>
+          </>
+        )}
+        {data && data.length === 0 && (
+          <BasicBox fullWidth align="center" top="100px" bottom="100px">
+            <TextContainer
+              className="search-text"
+              text="Няма намерени резултати"
+              textStyles={textStyles}
+            />
+          </BasicBox>
+        )}
       </InnerWrapper>
       {isMobile && <MobileAd />}
     </Wrapper>

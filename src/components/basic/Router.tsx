@@ -2,61 +2,58 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PublicRoutes from "./PublicRoutes";
 import Helmet from "react-helmet";
 import { FilterType } from "../../config/types";
-import { Catalog } from "../pages/Catalog";
 import { useEffect } from "react";
 import React from "react";
-import { FilterContext } from "../../App";
 import routePaths from "../../config/routePaths";
-import isMobile from "../../helper/isMobile";
 import { DesktopHeader } from "../DesktopHeader";
 import { Footer } from "../Footer";
 import { MobileHeader } from "../MobileHeader";
 import useIsMobile from "../../helper/isMobile";
 import { MobileFooter } from "../mobile/MobileFooter";
+import { useDispatch } from "react-redux";
+import { asyncGetTypes } from "../../redux/actions/typesActions";
+import { asyncGetLocations } from "../../redux/actions/locationsActions";
+import { asyncGetKvartals } from "../../redux/actions/kvartaliActions";
+import useIsTablet from "../../helper/isTablet";
+import { asyncGetProjects } from "../../redux/actions/projectActions";
 
-type RouterProps = {
-  onDeleteFilter: (filters: FilterType) => void;
-};
-
-const Router = (props: RouterProps) => {
+const Router = () => {
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
+  const isTablet = useIsTablet();
+
   useEffect(() => {
-    console.log("pathname", window.location.pathname);
-  }, [window.location.pathname]);
+    // Fetch data when the component mounts
+    dispatch(asyncGetLocations() as any);
+    dispatch(asyncGetKvartals() as any);
+    dispatch(asyncGetTypes() as any);
+    dispatch(asyncGetProjects() as any);
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
-      <FilterContext.Consumer>
-        {(filters) => (
-          <Routes>
-            {PublicRoutes.map(({ component: Component, path, title }) => (
-              <Route
-                path={path}
-                key={path}
-                element={
-                  <React.Fragment>
-                    {path !== routePaths.admin &&
-                      path !== routePaths.adminTrain &&
-                      // Render Header for non-AdminPage routes
-                      (isMobile ? (
-                        <MobileHeader />
-                      ) : (
-                        <DesktopHeader setFilters={props.onDeleteFilter} />
-                      ))}
-                    <Component />
-                    <Helmet title={title} />
-                    {isMobile ? (
-                      <MobileFooter />
-                    ) : path !== routePaths.admin &&
-                      path !== routePaths.adminTrain ? (
-                      <Footer />
-                    ) : null}
-                  </React.Fragment>
-                }
-              />
-            ))}
-          </Routes>
-        )}
-      </FilterContext.Consumer>
+      <Routes>
+        {PublicRoutes.map(({ component: Component, path, title }) => (
+          <Route
+            path={path}
+            key={path}
+            element={
+              <React.Fragment>
+                {path !== routePaths.admin &&
+                  // Render Header for non-AdminPage routes
+                  (isMobile ? <MobileHeader /> : <DesktopHeader />)}
+                <Component />
+                <Helmet title={title} />
+                {isMobile ? (
+                  <MobileFooter />
+                ) : path !== routePaths.admin ? (
+                  <Footer />
+                ) : null}
+              </React.Fragment>
+            }
+          />
+        ))}
+      </Routes>
     </BrowserRouter>
   );
 };

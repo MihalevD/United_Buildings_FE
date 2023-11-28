@@ -36,6 +36,7 @@ const usePostApartment = () => {
     // Wait for all image files to be processed before proceeding
     if (imageFiles) {
       for (const imageFile of imageFiles) {
+        console.log(imageFile)
         formData.append("images", imageFile);
       }
     }

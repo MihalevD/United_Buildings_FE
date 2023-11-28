@@ -2,24 +2,23 @@ import { useMutation, useQuery, UseQueryOptions } from 'react-query';
 import {useApiCall, handleApiResponse, handleApiMutation , generateApiUrl} from './useApiCall';
 
 export interface Location {
-  idlocations?: number;
+  id?: number;
   location_name?: string;
   image_url?: string;
 }
 
 export interface Type {
-  idtypes?: number;
+  id?: number;
   type_name?: string;
 }
 
-export interface PriceRange {
-  idprice_range?: number;
-  top: Number;
-  bottom: Number;
+export interface Kvartal {
+  id?: number;
+  name: String;
 }
 
 export interface Project {
-  idprojects: number;
+  id: number;
   project_name?: string;
   image_url?: string[];
 }
@@ -28,10 +27,11 @@ export interface Project {
 export type OptionType = { label: string; value: string };
 
 
-const transformPriceData = (data: PriceRange[]): OptionType[] => {
-  return data.map((range) => ({
-    label: `From ${range.bottom} to ${range.top}`,
-    value: range.idprice_range ? range.idprice_range.toString() : '',
+export const transformKvartalData = (data: Kvartal[]): OptionType[] => {
+  console.log(data)
+  return data.map((kvartal) => ({
+    label: `${kvartal.name}`,
+    value: kvartal.id ? kvartal.id.toString() : '',
   }));
 };
 
@@ -41,7 +41,7 @@ export function transformTypeData (data: Type[] | undefined): OptionType[] {
   }
   return data.map((type) => ({
     label: type.type_name || '',
-    value: type.idtypes ? type.idtypes.toString() : '', 
+    value: type.id ? type.id.toString() : '', 
   }));
 };
 
@@ -52,7 +52,7 @@ export function transformLocationData(data: Location[] | undefined): OptionType[
 
   return data.map((location) => ({
     label: location.location_name || '',
-    value: location.idlocations ? location.idlocations.toString() : '',
+    value: location.id ? location.id.toString() : '',
   }));
 }
 
@@ -63,7 +63,7 @@ export function transformProjectData(data: Project[] | undefined): OptionType[] 
 
   return data.map((project) => ({
     label: project.project_name || '',
-    value: project.idprojects ? project.idprojects.toString() : '',
+    value: project.id ? project.id.toString() : '',
   }));
 }
 
@@ -71,28 +71,30 @@ export function transformProjectData(data: Project[] | undefined): OptionType[] 
 const useGetLocations = (resourceIds:any, options:any) => {
   const { data: locationData } = useQuery(
     `locations_${options.page}_${options.perPage}_${options.field}_${options.order}_${options.yourFilterField}`,
-    () => handleApiResponse(useApiCall(generateApiUrl(`locations/${resourceIds.join(',')}`))),
+    () => handleApiResponse(useApiCall(generateApiUrl(`locations${resourceIds ? `/${resourceIds.join(',')}` : ''}`))),
     options
   );
 
-  return { data: locationData };
+  if(options.transform){
+    return { data: transformLocationData(locationData as Location[]) as OptionType[] };
+  }
+
+  return { data: locationData as OptionType[] };
 };
 
 
-// useGetPriceRanges
-const useGetPriceRanges = ({ filtered = false, ...options } = {}) => {
-  const { data: priceData } = useQuery<PriceRange[]>(
-    'priceRanges',
-    () => handleApiResponse<PriceRange[]>(useApiCall<PriceRange[]>(generateApiUrl('prices'))),
+// useGetKvartali
+const useGetKvartali = ({ filtered = true, ...options } = {}) => {
+  const { data: kvartaliData } = useQuery<Kvartal[]>(
+    'kvartali',
+    () => handleApiResponse<Kvartal[]>(useApiCall<Kvartal[]>(generateApiUrl('kvartali'))),
     options
   );
 
   let transformedData;
-  if (filtered) {
-    transformedData = priceData ? transformPriceData(priceData) : [];
-  }
+    transformedData = kvartaliData ? transformKvartalData(kvartaliData) : [];
 
-  return { data: filtered ? transformedData : priceData };
+  return { data:  transformedData };
 };
 
 // useGetTypes
@@ -161,26 +163,6 @@ const usePostType = () => {
     return typeData;  
   });
 };
-
-// usePostPriceRange
-const usePostPriceRange = () => {
-  return useMutation<PriceRange, Error, PriceRange>(async (priceRangeData) => {
-    const response = await useApiCall(generateApiUrl('prices'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(priceRangeData),
-    });
-
-    if (response.error) {
-      throw new Error(response.error.message);
-    }
-
-    return priceRangeData;
-  });
-};
-
 // usePostProject
 const usePostProject = () => {
   const mutation = useMutation<Project, Error, { project_name: any, imageFiles: File[] }>(async ({ project_name, imageFiles }) => {
@@ -210,7 +192,7 @@ const usePostProject = () => {
 // useUpdateLocation
 const useUpdateLocation = () => {
   return useMutation<Location[], Error, Location>(async (updatedData) => {
-    return handleApiMutation<Location[]>(useApiCall(generateApiUrl('locations', updatedData.idlocations), {
+    return handleApiMutation<Location[]>(useApiCall(generateApiUrl('locations', updatedData.id), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -224,20 +206,7 @@ const useUpdateLocation = () => {
 const useUpdateType = () => {
   return useMutation<Type[], Error, Type>(async (updatedData) => {
     console.log(updatedData)
-    return handleApiMutation<Type[]>(useApiCall(generateApiUrl('types', updatedData.idtypes), {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    }));
-  });
-};
-
-// useUpdatePriceRange
-const useUpdatePriceRange = () => {
-  return useMutation<PriceRange[], Error, PriceRange>(async (updatedData) => {
-    return handleApiMutation<PriceRange[]>(useApiCall(generateApiUrl('prices', updatedData.idprice_range), {
+    return handleApiMutation<Type[]>(useApiCall(generateApiUrl('types', updatedData.id), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -290,15 +259,6 @@ const useDeleteType = () => {
   });
 };
 
-// useDeletePriceRange
-const useDeletePriceRange = () => {
-  return useMutation<void, Error, number>(async (priceRangeId) => {
-    return handleApiMutation<void>(useApiCall(generateApiUrl('prices', priceRangeId), {
-      method: 'DELETE',
-    }));
-  });
-};
-
 // useDeleteProject
 const useDeleteProject = () => {
   const mutation = useMutation<void, Error, number>(async (idprojects) => {
@@ -311,19 +271,16 @@ const useDeleteProject = () => {
 
 export {
   useGetLocations,
-  useGetPriceRanges,
+  useGetKvartali,
   useGetTypes,
   useGetProjects,
   usePostLocation,
   usePostType,
-  usePostPriceRange,
   usePostProject,
   useUpdateLocation,
   useUpdateType,
-  useUpdatePriceRange,
   useUpdateProject,
   useDeleteLocation,
   useDeleteType,
-  useDeletePriceRange,
   useDeleteProject
 };

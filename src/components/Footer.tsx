@@ -6,6 +6,7 @@ import { TextContainer } from "./basic/TextContainer";
 import { Ad } from "./Ad";
 import house from "../img/house.png";
 import useIsTablet from "../helper/isTablet";
+import { MobileAd } from "./mobile/MobileAd";
 
 const textStylesHeading = {
   font: "normal normal bold 14px/12px Segoe UI",
@@ -21,74 +22,50 @@ export const Footer = () => {
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
   return (
-    <FooterWrapper
-      fullWidth
-      justify="center"
-      align="center"
-      $isMobile={isMobile}
-    >
+    <>
       <BasicBox
-        justify="flex-start"
-        align="center"
-        style={{ width: "inherit", height: "inherit" }}
+        fullWidth
+        justify="center"
+        style={{ marginBottom: "-30px", zIndex: 10 }}
       >
-        <Logo left />
-        <BasicBox
-          direction="column"
-          left="94px"
-          right={isTablet ? "20px" : "136px"}
-        >
-          <BasicBox bottom="25px">
-            <TextContainer text="Контакти" textStyles={textStylesHeading} />
-          </BasicBox>
-          <TextContainer
-            text="0889 466 977"
-            textStyles={textStylesSubHeading}
-          />
-          <TextContainer
-            text="sales@unitedbuildings.bg"
-            textStyles={textStylesSubHeading}
-          />
-          <TextContainer
-            text="бул. Даме Груев 1, 8001 Бургас, България"
-            textStyles={textStylesSubHeading}
-          />
-        </BasicBox>
-        {/* <BasicBox
-          direction="column"
-          style={{ width: "285px", marginTop: "-20px" }}
-        >
-          <BasicBox bottom="25px">
-            <TextContainer
-              text="Работно време"
-              textStyles={textStylesHeading}
-            />
-          </BasicBox>
-          <BasicBox justify="space-between" fullWidth>
-            <TextContainer
-              text="Понеделник - Събота"
-              textStyles={textStylesSubHeading}
-            />
-            <TextContainer
-              text="09:00 - 19:00"
-              textStyles={textStylesSubHeading}
-            />
-          </BasicBox>
-          <BasicBox justify="space-between" fullWidth>
-            <TextContainer text="Неделя" textStyles={textStylesSubHeading} />
-            <TextContainer
-              text="Почивен ден"
-              textStyles={textStylesSubHeading}
-            />
-          </BasicBox>
-        </BasicBox> */}
+        {!isMobile ? <Ad /> : <MobileAd />}
       </BasicBox>
-      {!isMobile && (
-        <>
-          <Ad />
-        </>
-      )}
-    </FooterWrapper>
+      <FooterWrapper
+        fullWidth
+        justify="center"
+        align="center"
+        $isMobile={isMobile}
+      >
+        <BasicBox
+          justify="flex-start"
+          align="center"
+          style={{ width: "inherit", height: "inherit" }}
+        >
+          <Logo left />
+          <BasicBox
+            direction="column"
+            left="94px"
+            right={isTablet ? "20px" : "136px"}
+          >
+            <BasicBox bottom="25px">
+              <TextContainer text="Контакти" textStyles={textStylesHeading} />
+            </BasicBox>
+            <TextContainer
+              text="0889 466 977"
+              textStyles={textStylesSubHeading}
+            />
+            <TextContainer
+              text="sales@unitedbuildings.bg"
+              textStyles={textStylesSubHeading}
+            />
+            <TextContainer
+              text="бул. Даме Груев 1, 8001 Бургас, България"
+              textStyles={textStylesSubHeading}
+            />
+          </BasicBox>
+        </BasicBox>
+      </FooterWrapper>
+    </>
   );
 };
 const FooterWrapper = styled(BasicBox)<{ $isMobile: boolean }>`

@@ -39,7 +39,7 @@ export const LocationsAboutUs = () => {
       <BasicBox top="80px" bottom="50px">
         <CustomText text="ОТДЕЛ ПРОДАЖБИ" />
       </BasicBox>
-      <BasicBox style={{ width: "80%" }} bottom="620px">
+      <BasicBox style={{ width: "80%" }} bottom="80px">
         <BasicBox
           direction="column"
           justify="space-between"

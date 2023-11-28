@@ -76,7 +76,7 @@ const Button = styled.button`
 
 const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
-  const locationQuery = useGetLocations();
+  const locationQuery = useGetLocations("locations", { limit: 1000 });
   const typeQuery = useGetTypes();
   const projectQuery = useGetProjects();
   const priceRangeQuery = useGetPriceRanges();

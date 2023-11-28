@@ -10,7 +10,7 @@ const text2 =
   "РАЗГЛЕДАЙТЕ НАЙ-АТРАКТИВНИТЕ КАТЕГОРИИ ЗА ДА ОТКРИЕТЕ СВОЕТО ЖИЛИЩЕ";
 
 const tagTextStyles = {
-  color: "#C9C7C7",
+  color: "#C9C7CF",
   fontSize: "30px",
   lineHeight: "20px",
   fontWeight: "700",
@@ -36,18 +36,19 @@ const Wrapper = styled.div`
   @media (max-width: 1365px) {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 16px 16px;
     grid-template-areas:
       "first first"
-      ". ."
-      ". ."
-      ". .;
+      "second second"
+      "third third"
+      "fourth fourth";
+    gap: 16px 16px;
   }
 `;
 
 const imgStyles = {
   width: "100%",
   height: "inherit",
+  maxHeight: "300px",
 };
 
 const styles = {
@@ -83,8 +84,10 @@ export const Locations = () => {
           top
           style={{ ...styles, gridarea: "first" }}
           tagTextStyles={tagTextStyles}
+          overlay
         />
         <ImageContainerWithHover
+          overlay
           imageSrc={sz}
           imageStyles={imgStyles}
           fullHeight
@@ -94,6 +97,7 @@ export const Locations = () => {
           tagTextStyles={tagTextStyles}
         />
         <ImageContainerWithHover
+          overlay
           imageSrc={ch}
           imageStyles={imgStyles}
           tag="Черноморец"
@@ -103,6 +107,7 @@ export const Locations = () => {
           tagTextStyles={tagTextStyles}
         />
         <ImageContainerWithHover
+          overlay
           imageSrc={sz}
           imageStyles={imgStyles}
           fullHeight
@@ -112,6 +117,7 @@ export const Locations = () => {
           tagTextStyles={tagTextStyles}
         />
         <ImageContainerWithHover
+          overlay
           imageSrc={ch}
           imageStyles={imgStyles}
           tag="Черноморец"
@@ -121,6 +127,7 @@ export const Locations = () => {
           tagTextStyles={tagTextStyles}
         />
         <ImageContainerWithHover
+          overlay
           imageSrc={sz}
           imageStyles={imgStyles}
           fullHeight
@@ -130,6 +137,7 @@ export const Locations = () => {
           tagTextStyles={tagTextStyles}
         />
         <ImageContainerWithHover
+          overlay
           imageSrc={ch}
           imageStyles={imgStyles}
           tag="Черноморец"

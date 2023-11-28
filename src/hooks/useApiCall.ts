@@ -39,10 +39,13 @@ const handleApiMutation = async <T>(mutation: Promise<ApiResponse<T>>) => {
   }
 };
 
-const generateApiUrl:any = (endpoint: string, id?: number) => {
+const generateApiUrl:any = (endpoint: string, id?: number, query?: any) => {
   const url = useUrl();
   if (id !== undefined) {
     return `${url}/${endpoint}/${id}`;
+  }
+  if(query !== undefined) {
+    return `${url}/${endpoint}?${query}`;
   }
   return `${url}/${endpoint}`;
 };

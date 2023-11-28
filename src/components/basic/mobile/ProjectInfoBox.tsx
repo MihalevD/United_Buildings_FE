@@ -14,6 +14,7 @@ const Wrapper = styled(BasicBox)<{ $top?: boolean }>`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  min-height: 70px;
 `;
 
 const textStyles = {

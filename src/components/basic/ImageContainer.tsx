@@ -8,6 +8,7 @@ const boxStyle = {
   position: "absolute" as const,
   bottom: "8%",
   left: "8%",
+  zIndex: 2,
 };
 
 export const ImageContainer: React.FC<{
@@ -21,6 +22,8 @@ export const ImageContainer: React.FC<{
   children?: React.ReactNode;
   top?: boolean;
   tagTextStyles?: { [name: string]: string };
+  animation?: boolean;
+  overlay?: boolean;
 }> = ({
   imageSrc,
   imageStyles,
@@ -31,9 +34,16 @@ export const ImageContainer: React.FC<{
   style,
   children,
   tagTextStyles,
+  animation = true,
+  overlay = false,
 }) => {
   return (
-    <Wrapper fullWidth={fullWidth} fullHeight={fullHeight} style={imageStyles}>
+    <Wrapper
+      fullWidth={fullWidth}
+      fullHeight={fullHeight}
+      style={imageStyles}
+      $animation={animation}
+    >
       {!!imageSrc && (
         <ImageComponent
           imageSrc={imageSrc}
@@ -59,14 +69,30 @@ export const ImageContainer: React.FC<{
           <TextContainer text={tag} textStyles={tagTextStyles} />
         </BasicBox>
       )}
+      {overlay && (
+        <BasicBox
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "black",
+            opacity: "0.3",
+            zIndex: 1,
+            borderRadius: "30px",
+          }}
+        />
+      )}
     </Wrapper>
   );
 };
-const Wrapper = styled(BasicBox)`
+const Wrapper = styled(BasicBox)<{ $animation: boolean }>`
   position: relative;
-  transition: all 0.5s ease-in-out;
+  transition: ${({ $animation }) =>
+    $animation ? "all 0.5s ease-in-out" : "none"};
   :hover {
-    scale: 1.1;
+    scale: ${({ $animation }) => ($animation ? 1.1 : "none")};
     transition: all 0.5s ease-in-out;
     cursor: pointer;
     z-index: 10;

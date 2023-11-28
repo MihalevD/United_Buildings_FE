@@ -20,7 +20,7 @@ export const SuggestionsBar = () => {
         background: "#7A7D48",
         borderTop: "1px solid #696969",
         borderBottom: "1px solid #696969",
-        marginBottom: "614px",
+        marginBottom: "80px",
       }}
       justify="center"
     >
@@ -29,7 +29,6 @@ export const SuggestionsBar = () => {
           <TextContainer text="Нови предложения" textStyles={textStyles} />
         </BasicBox>
         <SimpleSlider />
-        {/* <Carousel /> */}
       </BasicBox>
     </BasicBox>
   );

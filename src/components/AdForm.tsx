@@ -1,22 +1,24 @@
 import styled from "@emotion/styled";
 import BasicBox from "./basic/BasicBox";
-import { ImageContainer } from "./basic/ImageContainer";
 import { LightButton } from "./basic/LightButton";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MultiValue, ActionMeta, StylesConfig } from "react-select";
-import useIsTablet from "../helper/isTablet";
-import {
-  OptionType,
-  useGetLocations,
-  useGetTypes,
-  useGetPriceRanges,
-} from "../hooks/filterHooks";
+import { StylesConfig } from "react-select";
+import { OptionType } from "../hooks/filterHooks";
 import Select from "./basic/Select";
-import { useSpring, animated, config } from "react-spring"; // Import react-spring
+import { useSpring, animated } from "react-spring"; // Import react-spring
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  FormState,
+  clearFilters,
+  setInputValue,
+} from "../redux/reducers/adFormReducer";
 
 type AdFormProps = {
   formBuy: boolean;
+  setChosen: (chosen: boolean) => void;
 };
 
 const Wrapper = styled(animated(BasicBox))<{ isOpen: boolean }>`
@@ -24,48 +26,33 @@ const Wrapper = styled(animated(BasicBox))<{ isOpen: boolean }>`
   overflow: ${(props) => (props.isOpen ? "visible" : "hidden")};
 `;
 
-export const AdForm: React.FC<AdFormProps> = ({ formBuy }) => {
-  const [filters, setFilters] = useState({
-    type: [] as OptionType[],
-    place: [] as OptionType[],
-    price: [] as OptionType[],
-  });
-  const isTablet = useIsTablet();
+export const AdForm: React.FC<AdFormProps> = ({ formBuy, setChosen }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const isProductPage = location.pathname.split("/")[1] == "property";
+
+  const locationData = useSelector((state: RootState) => state.locations);
+  const kvartaliData = useSelector((state: RootState) => state.kvartals);
+  const typeData = useSelector((state: RootState) => state.types);
+  const { inputValues } = useSelector((state: RootState) => state.adForm);
 
   const [isOpen, setIsOpen] = useState(formBuy);
 
-  useEffect(() => {
-    // Watch for changes in the formBuy prop
-    setIsOpen(formBuy);
-  }, [formBuy]);
-
   const onApply = () => {
+    // Dispatch an action to set the filters in the Redux store
+
     if (location.pathname === "/") {
       navigate("/catalog");
     }
-    // setFilters(filters);
-    clearState();
+
+    // Dispatch an action to clear the filters in the Redux store
+    dispatch(clearFilters());
   };
 
-  const handleMultiChange =
-    (field: keyof typeof filters) =>
-    (newValue: MultiValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-      setFilters({
-        ...filters,
-        [field]: newValue || [],
-      });
+  const handleInputChange =
+    (field: keyof FormState["inputValues"]) => (value: any) => {
+      dispatch(setInputValue({ field, value }));
     };
-
-  const clearState = () => {
-    setFilters({ type: [], place: [], price: [] });
-  };
-
-  const { data: locationData } = useGetLocations();
-  const { data: typeData } = useGetTypes();
-  const { data: priceData } = useGetPriceRanges();
 
   const sidebarAnimation = useSpring({
     height: isOpen ? "450px" : "0px",
@@ -83,58 +70,61 @@ export const AdForm: React.FC<AdFormProps> = ({ formBuy }) => {
       isOpen={isOpen}
     >
       <BasicBox fullWidth bottom="8px" justify="space-between">
-        <InputBlock placeholder="Твоето име" style={{ width: "100%" }} />
+        <InputBlock
+          placeholder="Твоето име"
+          style={{ width: "100%" }}
+          value={inputValues.name}
+          onChange={(e) => handleInputChange("name")(e.target.value)}
+        />
       </BasicBox>
       <BasicBox fullWidth bottom="8px" justify="space-between">
-        <InputBlock placeholder="Твоя телефон" style={{ width: "100%" }} />
+        <InputBlock
+          placeholder="Твоя телефон"
+          style={{ width: "100%" }}
+          value={inputValues.phone}
+          onChange={(e) => handleInputChange("phone")(e.target.value)}
+        />
       </BasicBox>
       <BasicBox fullWidth>
-        <InputBlock placeholder="Твоя имейл" style={{ width: "100%" }} />
+        <InputBlock
+          placeholder="Твоя имейл"
+          style={{ width: "100%" }}
+          value={inputValues.email}
+          onChange={(e) => handleInputChange("email")(e.target.value)}
+        />
       </BasicBox>
       <Select
         options={locationData ?? []}
         placeholder="Населено място"
-        optionSelected={filters.place}
-        handleChange={handleMultiChange("place")}
+        optionSelected={inputValues.place}
+        handleChange={handleInputChange("place")}
         styles={customStyles}
       />
 
       <Select
         options={typeData ?? []}
-        handleChange={handleMultiChange("type")}
-        optionSelected={filters.type}
+        handleChange={handleInputChange("type")}
+        optionSelected={inputValues.type}
         placeholder="Тип имот"
         styles={customStyles}
       />
 
       <Select
-        options={priceData ?? []}
+        options={kvartaliData ?? []}
         placeholder="Цена"
-        optionSelected={filters.price}
+        optionSelected={inputValues.kvartal}
         styles={customStyles}
-        handleChange={handleMultiChange("price")}
+        handleChange={handleInputChange("kvartal")}
       />
-      <BasicBox fullWidth justify="center" top="52px">
+      <BasicBox fullWidth justify="space-evenly" top="52px">
         <LightButton>Изпрати</LightButton>
+        <CloseButton onClick={() => setChosen(false)}>
+          <CloseIcon />
+        </CloseButton>
       </BasicBox>
     </Wrapper>
   );
 };
-const CustomTextArea = styled.textarea`
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #707070;
-  width: 100%;
-  height: 100px;
-  resize: none;
-  outline-style: none;
-  border-radius: 30px;
-  padding-left: 30px;
-  padding-top: 12px;
-  box-sizing: border-box;
-  font: normal normal 300 18px/24px Segoe UI;
-  letter-spacing: 0px;
-  color: #696969;
-`;
 
 const InputBlock = styled.input`
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -172,4 +162,25 @@ const customStyles: StylesConfig<OptionType, true> = {
     ...provided,
     color: "rgba(63, 69, 84, 1)",
   }),
+  container: (provided: any) => ({
+    ...provided,
+    marginLeft: "0px",
+  }),
 };
+
+const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 20px;
+  z-index: 1000;
+  @media (max-width: 768px) {
+    top: 10px;
+    right: 5px;
+  }
+`;

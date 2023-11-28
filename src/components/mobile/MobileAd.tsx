@@ -4,6 +4,8 @@ import { AdForm } from "../AdForm";
 import BasicBox from "../basic/BasicBox";
 import styled from "@emotion/styled";
 import useIsMobile from "../../helper/isMobile";
+import { useDispatch, useSelector } from "react-redux";
+import { setFormBuy } from "../../redux/reducers/adFormReducer";
 
 const Wrapper = styled(BasicBox)`
   background: #7a7d48 0% 0% no-repeat padding-box;
@@ -37,7 +39,12 @@ type MobileAdProps = {
 
 export const MobileAd: React.FC<MobileAdProps> = ({ hasPadding = true }) => {
   const [chosen, setChosen] = useState(false);
-  const [formBuy, setFormBuy] = useState(false);
+  const { formBuy } = useSelector((state: any) => state.adForm);
+  const dispatch = useDispatch();
+
+  const setFormBuyLocal = (value: boolean) => {
+    dispatch(setFormBuy(value));
+  };
   const isMobile = useIsMobile();
   return (
     <BasicBox
@@ -47,7 +54,7 @@ export const MobileAd: React.FC<MobileAdProps> = ({ hasPadding = true }) => {
       style={{ boxSizing: "border-box" }}
       bottom="50px"
     >
-      <Wrapper>
+      <Wrapper style={{ position: "relative" }}>
         <BasicBox
           top="30px"
           bottom="30px"
@@ -64,13 +71,10 @@ export const MobileAd: React.FC<MobileAdProps> = ({ hasPadding = true }) => {
           <SecondaryText>
             <span>Направи запитване</span>
           </SecondaryText>
-          {chosen && isMobile && (
-            <AdChoose setChosen={setChosen} setFormBuy={setFormBuy} />
-          )}
           {chosen ? (
-            <AdForm formBuy={formBuy} />
+            <AdForm formBuy={chosen} setChosen={setChosen} />
           ) : (
-            <AdChoose setChosen={setChosen} setFormBuy={setFormBuy} />
+            <AdChoose setChosen={setChosen} setFormBuy={setFormBuyLocal} />
           )}
         </BasicBox>
       </Wrapper>

@@ -20,19 +20,32 @@ const Wrapper = styled(BasicBox)`
     font-size: 18px !important;
   }
   padding: 10px;
-  background-color: #fff;
+  background-color: transparent;
   :hover {
-    background-color: #f2f2f2;
+    text-decoration: none;
+    border: 1px solid green;
+    box-shadow: 0 0 10px green;
   }
+  text-decoration: none;
   cursor: pointer;
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 18px;
 `;
 
 export const ContactUs = () => {
   return (
     <Wrapper fullHeight direction="column">
-      <a href="tel:8882192787">089 232 288</a>
+      <a
+        href="tel:8882192787"
+        style={{
+          textDecoration: "none",
+          color: "#3f4554",
+          paddingLeft: "8px",
+          paddingRight: "8px",
+        }}
+      >
+        089 232 288
+      </a>
     </Wrapper>
   );
 };

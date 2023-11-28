@@ -6,11 +6,13 @@ import { NavbarButtons } from "./NavbarButtons";
 const Wrapper = styled(BasicBox)`
   position: relative;
   width: 100%;
-  padding-top: 47px;
+  padding-top: 23px;
+  padding-bottom: 23px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 `;
 
 export const Navbar = () => {

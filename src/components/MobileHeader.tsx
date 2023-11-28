@@ -13,6 +13,9 @@ import MobileSidebar from "./mobile/MobileSidebar";
 import { BackButton } from "./BackButton";
 import { ImageBlockProperty } from "./ImageBlockProperty";
 
+import projectbk from "../img/projects.png";
+import { TextContainer } from "./basic/TextContainer";
+
 const HeaderContainer = styled(BasicBox)<{}>`
   max-height: 380px;
   max-width: 100%;
@@ -41,6 +44,9 @@ export const MobileHeader = () => {
   const isProductPage = location.pathname.split("/")[1] == "property";
   const isProjectsPage = location.pathname.split("/")[1] == "projects";
 
+  const singlePage =
+    location.pathname.split("/")[2] !== undefined && isProjectsPage;
+
   const toggleDrawer = (event: any) => {
     if (
       event &&
@@ -61,11 +67,9 @@ export const MobileHeader = () => {
       }
       style={{ position: "relative" }}
     >
-      {!isProductPage && !isProjectsPage ? (
+      {!isProductPage && !singlePage ? (
         <>
-          {!isAboutPage ? (
-            <img src={background} style={{ width: "100%" }} />
-          ) : (
+          {isAboutPage ? (
             <>
               <Text>НИЕ РАЗБИРАМЕ САМО ОТ ИМОТИ, НО СМЕ ДОБРИ В ТОВА</Text>
               <img
@@ -77,6 +81,20 @@ export const MobileHeader = () => {
                 }}
               />
             </>
+          ) : isProjectsPage ? (
+            <>
+              <img
+                src={projectbk}
+                style={{
+                  width: "100%",
+                  minHeight: "300px",
+                  objectFit: "cover",
+                }}
+              />
+              <TextBox>ПРОЕКТИ</TextBox>
+            </>
+          ) : (
+            <img src={background} style={{ width: "100%" }} />
           )}
         </>
       ) : (
@@ -112,4 +130,15 @@ const LogoBlock = styled(BasicBox)`
 `;
 const OptionWrapper = styled(BasicBox)`
   cursor: pointer;
+`;
+
+const TextBox = styled(BasicBox)`
+  z-index: 1;
+  position: absolute;
+  top: 40%;
+  left: 15%;
+  text-align: center;
+  font: normal normal 600 30px/43px Segoe UI;
+  letter-spacing: 0px;
+  color: #3f4554;
 `;

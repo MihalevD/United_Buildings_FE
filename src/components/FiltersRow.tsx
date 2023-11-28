@@ -1,35 +1,37 @@
-import styled from '@emotion/styled';
-import {useState} from 'react';
-import {Filter} from './Filter';
-import BasicBox from './basic/BasicBox';
-import {FilterType} from '../config/types';
+import { Filter } from "./Filter";
+import BasicBox from "./basic/BasicBox";
+import { useSelector } from "react-redux";
 
-const Wrapper = styled(BasicBox)``;
-
-type FiltersRowProps = {
-  filters: FilterType;
-  onDelete: (filter: FilterType) => void;
-};
-
-export const FiltersRow = (props: FiltersRowProps) => {
-  const onDelete = (key: keyof FilterType) => {
-    let copy = {...props.filters};
-    delete copy[key];
-    props.onDelete(copy);
-  };
+export const FiltersRow = () => {
+  const filters = useSelector((state: any) => state.filters);
 
   return (
-    <Wrapper top='180px'>
-      {props.filters &&
-        Object.entries(props.filters)?.map(([key, value], index) => {
-          return (
-            <Filter
-              key={index}
-              text={value}
-              onDelete={() => onDelete(key as keyof FilterType)}
-            />
-          );
+    <BasicBox top="120px" fullWidth justify="center">
+      {filters &&
+        Object.entries(filters)?.map(([key, value]: any, index) => {
+          if (key === "priceRange") {
+            value = `${value[0]},000€` + " --- " + `${value[1]},000€`;
+            return (
+              <Filter
+                key={key}
+                text={value}
+                item={value}
+                type={key}
+                close={false}
+              />
+            );
+          }
+          return value.map((item: any, newIndex: Number) => {
+            return (
+              <Filter
+                key={key + newIndex}
+                text={item.label}
+                item={item}
+                type={key}
+              />
+            );
+          });
         })}
-    </Wrapper>
+    </BasicBox>
   );
 };
