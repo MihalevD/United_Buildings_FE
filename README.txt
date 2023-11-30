@@ -1,11 +1,25 @@
-Денислав Михалев
-ФН : 81772
-КН 4-ти курс
 
-курсове от aws educate :
-Getting started with Security
-Getting started with Cloud Operations 
-Introduction to Cloud 101
-Getting started with databases
-Alexa 101
-Software Development Engineer
+UnitedBuildings App
+Overview
+Welcome to UnitedBuildings, your go-to React application for buying and selling properties. This app is designed to provide a seamless experience for users interested in real estate transactions, with an added feature of an admin panel for easy management.
+
+Features
+Property Listings: Browse through a curated list of properties available for buying or selling.
+
+Property Details: Access comprehensive details about each property, including images, location, and specifications.
+
+Buy/Sell Functionality: List your property for sale or express interest in purchasing a property seamlessly.
+
+Admin Panel: A powerful admin panel to manage users, properties, and transactions efficiently.
+
+Admin Panel
+Access the admin panel at http://localhost:8080/admin.
+
+example credentials : 
+ivan 
+123
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Thank you for choosing UnitedBuildings! Happy buying and selling! 🏡✨
