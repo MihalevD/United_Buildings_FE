@@ -5,19 +5,11 @@ import BasicBox from "../basic/BasicBox";
 import project from "../../img/project.jpg";
 import styled from "@emotion/styled";
 import { TextContainer } from "../basic/TextContainer";
-
-const exampleProject = {
-  project_name: "Example Project",
-  description:
-    "lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit",
-  start_data: "2021-01-01",
-  end_data: "2021-12-31",
-  akt: 14,
-  size: 100,
-  floors: 10,
-  apartments_num: 100,
-  park_space: 100,
-};
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useEffect } from "react";
+import { asyncGetChosenProject } from "../../redux/actions/projectActions";
+import { useParams } from "react-router-dom";
 
 const textStyles = [
   {
@@ -31,6 +23,19 @@ const textStyles = [
 ];
 
 export const DesktopProjectPage = () => {
+  const project = useSelector(
+    (state: RootState) => state.projects.chosenProject
+  );
+  const dispatch = useDispatch();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    console.log(project);
+    if (!project) {
+      dispatch(asyncGetChosenProject(Number(id)) as any);
+    }
+  }, []);
   return (
     <>
       <BasicBox
@@ -38,9 +43,20 @@ export const DesktopProjectPage = () => {
         justify="center"
         style={{ maxHeight: "700px", position: "relative" }}
       >
-        <Image src={project} />
+        <Image
+          src={
+            project?.image_url
+              ? Array.isArray(project.image_url)
+                ? project.image_url[0].src
+                : project.image_url.src
+              : ""
+          }
+        />
         <NameBox>
-          <TextContainer text="Example Project" textStyles={textStyles[0]} />
+          <TextContainer
+            text={project?.project_name}
+            textStyles={textStyles[0]}
+          />
           <TextContainer text="гр. Бургас" textStyles={textStyles[1]} />
         </NameBox>
       </BasicBox>
@@ -49,12 +65,12 @@ export const DesktopProjectPage = () => {
           <BasicBox fullWidth justify="space-between" gap="10%">
             <InfoProjectBox
               stats={[
-                { name: "eтажа", value: exampleProject.floors },
-                { name: "апартамента", value: exampleProject.apartments_num },
-                { name: "паркоместа", value: exampleProject.park_space },
+                { name: "eтажа", value: project?.floor },
+                { name: "апартамента", value: project?.apartments_num },
+                { name: "паркоместа", value: project?.park_space },
               ]}
             />
-            <AboutProjectDesktop />
+            <AboutProjectDesktop html={project.description || ""} />
           </BasicBox>
           <Apartments />
         </BasicBox>

@@ -4,6 +4,7 @@ import { ImageContainer } from "../basic/ImageContainer";
 import { TextContainer } from "../basic/TextContainer";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { useNavigate } from "react-router-dom";
+import { ApartType } from "./CarouselBlock";
 
 const Wrapper = styled(BasicBox)`
   flex-shrink: 0;
@@ -19,21 +20,6 @@ const Wrapper = styled(BasicBox)`
     background: #cdd5b1 0% 0% no-repeat padding-box;
   }
 `;
-const imgStyles = {
-  width: "100%",
-  height: "190px",
-};
-
-export type CarouselBlockTypes = {
-  id: number;
-  image_url: { src: string }[];
-  imgAlt: string;
-  type_name: string;
-  price: string;
-  address: string;
-  size: string;
-  rooms: string;
-};
 
 const textStylesHeading = {
   color: "#000000",
@@ -50,28 +36,21 @@ const textStylesSubHeading = {
   textAlign: "left" as const,
 };
 
-export const MobileCarouselBlock = (props: CarouselBlockTypes) => {
+type CarouselBlockTypes = {
+  apartment: ApartType;
+};
+
+export const MobileCarouselBlock = ({ apartment }: CarouselBlockTypes) => {
   const navigate = useNavigate();
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    navigate("/property/" + props.id);
+    navigate("/property/" + apartment.id);
   };
 
   return (
     <BasicBox fullWidth justify="center" left="7px" right="10px">
       <Wrapper direction="column" onClick={handleClick}>
-        <BasicBox fullWidth>
-          <ImageContainer
-            imageSrc={props.image_url ? props.image_url[0].src : ""}
-            imageStyles={imgStyles}
-            style={{
-              borderRadius: "30px",
-              border: "1px solid #C9C7C7",
-              objectFit: "cover",
-            }}
-            fullWidth
-          />
-        </BasicBox>
+        <BasicBox fullWidth></BasicBox>
         <BasicBox
           left="24px"
           right="15px"
@@ -89,28 +68,28 @@ export const MobileCarouselBlock = (props: CarouselBlockTypes) => {
           >
             <BasicBox justify="space-between" fullWidth>
               <TextContainer
-                text={props.type_name}
+                text={apartment?.type_name || "Апартамент"}
                 textStyles={textStylesHeading}
               />
               <TextContainer
-                text={"€ " + props.price + ",000"}
+                text={"€ " + apartment?.price + ",000"}
                 textStyles={textStylesHeading}
               />
             </BasicBox>
             <TextContainer
-              text={props.address}
+              text={apartment?.address}
               textStyles={textStylesSubHeading}
             />
           </BasicBox>
           <BasicBox justify="space-between" fullWidth>
             <TextContainer
-              text={props.rooms + " спални"}
+              text={"Етаж " + (apartment?.floor || "1")}
               textStyles={textStylesSubHeading}
             />
             <BasicBox>
               <AspectRatioIcon />
               <TextContainer
-                text={props.size + " кв.м."}
+                text={apartment?.size + " кв.м."}
                 textStyles={textStylesSubHeading}
               />
             </BasicBox>

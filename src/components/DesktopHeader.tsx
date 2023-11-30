@@ -69,7 +69,7 @@ export const DesktopHeader = () => {
           <SearchBar />
         )}
         {isPorjectsPage && !singlePage && <TextBox>ПРОЕКТИ</TextBox>}
-        <Overlay />
+        {singlePage && <Overlay />}
       </HeaderContainer>
     </div>
   );

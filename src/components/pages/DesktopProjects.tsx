@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 
 export const DesktopProjects = () => {
-  const projects = useSelector((state: any) => state.projects);
+  const projects = useSelector((state: any) => state.projects.projects);
 
   return (
     <BasicBox fullWidth justify="center" align="center">
@@ -18,7 +18,7 @@ export const DesktopProjects = () => {
       >
         {projects &&
           projects.map((project: any, index: any) => (
-            <ProjectBox key={index} {...project} />
+            <ProjectBox key={index} project={project} />
           ))}
       </ProjectWrapper>
     </BasicBox>

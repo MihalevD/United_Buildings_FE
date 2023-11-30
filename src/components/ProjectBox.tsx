@@ -2,12 +2,10 @@ import BasicBox from "./basic/BasicBox";
 import styled from "@emotion/styled";
 import { TextContainer } from "./basic/TextContainer";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 type ProjectBoxProps = {
-  id: number;
-  project_name: string;
-  location_name: string;
-  image_url: { src: string }[];
+  project: any;
 };
 
 const Wrapper = styled(BasicBox)<{ $img_url: string }>`
@@ -60,28 +58,35 @@ const textStylesSubHeading = {
   color: "#F5F5F5",
 };
 
-export const ProjectBox: React.FC<ProjectBoxProps> = ({
-  id,
-  project_name: name,
-  location_name: location,
-  image_url,
-}) => {
+export const ProjectBox: React.FC<ProjectBoxProps> = ({ project }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
+    dispatch({ type: "SET_CHOSEN_PROJECT", payload: project });
+
     window.scrollTo({ top: 0, behavior: "smooth" });
-    navigate(`/projects/${id}`);
+    navigate(`/projects/${project.id}`);
   };
 
   return (
     <Wrapper
       fullWidth
-      $img_url={image_url ? image_url[0].src : ""}
+      $img_url={
+        project.image_url || project.image_url[0]
+          ? Array.isArray(project.image_url)
+            ? project.image_url[0].src
+            : project.image_url.src
+          : ""
+      }
       onClick={() => handleClick()}
     >
       <TextBox direction="column" gap="8px">
-        <TextContainer text={name} textStyles={textStylesHeading} />
-        <TextContainer text={location} textStyles={textStylesSubHeading} />
+        <TextContainer text={project.name} textStyles={textStylesHeading} />
+        <TextContainer
+          text={project.location_name}
+          textStyles={textStylesSubHeading}
+        />
       </TextBox>
       <Overlay />
     </Wrapper>

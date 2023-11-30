@@ -11,6 +11,7 @@ import ModalImage, { Lightbox } from "react-modal-image";
 import explan from "../img/ex_plan.png";
 import { useState } from "react";
 import { ShareModal } from "./modals/ShareModal";
+import { ApartType } from "./carousel/CarouselBlock";
 // @ts-ignore
 
 const textStylesHeading = {
@@ -28,10 +29,7 @@ const textStylesSubHeading = {
 };
 
 type InfoBoxProps = {
-  data?: {
-    title: string;
-    address: string;
-  };
+  data?: ApartType;
 };
 
 const Wrapper = styled(BasicBox)`
@@ -82,22 +80,22 @@ export const InfoBoxProperty = (props: InfoBoxProps) => {
     >
       <InfoWrapper direction="column">
         <TextContainer
-          text={props.data ? props.data.title : "Чудесен едностаен апартамент"}
+          text={
+            props.data?.type_name
+              ? props.data.type_name
+              : "Чудесен едностаен апартамент"
+          }
           textStyles={textStylesHeading}
         />
         <BasicBox top="16px">
           <LocationOnIcon width="36px" />
           <TextContainer
             customStyles={{ marginLeft: "10px" }}
-            text={props.data ? props.data.address : "No address"}
+            text={props.data ? props.data.location_name : "No address"}
             textStyles={textStylesSubHeading}
           />
         </BasicBox>
-        <DescriptionBlock
-          text={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
-          }
-        />
+        <DescriptionBlock text={props.data?.description || "No Description"} />
         <BasicBox style={{ position: "relative" }}>
           <CustomButton onClick={() => openLightbox()}>
             <AspectRatioIcon />

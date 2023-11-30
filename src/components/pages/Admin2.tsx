@@ -36,7 +36,7 @@ import MapIcon from "@mui/icons-material/Map";
 const url_name =
   import.meta.env.VITE_NODE_ENV === "production"
     ? "https://united-buildings-be.online"
-    : "http://localhost:3000";
+    : "http://localhost:8080";
 // create the data provider by providing the API endpoint
 const dataProvider = simpleRestProvider(url_name);
 

@@ -43,13 +43,18 @@ const CustomMobileStepper = styled(MobileStepper)`
   borderradius: "30px";
 `;
 
-function Stepper() {
+type StepperProps = {
+  images?: { src: string }[];
+};
+
+function Stepper({ images }: StepperProps) {
   const theme = useTheme();
+  console.log(images);
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = images?.length || 0;
 
   const handleNext = () => {
-    if (activeStep === 3) setActiveStep(-1);
+    if (activeStep === maxSteps - 1) setActiveStep(-1);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -71,34 +76,35 @@ function Stepper() {
         enableMouseEvents
         style={{ borderRadius: "30px" }}
       >
-        {images.map((step, index) => (
-          <div
-            key={step.label}
-            style={{ borderRadius: "30px", backgroundColor: "black" }}
-          >
-            {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  height: 500,
-                  display: "block",
-                  overflow: "hidden",
-                  width: "100%",
-                  borderRadius: "30px",
-                  cursor: "pointer",
-                  backgroundColor: "black",
-                  transition: "0.3s",
-                  ":hover": {
-                    opacity: "0.5",
+        {images &&
+          images.map((step, index) => (
+            <div
+              key={index}
+              style={{ borderRadius: "30px", backgroundColor: "black" }}
+            >
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Box
+                  component="img"
+                  sx={{
+                    height: 500,
+                    display: "block",
+                    overflow: "hidden",
+                    width: "100%",
+                    borderRadius: "30px",
+                    cursor: "pointer",
+                    backgroundColor: "black",
                     transition: "0.3s",
-                  },
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null}
-          </div>
-        ))}
+                    ":hover": {
+                      opacity: "0.5",
+                      transition: "0.3s",
+                    },
+                  }}
+                  src={step.src}
+                  alt={"image" + index}
+                />
+              ) : null}
+            </div>
+          ))}
       </AutoPlaySwipeableViews>
       <CustomMobileStepper
         steps={maxSteps}

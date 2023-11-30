@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { items } from "../../helper/constants";
 import BasicBox from "../basic/BasicBox";
 import styled from "@emotion/styled";
-import { CarouselBlockTypes } from "../carousel/CarouselBlock";
 import { PropertyData } from "../PropertyData";
 import { MoreButton } from "../MoreButton";
 import { FiltersRow } from "../FiltersRow";
@@ -28,7 +27,8 @@ const textStyles = {
 };
 
 export const Catalog = () => {
-  const data = useSelector((state: RootState) => state.apartments);
+  const data = useSelector((state: RootState) => state.apartments.apartments);
+  console.log(data);
   const dispatch = useDispatch();
 
   const isMobile = useIsMobile();

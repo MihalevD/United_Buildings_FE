@@ -8,7 +8,7 @@ import { ImageContainer } from "./basic/ImageContainer";
 import CreditSVG from "../img/svg/CreditSVG";
 
 type CreditCalculatorProps = {
-  price: string;
+  price: number;
 };
 
 const Wrapper = styled(BasicBox)`
@@ -48,16 +48,14 @@ const secondaryTextStyles = {
 };
 
 export const CreditCalculator: React.FC<CreditCalculatorProps> = ({
-  price = "99 489",
+  price,
 }) => {
   const [selectedOption, setSelectedOption] = useState(1);
   const [result, setResult] = useState(Number(price) / (selectedOption * 12));
 
   const handleChange = (selectedOption: any) => {
     setSelectedOption(selectedOption);
-    const newNumber = Number(
-      (Number(price) / (selectedOption * 12)).toFixed(2)
-    );
+    const newNumber = Number((price / (selectedOption * 12)).toFixed(2));
     setResult(newNumber);
   };
 

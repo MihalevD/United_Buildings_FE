@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
-import { items } from "../../helper/constants";
-import { CarouselBlock, CarouselBlockTypes } from "./CarouselBlock";
+import { CarouselBlock, ApartType } from "./CarouselBlock";
 import { MobileCarouselBlock } from "./MobileCarouselBlock";
 import useIsMobile from "../../helper/isMobile";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
 import BasicBox from "../basic/BasicBox";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const WrapperNext = styled(BasicBox)`
   position: absolute;
@@ -50,7 +51,9 @@ const CustomPreviousArrow = (props: any) => {
 };
 
 export default function SimpleSlider() {
-  const [carouselData, setCarouselData] = useState<CarouselBlockTypes[]>(items);
+  const items = useSelector(
+    (state: RootState) => state.apartments.adApartments
+  );
   const isMobile = useIsMobile();
   var settings = {
     infinite: true,
@@ -86,13 +89,14 @@ export default function SimpleSlider() {
 
   return (
     <Slider {...settings}>
-      {carouselData.map((item, index) => {
-        return !isMobile ? (
-          <CarouselBlock key={index} {...item} fullWidth={true} />
-        ) : (
-          <MobileCarouselBlock key={index} {...item} />
-        );
-      })}
+      {items.length > 0 &&
+        items.map((item: ApartType, index: React.Key) => {
+          return !isMobile ? (
+            <CarouselBlock key={index} apartment={item} fullWidth={true} />
+          ) : (
+            <MobileCarouselBlock key={index} apartment={item} />
+          );
+        })}
     </Slider>
   );
 }

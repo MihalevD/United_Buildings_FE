@@ -1,5 +1,7 @@
+import { Fragment } from "react";
 import BasicBox from "./basic/BasicBox";
 import { TextContainer } from "./basic/TextContainer";
+import DOMPurify from "dompurify";
 
 type DescriptionBlockProps = {
   text: string;
@@ -21,12 +23,13 @@ const textStylesSubHeading = {
 };
 
 export const DescriptionBlock = (props: DescriptionBlockProps) => {
+  const sanitizedHTML = DOMPurify.sanitize(props.text);
   return (
     <BasicBox direction="column" top="24px">
       <BasicBox bottom="12px">
         <TextContainer text="Описание:" textStyles={textStylesHeading} />
       </BasicBox>
-      <pre style={textStylesSubHeading}>{props.text}</pre>
+      <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
     </BasicBox>
   );
 };

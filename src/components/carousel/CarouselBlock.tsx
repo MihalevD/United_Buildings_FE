@@ -4,6 +4,7 @@ import { ImageContainer } from "../basic/ImageContainer";
 import { TextContainer } from "../basic/TextContainer";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled(BasicBox)`
   flex-shrink: 0;
@@ -26,16 +27,17 @@ const imgStyles = {
   objectFit: "cover" as const,
 };
 
-export type CarouselBlockTypes = {
+export type ApartType = {
   id: number;
   image_url: { src: string }[];
-  imgAlt: string;
   type_name: string;
   price: string;
   address: string;
   size: string;
-  rooms: string;
-  fullWidth?: boolean;
+  description?: string;
+  location_name: string;
+  project_name?: string;
+  floor?: string;
 };
 
 const textStylesHeading = {
@@ -53,20 +55,31 @@ const textStylesSubHeading = {
   textAlign: "left" as const,
 };
 
-export const CarouselBlock = (props: CarouselBlockTypes) => {
+type CarouselBlockTypes = {
+  apartment: ApartType;
+  fullWidth?: boolean;
+};
+
+export const CarouselBlock: React.FC<CarouselBlockTypes> = ({
+  apartment,
+  fullWidth,
+}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleClick = () => {
+    dispatch({ type: "SET_CHOSEN_APARTMENT", payload: apartment });
     window.scrollTo({ top: 0, behavior: "smooth" });
-    navigate("/property/" + props.id);
+    navigate("/property/" + apartment.id);
   };
+  console.log(apartment);
 
   return (
-    <BasicBox fullWidth={props.fullWidth} justify="center">
+    <BasicBox fullWidth={fullWidth} justify="center">
       <Wrapper direction="column" onClick={handleClick}>
         <BasicBox fullWidth>
           <ImageContainer
             animation={false}
-            imageSrc={props.image_url ? props.image_url[0].src : ""}
+            imageSrc={apartment?.image_url ? apartment.image_url[0].src : ""}
             imageStyles={imgStyles}
             style={{
               borderRadius: "30px",
@@ -93,28 +106,28 @@ export const CarouselBlock = (props: CarouselBlockTypes) => {
           >
             <BasicBox justify="space-between" fullWidth>
               <TextContainer
-                text={props.type_name}
+                text={apartment?.type_name}
                 textStyles={textStylesHeading}
               />
               <TextContainer
-                text={"€ " + props.price + ",000"}
+                text={"€ " + apartment?.price + ",000"}
                 textStyles={textStylesHeading}
               />
             </BasicBox>
             <TextContainer
-              text={props.address}
+              text={apartment?.address}
               textStyles={textStylesSubHeading}
             />
           </BasicBox>
           <BasicBox justify="space-between" fullWidth>
             <TextContainer
-              text={props.rooms + " спални"}
+              text={"Етаж  " + (apartment?.floor || "1")}
               textStyles={textStylesSubHeading}
             />
             <BasicBox>
               <AspectRatioIcon sx={{ fontSize: "32px", marginRight: "8px" }} />
               <TextContainer
-                text={props.size + " кв.м."}
+                text={apartment?.size + " кв.м."}
                 textStyles={textStylesSubHeading}
               />
             </BasicBox>

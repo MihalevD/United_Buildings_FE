@@ -1,6 +1,6 @@
 import BasicBox from "./basic/BasicBox";
 import styled from "@emotion/styled";
-import { CarouselBlock, CarouselBlockTypes } from "./carousel/CarouselBlock";
+import { CarouselBlock, ApartType } from "./carousel/CarouselBlock";
 import useIsMobile from "../helper/isMobile";
 import { MobileCarouselBlock } from "./carousel/MobileCarouselBlock";
 
@@ -10,7 +10,7 @@ const Wrapper = styled(BasicBox)`
 `;
 
 type PropertyDataProps = {
-  data: CarouselBlockTypes[];
+  data: ApartType[];
   top: boolean;
 };
 
@@ -25,9 +25,9 @@ export const PropertyData = (props: PropertyDataProps) => {
     >
       {props.data.map((item, index) => {
         return !isMobile ? (
-          <CarouselBlock key={index} {...item} />
+          <CarouselBlock key={index} apartment={item} />
         ) : (
-          <MobileCarouselBlock key={index} {...item} />
+          <MobileCarouselBlock key={index} apartment={item} />
         );
       })}
     </Wrapper>

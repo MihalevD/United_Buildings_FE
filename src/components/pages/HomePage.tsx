@@ -6,9 +6,18 @@ import { InfoComponent } from "../InfoComponent";
 import { SuggestionsBar } from "../SuggestionsBar";
 import { Locations } from "../Locations";
 import { MobileHomePage } from "./MobileHomePage";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { asyncGetAdApartments } from "../../redux/actions/apartmentActions";
 
 export const HomePage = () => {
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncGetAdApartments() as any);
+  }, []);
+
   return (
     <>
       {!isMobile ? (
